@@ -1,0 +1,237 @@
+.cartoon {
+    display: flex;
+    border: 2px solid #000;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+}
+.vegetables {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.vegetable {
+    border: 2px solid green;
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+}
+.tab-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.tab {
+    border: 1px solid red;
+    text-align: center;
+    width: 200px;
+    padding: 10px;
+    text-transform: capitalize;
+}
+.active-tab{
+   background-color: red; 
+}
+.tab-contents {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+.tab-content {
+    border: 1px solid green;
+    text-align: center;
+    width: 24%;
+    padding: 10px;
+    text-transform: capitalize;
+}
+button{
+    width: auto;
+    height: 50px;
+    border: 1px solid black;
+    margin: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.button-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+.button{
+    border: 1px solid black;
+    padding: 10px 0;
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+}
+.todolists button{
+    display: inline;
+}
+.genre-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+.genre{
+    border: 2px solid red;
+    padding: 5px;
+}
+.books-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+.book{
+    border: 2px solid lightcoral;
+    padding: 5px;
+    font-size: 1rem;
+}
+.users-list {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: 20px;
+}
+.user {
+    width: 33%;
+    border: 2px solid red;
+}
+.user img{
+    width: 100%;
+}
+.tabs-container, .video-container, .social-container{
+    display: flex;
+    gap: 10px;
+    width: 100% ;
+    justify-content: space-between;
+    align-items: center;
+}
+.tab, .video, .social{
+    width: 24%;
+    border: 2px solid green;
+    cursor: pointer;
+}
+.products-list{
+    display: flex;
+    width: 100%;
+    gap:10px;
+    text-align: center;
+    margin-top: 10px;
+}
+.product{
+    width: 33%;
+    border: 2px solid brown;
+}
+.product img{
+    width: 100%;
+}
+.social-container{
+    display: flex;
+    gap: 5px;
+    width: 100% ;
+    justify-content: flex-start;
+    align-items: center;
+}
+.social{
+    width: 16.5%;
+    border: 2px solid green;
+    cursor: pointer;
+}
+.social img{
+    width: 100%;
+}
+.button-disable{
+    opacity: 0.2;
+}
+.movies-list{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.movie{
+    border: 1px solid rebeccapurple;
+}
+.flex-box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive Grid */
+    gap: 20px;
+    padding: 20px;
+}
+
+.flex-box {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+}
+
+.flex-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.flex-box p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.flex-box b {
+    color: #007bff;
+    font-size: 17px;
+}
+
+.flex-box a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.flex-box a:hover {
+    text-decoration: underline;
+}
+.drop-down {
+    width: 100%;
+    max-width: 250px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+
+    /* Custom dropdown arrow */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24' fill='%23007bff'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    appearance: none; /* Removes default OS styling */
+}
+
+.drop-down:hover {
+    border-color: #0056b3;
+}
+
+.drop-down:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 91, 187, 0.3);
+}
+
+.drop-down option {
+    padding: 10px;
+    font-size: 16px;
+    background: white;
+    color: #333;
+}
+

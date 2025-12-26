@@ -1,0 +1,14 @@
+/* Styles for App */
+.App {
+  display: flex;
+}
+
+.App > .header {
+  flex: 0 0 10%; /* Navbar occupies 10% */
+}
+
+.App > .content {
+  flex: 1; /* Dashboard occupies the remaining 90% */
+  background-color: #f5f5f5;
+  padding: 0px 20px;
+}

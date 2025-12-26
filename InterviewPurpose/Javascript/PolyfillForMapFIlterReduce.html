@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //Array.map((num, i, arr)=>{})
+
+        //Polyfill for Map
+
+        Array.prototype.myMap = function (cb) {
+            let temp = [];
+            for (let i = 0; i < this.length; i++) {
+                temp.push(cb(this[i], i, this))
+            }
+            return temp;
+        }
+        let arr = [1, 2, 3, 4];
+        console.log(arr.myMap((num) => num * 2))
+
+      const results =  arr.map((num, i, arr) => {
+            console.log(arr)
+            return num * 5
+        }
+        );
+
+        console.log(results)
+
+        //Polyfill for Filter
+        Array.prototype.myFilter = function (cb) {
+            let temp = [];
+            for (let i = 0; i < this.length; i++) {
+                if (cb(this[i], i, this)) { 
+                    // Does the callback return true or false for the current element?
+                    // If true, the element passes the test.
+                    // If false, it gets filtered out.
+                    temp.push(this[i])
+                }
+            }
+            return temp;
+        }
+        let numbers = [1, 2, 3, 4, 5];
+        console.log(numbers.myFilter((num) => num > 2))
+
+
+        //PolyFill for Reduce
+        
+        //arr.reduce((acc,curr, i, arr) => {}, initialValue)
+
+        Array.prototype.myReduce = function (cb, initialValue) {
+            let accumulator = initialValue;
+            for (let i = 0; i < this.length; i++) {
+                accumulator = accumulator ? cb(accumulator, this[i], i, this) : this[i]
+            }
+            return accumulator
+        }
+
+        let digits = [1, 2, 3, 4];
+        console.log(digits.myReduce((acc, curr) => acc + curr, 0))  
+    </script>
+</body>
+
+</html>accumulator

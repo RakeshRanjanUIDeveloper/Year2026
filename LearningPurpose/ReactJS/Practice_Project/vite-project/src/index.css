@@ -1,0 +1,59 @@
+/* Reset default margins, paddings, and box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Reset body font and background */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+  }  
+  /* Add spacing to common elements */
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 10px;
+  }
+  
+  p {
+    margin-bottom: 15px;
+  }
+  
+  ul {
+    padding-left: 20px;
+  }
+    
+  html {
+    font-size: 16px;
+  }
+  
+
+  
+  /* Ensure headers are bold and spaced properly */
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+  
+  a {
+    text-decoration: none;
+    color: blue;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  

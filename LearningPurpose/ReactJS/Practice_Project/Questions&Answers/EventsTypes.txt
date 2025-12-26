@@ -1,0 +1,15 @@
+Syntehtic events, native events, Real Events
+======================================================================================================================
+Syntehtic Events
+- Events like onClick, onChange, onSubmit in JSX, are synthetic events.
+- Default and recommended for React components.
+- 
+=======================================================================================================================
+Native Events
+- Actual browser event object
+- Browser specific - browser - window event 
+- $window.click
+=======================================================================================================================
+Real Events
+- Directly attaching event listeners to DOM elements using addEventListener
+- button#id.addEventListener

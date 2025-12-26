@@ -1,0 +1,38 @@
+/* Styles for Dashboard */
+.inventory-boxes {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    padding: 20px;
+  }
+  
+  .inventory-box {
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    flex: 1;
+    max-width: 300px;
+  }
+  
+  .inventory-box div {
+    font-size: 1.5rem;
+    margin: 10px 0;
+  }
+  
+  .inventory-box div:nth-child(1) {
+    color: #28a745;
+    font-weight: bold;
+  }
+  
+  .inventory-box div:nth-child(2) {
+    color: #ffc107;
+    font-weight: bold;
+  }
+  
+  .inventory-box div:nth-child(3) {
+    color: #dc3545;
+    font-weight: bold;
+  }
+  

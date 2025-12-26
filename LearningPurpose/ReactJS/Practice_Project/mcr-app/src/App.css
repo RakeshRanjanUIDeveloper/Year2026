@@ -1,0 +1,34 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #333;
+  color: white;
+}
+
+.book {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.book img {
+  width: 100px;
+  height: 150px;
+}
+
+.book-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-page input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+}

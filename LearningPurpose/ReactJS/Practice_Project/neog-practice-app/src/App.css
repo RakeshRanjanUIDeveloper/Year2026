@@ -1,0 +1,225 @@
+/* .App { */
+  /* text-align: center; */
+/* } */
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.video-list{
+  display: flex;
+  gap: 1%;
+}
+.video {
+  width: 20%;
+  border: 1px solid #000;
+  height: 100%;
+}
+.posts, .products{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap:1%;
+}
+.post, .product {
+  margin: 0 auto;
+  border-radius: 10px;
+  width: 23%;
+  box-shadow: 0 4px 4px #bebebe;
+  background: #2a4c61;
+  padding: 20px;
+  color: #FFFFFF;
+}
+.post figure img{
+  width: 100%;
+}
+.movies-list{
+  display: flex;
+  gap: 10px;
+}
+.movie {
+  border: 2px solid green;
+  background: beige;
+  box-shadow: 0 4px 4px lightgray;
+  filter: invert(1);
+  width: 18%;
+}
+.company-resources{
+  display: flex;
+  gap: 10px;
+}
+.company-resource{
+  border: 2px solid green;
+  background: beige;
+  box-shadow: 0 4px 4px lightgray;
+  filter: hue-rotate(45deg);
+  width: 18%;
+}
+.stationary-items{
+  display: flex;
+  gap: 10px;
+}
+.stationary {
+  border: 2px solid yellow;
+  background: beige;
+  box-shadow: 0 4px 4px black;
+  filter: grayscale(1);
+  width: 18%;
+}
+button{
+  align-items: center;
+    appearance: none;
+    background-color: #758996;
+    /* background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%); */
+    background-size: calc(100% + 20px) calc(100% + 20px);
+    border-radius: 100px;
+    border-width: 0;
+    box-shadow: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: CircularStd, sans-serif;
+    font-size: 1rem;
+    height: auto;
+    justify-content: center;
+    line-height: 1.5;
+    padding: 6px 20px;
+    margin: 0 5px;
+}
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: #2a4c61;
+  z-index: 1000;
+  box-shadow: 0 15px 40px -20px rgba(40,44,63,.15);
+}
+.logo {
+  width: 50px;
+  padding: 10px;
+}
+.nav-items {
+  display: flex;
+  align-items: center;
+}
+.nav-items > ul {
+  display: flex;
+  list-style-type: none;
+}
+.nav-items > ul > li {
+  padding: 8px 20px;
+  font-size: 18px;
+  font-family: Graphik;
+}
+.nav-items > ul > li a.active {
+  color: #99e708;
+  text-decoration: underline;
+}
+.nav-items > ul > li a{
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.todos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem; 
+  justify-content: center; 
+  padding: 2rem; 
+  /* background-color: #f9f9f9;  */
+}
+
+
+.todo {
+  background: #fff;
+  border: 1px solid #e0e0e0; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  padding: 1.5rem; 
+  width: 300px; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+.todo:hover {
+  transform: translateY(-5px); 
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
+}
+
+.todo-title {
+  font-size: 1.2rem; 
+  font-weight: bold; 
+  margin-bottom: 0.5rem; 
+  color: #333;
+}
+
+.todo-description {
+  font-size: 1rem;
+  color: #555; 
+  margin-bottom: 0.5rem;
+}
+
+
+.todo-status {
+  font-size: 1rem; 
+  font-weight: bold; 
+  padding: 0.2rem 0.5rem; 
+  border-radius: 4px; 
+  display: inline-block; 
+}
+
+.todo-status.done {
+  color: #ffffff; 
+  background-color: #28a745; 
+}
+
+.todo-status.open {
+  color: #ffffff; 
+  background-color: #dc3545; 
+}
+.todo.completed {
+  text-decoration: line-through;
+}
+.exam-question a {
+  color: seagreen;
+  padding: 20px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.internal-links a:nth-child(2){
+  margin-left: 20px;
+}

@@ -1,0 +1,24 @@
+[
+    {
+      "id": 1,
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "image": "https://tse1.mm.bing.net/th?id=OIP.eTO09xqdGYiKU913AIb0vQHaJt&pid=Api",
+      "shelf": "currentlyReading"
+    },
+    {
+      "id": 2,
+      "title": "1984",
+      "author": "George Orwell",
+      "image": "http://www.bookerworm.com/images/1984.jpg",
+      "shelf": "wantToRead"
+    },
+    {
+      "id": 3,
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "image": "https://cdn11.bigcommerce.com/s-gibnfyxosi/images/stencil/2560w/products/114990/116752/51IXWZzlgSL__41945.1615559130.jpg?c=1",
+      "shelf": "read"
+    }
+  ]
+  

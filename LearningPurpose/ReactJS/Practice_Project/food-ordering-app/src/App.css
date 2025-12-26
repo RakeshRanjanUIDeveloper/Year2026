@@ -1,0 +1,191 @@
+/* Header Container */
+.header {
+  background: rgb(255, 82, 0);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Fixes the header at the top */
+  top: 0; /* Aligns to the top of the viewport */
+  left: 0; /* Aligns to the left of the viewport */
+  right: 0; /* Aligns to the right of the viewport */
+  z-index: 1000; /* Ensures it appears above other elements */
+}
+
+/* Add a margin-top to the rest of the content to prevent overlap */
+body {
+  margin-top: 60px; /* Adjust based on header height */
+}
+
+
+/* App Title */
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Navigation */
+.header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navigation Items */
+.header nav ul li {
+  margin: 0;
+}
+
+/* Links */
+.header nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background 0.3s ease, color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Active Link */
+.header nav a.active-link {
+  background: rgba(255, 255, 255, 0.3);
+  color: #000;
+}
+
+/* Hover Effect */
+.header nav a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #000;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .header nav ul {
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+}
+
+/* Container for menu cards */
+.menu-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 20px; /* Space between cards */
+  padding: 20px;
+}
+
+/* Individual menu card */
+.menu-card {
+  background-color: #ffffff; /* Card background */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  overflow: hidden; /* Crop overflowing content */
+  display: flex;
+  flex-direction: column; /* Stack content */
+  justify-content: space-between;
+}
+
+/* Image styling */
+.menu-card img {
+  width: 100%; /* Full width */
+  height: 200px; /* Fixed height */
+  object-fit: cover; /* Crop image to fill */
+  border-top-left-radius: 15px; /* Rounded corners for top */
+  border-top-right-radius: 15px;
+}
+
+/* Content within the card */
+.menu-card p {
+  margin: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.menu-card p b {
+  color: #555; /* Lighter color for labels */
+}
+
+/* Add to Cart button */
+.menu-card button {
+  background-color: rgb(27, 166, 114); /* Bright button color */
+  color: white; /* Text color */
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 15px; /* Spacing from edges */
+  transition: background-color 0.3s ease;
+}
+
+.menu-card button:hover {
+  background-color: #e64a19; /* Darker shade on hover */
+}
+
+/* Hover effect for the card */
+.menu-card:hover {
+  transform: translateY(-10px); /* Lift card slightly */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Darker shadow */
+}
+
+
+/* Filter container */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 10px 20px;
+}
+
+/* Align filters in a row */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-left: 20px;
+}
+
+/* Style individual filter items */
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between checkbox/radio and label */
+  font-size: 16px;
+}
+
+/* Style labels for better readability */
+.filter-item label {
+  cursor: pointer;
+  color: #555;
+}
+
+/* Input (checkbox/radio) style */
+input[type='checkbox'],
+input[type='radio'] {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff5722; /* Custom checkbox color */
+  cursor: pointer;
+}
+
+/* Input hover effect */
+input[type='checkbox']:hover,
+input[type='radio']:hover {
+  box-shadow: 0 0 4px rgba(255, 87, 34, 0.5); /* Subtle glow effect */
+}
+

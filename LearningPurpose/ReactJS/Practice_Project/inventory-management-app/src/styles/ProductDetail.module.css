@@ -1,0 +1,37 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .heading {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .productDetail {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .productImage {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .details {
+    flex: 1;
+  }
+  
+  .details p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+  
+  .details p strong {
+    font-weight: bold;
+  }
+  
