@@ -1,21 +1,41 @@
 import React from 'react'
-import {addTodo} from '../redux/actions/todoActions';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import {addTodo, updateTodo} from '../redux/actions/todoActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import './TodoApp.css'
 const TodoForm = () => {
   const [text, setText] = useState('')
 const dispatch = useDispatch()
   const handleSubmit = (e) => {
     e.preventDefault()
-    // dispatch addTodo action here
-    dispatch(addTodo(text))
+
+    if(editingTodo){
+      dispatch(updateTodo({...editingTodo, text}))
+    }else{
+      dispatch(addTodo(text))
+    }
     setText('')
   }
+
+  //Get Value of editingTodo from store
+  const editingTodo = useSelector((state) => state.todo.editingTodo)
+  
+  // Fill input box when edit clicked
+  useEffect(() => {
+    if(editingTodo){
+      setText(editingTodo.text)
+    }
+  }, [editingTodo])
   return (
-    <div>
-        <form onSubmit={handleSubmit}>
+    <div className="todo-form-container">
+        <h1>Redux Todo App</h1>
+        <form onSubmit={handleSubmit} className="todo-form">
             <input type="text" placeholder='Enter todo' value={text} onChange={(e) => setText(e.target.value)} />
-            <button type='submit'>Add Todo</button>
+            <button type='submit'>
+              {
+                editingTodo ? 'Update Todo' : 'Add Todo'
+              }
+            </button>
         </form>
     </div>
   )
