@@ -1,0 +1,29 @@
+TypeScript catches the bugs before your code even runs.
+Type annotationsname: type syntax
+Inference : TypeScript figures it out from the value
+When to annotate: No value, function params, return types
+any : Opt-out of type checking — avoid it
+Compile vs runtime : TypeScript checks before running, strips away after
+unknown is TypeScript saying "I'll accept anything, but you must prove what it is before you use it."
+A function that never returns (throws or runs forever): never Function never finishes at all
+void Function finishes but returns nothing
+Literal types - Variables can be typed to an exact value, not just a general type:
+const vs let inference behaves differently
+const — infers the literal type
+let — infers the general type
+Type casting with as
+Functions that do something but return nothing:
+For Variables, Functions, Parameters — camelCase:
+For Constants that never change — SCREAMING_SNAKE_CASE:
+========================================================================================
+For Types and Interfaces — PascalCase:
+Difference 1 — interface can be reopened, type cannot:
+Difference 2 — type can do things interface cannot:
+interface can only describe object shapes — nothing else.
+Difference 3 — interface is extendable:
+type can do similar with & but syntax is different:
+Describing object shapes => Either — both work
+React component props => interface — most common convention
+Union types, primitives => type — only option
+Extending/inheriting shapes =>  interface — cleaner syntax
+Library/package code => interface — allows consumers to extend
