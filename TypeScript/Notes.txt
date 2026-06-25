@@ -27,3 +27,4 @@ React component props => interface — most common convention
 Union types, primitives => type — only option
 Extending/inheriting shapes =>  interface — cleaner syntax
 Library/package code => interface — allows consumers to extend
+Script has a special syntax for that — the ? operator:
