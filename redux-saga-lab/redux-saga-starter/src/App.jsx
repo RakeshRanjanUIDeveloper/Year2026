@@ -1,12 +1,14 @@
-import React from 'react'
-import TodoApp from './todo/components/TodoApp'
+import React from "react";
+import { Provider } from "react-redux";
+import store from "./todo/redux/store";
+import TodoApp from "./todo/components/TodoApp";
 
-const App = () => {
+function App() {
   return (
-    <>
-        <TodoApp />
-    </>
-  )
+    <Provider store={store}>
+      <TodoApp />
+    </Provider>
+  );
 }
 
-export default App
+export default App;

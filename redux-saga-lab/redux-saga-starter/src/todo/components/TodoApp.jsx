@@ -1,19 +1,15 @@
-import React from 'react'
-import TodoForm from './TodoForm'
-import TodoList from './TodoList'
-import { Provider } from 'react-redux'
-import store from '../redux/store'
-import './TodoApp.css'
+import React from "react";
+import TodoForm from "./TodoForm";
+import TodoList from "./TodoList";
+import "./TodoApp.css";
+
 const TodoApp = () => {
   return (
-    <div  className="app-container">
-    <Provider store={store}>
-        <TodoForm />
-        <TodoList />
-    </Provider>
+    <div className="app-container">
+      <TodoForm />
+      <TodoList />
     </div>
+  );
+};
 
-  )
-}
-
-export default TodoApp
+export default TodoApp;
