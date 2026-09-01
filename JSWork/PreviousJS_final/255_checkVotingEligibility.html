@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>check Voting Eligibility</title>
+</head>
+<body>
+    <script>
+        function checkVotingEligibility(age){
+            if(typeof age !== "number" || age<0){
+                return "Invalid Age"
+            }
+            if(age>=18){
+                return "Eligible to Vote"
+            }else{
+                return "Not Eligible to Vote"
+            }
+        }
+        console.log(checkVotingEligibility(18));
+        console.log(checkVotingEligibility("hey"));
+        console.log(checkVotingEligibility(1));
+    </script>
+</body>
+</html>

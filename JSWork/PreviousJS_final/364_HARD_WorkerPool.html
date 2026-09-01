@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worker Pool</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7;max-width:960px;margin:0 auto}
+    h1{color:#58a6ff;font-size:1.5em;margin-bottom:8px}
+    .meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+    .badge{padding:3px 12px;border-radius:20px;font-size:.75em;font-weight:700;color:#fff;background:#f85149}
+    .company{background:#21262d;color:#8b949e;padding:2px 8px;border-radius:4px;font-size:.75em;border:1px solid #30363d}
+    .section{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:18px;margin-bottom:16px}
+    .section h2{color:#79c0ff;font-size:.85em;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+    p,li{color:#c9d1d9;font-size:.92em;margin-bottom:6px}
+    ul{padding-left:18px}
+    code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.85em}
+    pre{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;overflow-x:auto;margin-top:8px}
+    pre code{background:none;color:#e6edf3;padding:0;font-family:'Cascadia Code','Fira Code',monospace;font-size:.84em;line-height:1.7}
+    .solution pre code{color:#aff5b4}
+    .complexity{display:flex;gap:16px;flex-wrap:wrap}
+    .complexity span{background:#21262d;padding:4px 12px;border-radius:6px;font-size:.82em;color:#79c0ff;border:1px solid #30363d}
+    .tag{color:#8b949e;font-size:.8em}
+    details summary{cursor:pointer;color:#58a6ff;font-size:.9em;padding:4px 0;user-select:none}
+    details summary:hover{color:#79c0ff}
+    .output{background:#0a1f0a;border:1px solid #238636;border-radius:6px;padding:12px;margin-top:8px;font-family:monospace;font-size:.83em;color:#3fb950}
+  </style>
+</head>
+<body>
+  <h1>Worker Pool</h1>
+  <div class="meta">
+    <span class="badge">HARD</span>
+    <span class="company">stripe</span><span class="company">dropbox</span><span class="company">meesho</span>
+  </div>
+
+  <div class="section">
+    <h2>📋 Problem</h2>
+    <p>Implement a Worker Pool that manages multiple concurrent workers. A pool of N workers should pick up tasks from a queue and process them concurrently.</p>
+    <pre><code>const pool = new WorkerPool(3); // 3 concurrent workers
+pool.run(task1);
+pool.run(task2); // runs concurrently if worker available
+pool.run(task3);
+pool.run(task4); // queued until a worker frees up</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>💡 Approach</h2>
+    <p>Maintain a count of active workers and a queue of pending tasks. When a task completes, check the queue and start the next pending task if workers are available.</p>
+  </div>
+
+  <div class="section solution">
+    <h2>✅ Solution</h2>
+    <pre><code>class WorkerPool {
+  constructor(concurrency) {
+    this.concurrency = concurrency;
+    this.active = 0;
+    this.queue = [];
+  }
+
+  run(task) {
+    return new Promise((resolve, reject) => {
+      const wrapped = () =>
+        Promise.resolve()
+          .then(task)
+          .then(resolve, reject)
+          .finally(() => {
+            this.active--;
+            this._next();
+          });
+
+      if (this.active < this.concurrency) {
+        this.active++;
+        wrapped();
+      } else {
+        this.queue.push(wrapped); // wait in queue
+      }
+    });
+  }
+
+  _next() {
+    if (this.queue.length && this.active < this.concurrency) {
+      this.active++;
+      this.queue.shift()(); // dequeue and run
+    }
+  }
+}
+
+// Demo
+function makeTask(id, ms) {
+  return () => new Promise(resolve => {
+    console.log(`Task ${id} started (active workers processing)`);
+    setTimeout(() => { console.log(`Task ${id} done`); resolve(id); }, ms);
+  });
+}
+
+const pool = new WorkerPool(2); // only 2 concurrent
+Promise.all([
+  pool.run(makeTask(1, 400)),
+  pool.run(makeTask(2, 200)),
+  pool.run(makeTask(3, 300)), // queued initially
+  pool.run(makeTask(4, 100)), // queued initially
+]).then(results => console.log('All done:', results));</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>⏱ Complexity</h2>
+    <div class="complexity"><span>Time: O(1) per run</span><span>Space: O(n queue)</span></div>
+  </div>
+
+  <div class="section">
+    <h2>▶ Run Output</h2>
+    <div class="output" id="out"></div>
+  </div>
+
+  <script>
+    const out = document.getElementById('out');
+    const _log = console.log;
+    console.log = (...a) => {
+      _log(...a);
+      const d = document.createElement('div');
+      d.textContent = a.map(x => typeof x === 'object' ? JSON.stringify(x,null,2) : String(x)).join(' ');
+      out.appendChild(d);
+    };
+  </script>
+  <script>
+class WorkerPool {
+  constructor(concurrency) {
+    this.concurrency = concurrency;
+    this.active = 0;
+    this.queue = [];
+  }
+
+  run(task) {
+    return new Promise((resolve, reject) => {
+      const wrapped = () =>
+        Promise.resolve()
+          .then(task)
+          .then(resolve, reject)
+          .finally(() => {
+            this.active--;
+            this._next();
+          });
+
+      if (this.active < this.concurrency) {
+        this.active++;
+        wrapped();
+      } else {
+        this.queue.push(wrapped); // wait in queue
+      }
+    });
+  }
+
+  _next() {
+    if (this.queue.length && this.active < this.concurrency) {
+      this.active++;
+      this.queue.shift()(); // dequeue and run
+    }
+  }
+}
+
+// Demo
+function makeTask(id, ms) {
+  return () => new Promise(resolve => {
+    console.log(`Task ${id} started (active workers processing)`);
+    setTimeout(() => { console.log(`Task ${id} done`); resolve(id); }, ms);
+  });
+}
+
+const pool = new WorkerPool(2); // only 2 concurrent
+Promise.all([
+  pool.run(makeTask(1, 400)),
+  pool.run(makeTask(2, 200)),
+  pool.run(makeTask(3, 300)), // queued initially
+  pool.run(makeTask(4, 100)), // queued initially
+]).then(results => console.log('All done:', results));
+  </script>
+</body>
+</html>

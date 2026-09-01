@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Even & Odd Number Check</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Even & Odd Number Check</h1>
+    <pre><code>const num=[2,4,3,1,8,7];
+const evenNum=num.filter(num=&gt;num%2===0);
+console.log(evenNum);
+const oddNum=num.filter(num=&gt;num%2!==0);
+console.log(oddNum);
+
+//Sum of numbers
+const sumOutput=num.reduce((prevVal,currVal)=&gt;prevVal+currVal);
+console.log(sumOutput);
+
+//Factorial of a number
+
+const number=prompt('Enter your number');
+let fact=1;
+for(let i=1; i&lt;=number;i++){
+    fact=fact*i;
+}
+console.log(fact);
+
+//prime number
+const primeNumber=prompt('Enter your number');
+for (let i=2;i&lt;primeNumber;i++){
+    if(primeNumber%i === 0){
+        console.log('Not a prime number');
+    }
+    else{
+        console.log('prime number')
+    }
+}
+</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+const num=[2,4,3,1,8,7];
+const evenNum=num.filter(num=>num%2===0);
+console.log(evenNum);
+const oddNum=num.filter(num=>num%2!==0);
+console.log(oddNum);
+
+//Sum of numbers
+const sumOutput=num.reduce((prevVal,currVal)=>prevVal+currVal);
+console.log(sumOutput);
+
+//Factorial of a number
+
+const number=prompt('Enter your number');
+let fact=1;
+for(let i=1; i<=number;i++){
+    fact=fact*i;
+}
+console.log(fact);
+
+//prime number
+const primeNumber=prompt('Enter your number');
+for (let i=2;i<primeNumber;i++){
+    if(primeNumber%i === 0){
+        console.log('Not a prime number');
+    }
+    else{
+        console.log('prime number')
+    }
+}
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Delegation</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Event Delegation</h1>
+    <pre><code>{/* &lt;div id="parentblock"&gt;
+&lt;input type="text" id="name" data-uppercase&gt;
+&lt;input type="text" id="pan"&gt;
+&lt;input type="text" id="aadhar" &gt;
+&lt;!-- &lt;ul&gt;
+    &lt;li id="computers"&gt;Computers&lt;/li&gt;
+    &lt;li id="cameras"&gt;Cameras&lt;/li&gt;
+    &lt;li id="mobiles"&gt;Mobiles&lt;/li&gt;
+&lt;/ul&gt; --&gt;
+&lt;/div&gt; */}
+
+document.querySelector('#parentblock').
+    addEventListener('keyup', (e) =&gt; {
+        console.log(e);
+        if (e.target.dataset.uppercase != undefined) {
+            e.target.value = e.target.value.toUpperCase();
+        }
+    });
+
+// document.querySelector('#parentblock').
+//     addEventListener('click', (e) =&gt; {
+//         console.log(e.target.id);
+//         if (e.target.tagName == "LI");
+//         {
+//             window.location.href = "/" + e.target.id;
+//         }
+//     })</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+{/* <div id="parentblock">
+<input type="text" id="name" data-uppercase>
+<input type="text" id="pan">
+<input type="text" id="aadhar" >
+<!-- <ul>
+    <li id="computers">Computers</li>
+    <li id="cameras">Cameras</li>
+    <li id="mobiles">Mobiles</li>
+</ul> -->
+</div> */}
+
+document.querySelector('#parentblock').
+    addEventListener('keyup', (e) => {
+        console.log(e);
+        if (e.target.dataset.uppercase != undefined) {
+            e.target.value = e.target.value.toUpperCase();
+        }
+    });
+
+// document.querySelector('#parentblock').
+//     addEventListener('click', (e) => {
+//         console.log(e.target.id);
+//         if (e.target.tagName == "LI");
+//         {
+//             window.location.href = "/" + e.target.id;
+//         }
+//     })
+    </script>
+</body>
+</html>

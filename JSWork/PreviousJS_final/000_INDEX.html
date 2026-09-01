@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Interview Prep — Index</title>
+  <style>
+    :root{
+      --bg:#0d1117;--surface:#161b22;--border:#30363d;
+      --text:#c9d1d9;--muted:#8b949e;--accent:#58a6ff;--accent2:#79c0ff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+    header{background:var(--surface);border-bottom:1px solid var(--border);
+            padding:18px 28px;display:flex;align-items:center;
+            justify-content:space-between;flex-wrap:wrap;gap:12px;
+            position:sticky;top:0;z-index:100}
+    .logo{font-size:1.25em;font-weight:700;color:var(--accent)}
+    .logo span{color:var(--muted);font-weight:400;font-size:.75em;margin-left:8px}
+    .hstats{display:flex;gap:28px}
+    .hstat .n{font-size:1.35em;font-weight:700;color:var(--accent)}
+    .hstat .l{font-size:.7em;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+    .layout{display:flex;min-height:calc(100vh - 65px)}
+
+    aside{width:240px;min-width:240px;background:var(--surface);
+           border-right:1px solid var(--border);padding:14px 12px;
+           position:sticky;top:65px;height:calc(100vh - 65px);overflow-y:auto}
+    aside h3{font-size:.68em;text-transform:uppercase;letter-spacing:.1em;
+              color:var(--muted);margin:16px 0 6px}
+    aside h3:first-child{margin-top:0}
+
+    .search-box{width:100%;background:var(--bg);border:1px solid var(--border);
+                 border-radius:6px;padding:8px 10px;color:var(--text);
+                 font-size:.86em;outline:none;margin-bottom:10px}
+    .search-box:focus{border-color:var(--accent)}
+
+    .week-btn{display:flex;align-items:center;gap:8px;width:100%;background:none;
+               border:none;color:var(--muted);padding:7px 8px;border-radius:6px;
+               cursor:pointer;font-size:.82em;text-align:left;
+               transition:all .15s;margin-bottom:2px}
+    .week-btn:hover{background:var(--border);color:var(--text)}
+    .week-btn.active{background:var(--accent)18;color:var(--accent);font-weight:600}
+    .week-btn .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+    .week-btn .cnt{margin-left:auto;background:var(--border);border-radius:10px;
+                    padding:1px 7px;font-size:.75em;color:var(--muted)}
+
+    main{flex:1;padding:18px 22px;overflow-y:auto}
+    .result-info{font-size:.8em;color:var(--muted);margin-bottom:14px}
+
+    .week-banner{border-radius:10px;padding:16px 20px;margin-bottom:20px;
+                  border:1px solid;display:flex;align-items:flex-start;gap:16px}
+    .wb-num{font-size:1.8em;font-weight:800;line-height:1}
+    .wb-range{font-size:.76em;opacity:.65;margin-top:3px}
+    .wb-desc{font-size:.88em;margin-top:4px;opacity:.9}
+    .wb-tip{font-size:.75em;opacity:.6;margin-top:6px;font-style:italic}
+
+    .chapter{margin-bottom:22px}
+    .chapter-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;
+                     padding-bottom:7px;border-bottom:1px solid var(--border);
+                     cursor:pointer;user-select:none}
+    .chapter-title{font-size:.95em;font-weight:600;color:var(--accent2)}
+    .chapter-count{font-size:.72em;color:var(--muted);background:var(--border);
+                    padding:1px 8px;border-radius:10px}
+    .chapter-toggle{color:var(--muted);font-size:.75em;
+                     transition:transform .2s;margin-left:auto}
+    .chapter.collapsed .chapter-toggle{transform:rotate(-90deg)}
+    .chapter.collapsed .cards{display:none}
+
+    .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:9px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+           padding:13px 15px;cursor:pointer;transition:all .15s;display:block}
+    .card:hover{border-color:var(--accent);transform:translateY(-1px);
+                 box-shadow:0 4px 14px #0005}
+    .card-num{font-size:.68em;color:var(--muted);margin-bottom:4px;font-family:monospace}
+    .card-title{font-size:.88em;color:var(--text);font-weight:500;line-height:1.35}
+
+    .empty{text-align:center;padding:60px 20px;color:var(--muted)}
+    .empty .icon{font-size:2.5em;margin-bottom:10px}
+    .hidden{display:none!important}
+
+    @media(max-width:680px){
+      aside{display:none}
+      .cards{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚡ JS Interview Prep <span>Complete Study Guide</span></div>
+  <div class="hstats">
+    <div class="hstat"><div class="n">377</div><div class="l">Total Files</div></div>
+    <div class="hstat"><div class="n" id="s-shown">377</div><div class="l">Showing</div></div>
+  </div>
+</header>
+
+<div class="layout">
+<aside>
+  <input class="search-box" id="searchBox" placeholder="🔍  Search..." oninput="applyFilters()">
+
+  <h3>Study Plan</h3>
+  <div id="weekFilters"></div>
+</aside>
+
+<main>
+  <div class="result-info" id="resultInfo"></div>
+  <div id="weekBanner" class="hidden"></div>
+  <div id="chaptersContainer"></div>
+  <div class="empty hidden" id="emptyState">
+    <div class="icon">🔍</div><div>No files match your search</div>
+  </div>
+</main>
+</div>
+
+<script>
+const FILES    = [{"file": "001_JSEngine.html", "title": "JavaScript Engine", "num": 1}, {"file": "002_globalExecutionContext.html", "title": "Global Execution Context", "num": 2}, {"file": "003_ExecutionOrder.html", "title": "ExecutionOrder", "num": 3}, {"file": "004_varletconst.html", "title": "varletconst", "num": 4}, {"file": "005_ConditionalStatements.html", "title": "Conditional Statements", "num": 5}, {"file": "006_Ternary.html", "title": "Ternary", "num": 6}, {"file": "007_undefined.html", "title": "undefined", "num": 7}, {"file": "008_undefinedNotDefinedNull.html", "title": "undefined Not Defined Null", "num": 8}, {"file": "009_DetectDataType.html", "title": "Detect Data Type", "num": 9}, {"file": "010_shadowing.html", "title": "Variable Shadowing", "num": 10}, {"file": "011_ForLoop.html", "title": "For Loop", "num": 11}, {"file": "012_WhileLoopExample.html", "title": "While Loop Example", "num": 12}, {"file": "013_dowhile.html", "title": "dowhile", "num": 13}, {"file": "014_break.html", "title": "break", "num": 14}, {"file": "015_continue.html", "title": "continue", "num": 15}, {"file": "016_return.html", "title": "return Statement", "num": 16}, {"file": "017_forin.html", "title": "forin", "num": 17}, {"file": "018_forinloop1.html", "title": "For-In Loop Example 1", "num": 18}, {"file": "019_forinloop2.html", "title": "For-In Loop Example 2", "num": 19}, {"file": "020_forinloopToCalculateTheLengthofWord.html", "title": "For-In Loop: Calculate Word Length", "num": 20}, {"file": "021_ForInForOfLoop.html", "title": "For-In and For-Of Loop", "num": 21}, {"file": "022_forLoopSumOFArray.html", "title": "For Loop: Sum Of Array", "num": 22}, {"file": "023_ForLoopToFindIndex.html", "title": "For Loop: Find Index", "num": 23}, {"file": "024_forlooptofindminmaxvaluefromArray.html", "title": "For Loop: Find Min Max From Array", "num": 24}, {"file": "025_switch.html", "title": "Switch", "num": 25}, {"file": "026_LoopQuestion.html", "title": "Loop Question", "num": 26}, {"file": "027_functionDefinition.html", "title": "function Definition", "num": 27}, {"file": "028_functionDeclarationExpression.html", "title": "function Declaration Expression", "num": 28}, {"file": "029_functionDelcartion.html", "title": "function Delcartion", "num": 29}, {"file": "030_function1.html", "title": "function1", "num": 30}, {"file": "031_ArrowFunction.html", "title": "Arrow Function", "num": 31}, {"file": "032_FunctionParameter.html", "title": "Function Parameter", "num": 32}, {"file": "033_FunctionHoisting.html", "title": "Function Hoisting", "num": 33}, {"file": "034_FunctionBinding.html", "title": "Function Binding", "num": 34}, {"file": "035_FunctionAndJSON.html", "title": "Function And JSON", "num": 35}, {"file": "036_firstClassFunction.html", "title": "First Class Functions", "num": 36}, {"file": "037_HigherOrderFunction.html", "title": "Higher Order Function", "num": 37}, {"file": "038_HigherOrderFUnctionExamples.html", "title": "Higher Order Function Examples", "num": 38}, {"file": "039_higherOrderFunction.html", "title": "Higher Order Functions", "num": 39}, {"file": "040_PureImpureFunction.html", "title": "Pure vs Impure Function", "num": 40}, {"file": "041_Function.html", "title": "Function", "num": 41}, {"file": "042_hoisting.html", "title": "Hoisting", "num": 42}, {"file": "043_Hoisting_Explanation.html", "title": "Hoisting Explanation", "num": 43}, {"file": "044_Hoisting_VarLetConst_Practice.html", "title": "Hoisting: var, let, const Practice", "num": 44}, {"file": "045_Day2_Hoisting_TDZ.html", "title": "Day 2: Hoisting & TDZ", "num": 45}, {"file": "046_HoistingAndTDZ.html", "title": "Hoisting And TDZ", "num": 46}, {"file": "047_ScopeAndClosure.html", "title": "Scope And Closure", "num": 47}, {"file": "048_strings.html", "title": "String Methods", "num": 48}, {"file": "049_TemplateString.html", "title": " Template Literal ", "num": 49}, {"file": "050_concat.html", "title": "concat", "num": 50}, {"file": "051_charAt.html", "title": "char At", "num": 51}, {"file": "052_indexOf.html", "title": "index Of", "num": 52}, {"file": "053_ListFormat.html", "title": "List Format", "num": 53}, {"file": "054_Array.html", "title": "Array", "num": 54}, {"file": "055_ArrayMethods.html", "title": "Array Methods", "num": 55}, {"file": "056_ArrayAndObjectMethodsCheetSheet.html", "title": "JavaScript Arrays & Objects Cheat Sheet", "num": 56}, {"file": "057_isArray.html", "title": "is Array", "num": 57}, {"file": "058_ArrayChunk.html", "title": "Array Chunk", "num": 58}, {"file": "059_MergeArray.html", "title": "Merge Array", "num": 59}, {"file": "060_mergingArray.html", "title": "Merging Arrays", "num": 60}, {"file": "061_flattenArray.html", "title": "flatten Array", "num": 61}, {"file": "062_flattenNestedArray.html", "title": "flatten Nested Array", "num": 62}, {"file": "063_flatMethod.html", "title": "Array Flat Method", "num": 63}, {"file": "064_flatMapWithoutFlat.html", "title": "Flat Map Without Flat Method", "num": 64}, {"file": "065_CustomSort.html", "title": "Custom Sort", "num": 65}, {"file": "066_arraySortFunction.html", "title": "Array Sort Function", "num": 66}, {"file": "067_Stack.html", "title": "Stack", "num": 67}, {"file": "068_ObjectBasics.html", "title": "Object Basics", "num": 68}, {"file": "069_Object.html", "title": "Object", "num": 69}, {"file": "070_Objects.html", "title": "Objects", "num": 70}, {"file": "071_Object_Methods_Advanced.html", "title": "Object Methods (Advanced)", "num": 71}, {"file": "072_ObjectAssign.html", "title": "Object Assign", "num": 72}, {"file": "073_ObjectAssignment.html", "title": "Object Assignment", "num": 73}, {"file": "074_ObjectOutput.html", "title": "Object Output", "num": 74}, {"file": "075_ObjectConstructor.html", "title": "Object Constructor", "num": 75}, {"file": "076_Constructor.html", "title": "Constructor", "num": 76}, {"file": "077_constructor.html", "title": "Constructor Function", "num": 77}, {"file": "078_AddTwoObject.html", "title": "Add Two Objects", "num": 78}, {"file": "079_CompareValuesFromObject.html", "title": "Compare Values From Object", "num": 79}, {"file": "080_PassByValueAndReference.html", "title": "Pass By Value And Reference", "num": 80}, {"file": "081_ShallowCopy.html", "title": "Shallow Copy", "num": 81}, {"file": "082_createDeepCopyOfAnObject.html", "title": "Create Deep Copy Of An Object", "num": 82}, {"file": "083_ShallowDeepPractice.html", "title": "Shallow vs Deep Copy Practice", "num": 83}, {"file": "084_deepVsShallowCopy.html", "title": "Deep vs Shallow Copy", "num": 84}, {"file": "085_deepMerge.html", "title": "deep Merge", "num": 85}, {"file": "086_instanceOf.html", "title": "instance Of", "num": 86}, {"file": "087_PrototypalInheritance.html", "title": "Prototypal Inheritance", "num": 87}, {"file": "088_classes.html", "title": "classes", "num": 88}, {"file": "089_Destructuring.html", "title": "Destructuring", "num": 89}, {"file": "090_Destructuring1.html", "title": "Destructuring1", "num": 90}, {"file": "091_ArrayObjectDestructuring.html", "title": "Array Object Destructuring", "num": 91}, {"file": "092_DestructuringInterview.html", "title": "Destructuring Interview", "num": 92}, {"file": "093_Rest.html", "title": "Rest", "num": 93}, {"file": "094_RestSpread.html", "title": "Rest Spread", "num": 94}, {"file": "095_RestSpreadOperator.html", "title": "Rest Spread Operator", "num": 95}, {"file": "096_restSpreadOperator.html", "title": "Rest & Spread Operator", "num": 96}, {"file": "097_SpreadRest.html", "title": "Spread Operator", "num": 97}, {"file": "098_ES6Features.html", "title": "ES6 Key Features", "num": 98}, {"file": "099_ES6_1.html", "title": "ES6 Features - Part 1", "num": 99}, {"file": "100_ES6_2.html", "title": "ES6 Features - Part 2", "num": 100}, {"file": "101_ES6_4.html", "title": "ES6 Features - Part 4", "num": 101}, {"file": "102_setMap.html", "title": "set Map", "num": 102}, {"file": "103_WeaksetWeakmap.html", "title": "WeakSet and WeakMap", "num": 103}, {"file": "104_GeneratorFunction.html", "title": "Generator Function", "num": 104}, {"file": "105_generatorFunction.html", "title": "generator Function", "num": 105}, {"file": "106_Map.html", "title": "Map", "num": 106}, {"file": "107_MapExamples.html", "title": "Map Examples", "num": 107}, {"file": "108_Filter.html", "title": "Filter", "num": 108}, {"file": "109_filterExamples.html", "title": "filter Examples", "num": 109}, {"file": "110_Reduce.html", "title": "Reduce", "num": 110}, {"file": "111_Reduce_Examples2.html", "title": "Reduce Examples (Part 2)", "num": 111}, {"file": "112_ReduceProblem.html", "title": "Reduce Problem", "num": 112}, {"file": "113_ReduceQuestion.html", "title": "Reduce Question", "num": 113}, {"file": "114_mapfilterreduce.html", "title": "mapfilterreduce", "num": 114}, {"file": "115_ArrayPrototypeReduce.html", "title": "Array Prototype Reduce", "num": 115}, {"file": "116_DifferenceBetweenMapandForEach.html", "title": "Difference Between Map and ForEach", "num": 116}, {"file": "117_DifferenceMapFilter.html", "title": "Difference: Map vs Filter", "num": 117}, {"file": "118_DifferenceMapForEach.html", "title": "Difference: Map vs ForEach", "num": 118}, {"file": "119_practiceMapFilterReduce.html", "title": "Practice: Map, Filter, Reduce", "num": 119}, {"file": "120_groupBy.html", "title": "group By", "num": 120}, {"file": "121_Closure.html", "title": "Closure", "num": 121}, {"file": "122_closures.html", "title": "Closures", "num": 122}, {"file": "123_makeCounter.html", "title": "make Counter", "num": 123}, {"file": "124_ClosureVarScope_Practice.html", "title": "Closure & Var Scope Practice", "num": 124}, {"file": "125_Day7_Closure_Typeof.html", "title": "Day 7: Closure & Typeof", "num": 125}, {"file": "126_setTimeoutWithClosure.html", "title": "setTimeout With Closure", "num": 126}, {"file": "127_setTimeoutWithClosureWithVar.html", "title": "setTimeout With Closure (var)", "num": 127}, {"file": "128_Memoization.html", "title": "Memoization", "num": 128}, {"file": "129_Once.html", "title": "Once", "num": 129}, {"file": "130_keywordThis.html", "title": "The \"this\" Keyword", "num": 130}, {"file": "131_this.html", "title": "The \"this\" Keyword Practice", "num": 131}, {"file": "132_thisPractice.html", "title": "this Practice", "num": 132}, {"file": "133_thisQuestion1.html", "title": "this Question1", "num": 133}, {"file": "134_callapplybind.html", "title": "Call, Apply, Bind", "num": 134}, {"file": "135_callApplyBind.html", "title": "call Apply Bind", "num": 135}, {"file": "136_CallApplyBind_Examples.html", "title": "Call, Apply, Bind Examples", "num": 136}, {"file": "137_DifferenceCallApplyBind.html", "title": "call vs apply vs bind", "num": 137}, {"file": "138_ChainingBind.html", "title": "Chaining Bind", "num": 138}, {"file": "139_Bind_PartialApplication.html", "title": "Bind: Partial Application", "num": 139}, {"file": "140_calltest.html", "title": "calltest", "num": 140}, {"file": "141_practiceCallApplyBind.html", "title": "Practice: Call, Apply, Bind", "num": 141}, {"file": "142_practiceonCallApplyBind.html", "title": "Practice: Call, Apply, Bind", "num": 142}, {"file": "143_PolyfillForCall.html", "title": "Polyfill For Call", "num": 143}, {"file": "144_PolyfillForBind.html", "title": "Polyfill For Bind", "num": 144}, {"file": "145_PolyFillforBind2.html", "title": "Polyfill For Bind (v2)", "num": 145}, {"file": "146_polyfillBind.html", "title": "Polyfill For Bind (Practice)", "num": 146}, {"file": "147_PolyfillForCallApplyBind.html", "title": "Difference Between call(), apply(), and bind()", "num": 147}, {"file": "148_Curry.html", "title": "Curry", "num": 148}, {"file": "149_currying.html", "title": "Currying", "num": 149}, {"file": "150_curryExample.html", "title": "curry Example", "num": 150}, {"file": "151_CurryExamples.html", "title": "Curry Examples", "num": 151}, {"file": "152_CurryMoreExamples.html", "title": "Curry More Examples", "num": 152}, {"file": "153_curryingtest.html", "title": "curryingtest", "num": 153}, {"file": "154_PolyfillMap_Examples.html", "title": "Polyfill Map Examples", "num": 154}, {"file": "155_PolyfillForMapFIlterReduce.html", "title": "Polyfill For Map Filter Reduce", "num": 155}, {"file": "156_ReducePolyfill.html", "title": "Reduce Polyfill", "num": 156}, {"file": "157_Recursive.html", "title": "Recursive", "num": 157}, {"file": "158_factorial.html", "title": "factorial", "num": 158}, {"file": "159_recursiveFibonacci.html", "title": "recursive Fibonacci", "num": 159}, {"file": "160_generateFibonacci.html", "title": "generate Fibonacci", "num": 160}, {"file": "161_PowerOfTwo.html", "title": "Power Of Two", "num": 161}, {"file": "162_PowerOfThree.html", "title": "Power Of Three", "num": 162}, {"file": "163_AsynchronousJavaScript.html", "title": "Asynchronous Java Script", "num": 163}, {"file": "164_Async.html", "title": "Async", "num": 164}, {"file": "165_EventLoop.html", "title": "Event Loop", "num": 165}, {"file": "166_EventLoop2.html", "title": "Event Loop2", "num": 166}, {"file": "167_EventLoop3.html", "title": "Event Loop3", "num": 167}, {"file": "168_Flow.html", "title": "Flow", "num": 168}, {"file": "169_setTimeOut.html", "title": "set Time Out", "num": 169}, {"file": "170_setTimeout.html", "title": "setTimeout Examples", "num": 170}, {"file": "171_setInterval.html", "title": "set Interval", "num": 171}, {"file": "172_AsyncDefer.html", "title": "Async Defer", "num": 172}, {"file": "173_callback.html", "title": "Callback", "num": 173}, {"file": "174_BasicPromise.html", "title": "Basic Promise", "num": 174}, {"file": "175_Promise.html", "title": "Promise", "num": 175}, {"file": "176_Promise_Chain_Example.html", "title": "Promise Chain Example", "num": 176}, {"file": "177_PromiseChaining.html", "title": "Promise Chaining", "num": 177}, {"file": "178_createAPromise.html", "title": "Create A Promise", "num": 178}, {"file": "179_promises.html", "title": "Promises", "num": 179}, {"file": "180_promiseChain.html", "title": "Promise Chaining", "num": 180}, {"file": "181_PromiseAll.html", "title": "Promise All", "num": 181}, {"file": "182_PromiseAny.html", "title": "Promise Any", "num": 182}, {"file": "183_PromiseRace.html", "title": "Promise Race", "num": 183}, {"file": "184_PromiseSettled.html", "title": "Promise Settled", "num": 184}, {"file": "185_PromiseRetry.html", "title": "Promise Retry", "num": 185}, {"file": "186_SequentialPromise.html", "title": "Sequential Promise", "num": 186}, {"file": "187_SimulateAPICall.html", "title": "Simulate API Call", "num": 187}, {"file": "188_mockInterviewPromise.html", "title": "Mock Interview: Promise", "num": 188}, {"file": "189_practicePromise.html", "title": "Practice: Promises", "num": 189}, {"file": "190_PolyfillforPromise.html", "title": "Polyfill For Promise", "num": 190}, {"file": "191_DifferenceBetweenTehnCatchAndAsyncAwait.html", "title": "then() vs async/await", "num": 191}, {"file": "192_AsyncAwait.html", "title": "Async Await", "num": 192}, {"file": "193_asyncAwait.html", "title": "Async / Await", "num": 193}, {"file": "194_AsyncAwaitDelayExecution.html", "title": "Async Await Delay Execution", "num": 194}, {"file": "195_AsyncAwaitErrorHandling.html", "title": "Async Await Error Handling", "num": 195}, {"file": "196_PromiseChainIntoAsyncAwait.html", "title": "Promise Chain Into Async Await", "num": 196}, {"file": "197_APIFetchConcurrentlyLimit.html", "title": "API Fetch - Concurrent Limit", "num": 197}, {"file": "198_FetchonButtonClick.html", "title": "Fetchon Button Click", "num": 198}, {"file": "199_fetchAPIGithubUSER.html", "title": "Fetch API - GitHub User", "num": 199}, {"file": "200_NodeEventEmit.html", "title": "Node.js Event Emitter", "num": 200}, {"file": "201_ErrorHandling.html", "title": "Error Handling", "num": 201}, {"file": "202_trycatch.html", "title": "trycatch", "num": 202}, {"file": "203_trycatchthrowfinally.html", "title": "trycatchthrowfinally", "num": 203}, {"file": "204_EventBubbling.html", "title": "Event Bubbling", "num": 204}, {"file": "205_EventBubblingandCapturing.html", "title": "Event Bubblingand Capturing", "num": 205}, {"file": "206_bubblingVsCapturing.html", "title": "Event Bubbling vs Capturing", "num": 206}, {"file": "207_EventDelegation.html", "title": "Event Delegation", "num": 207}, {"file": "208_eventDelegation.html", "title": "Event Delegation", "num": 208}, {"file": "209_ChangeBG.html", "title": "Change BG", "num": 209}, {"file": "210_counter.html", "title": "Counter", "num": 210}, {"file": "211_Form.html", "title": "Form", "num": 211}, {"file": "212_LocalStorage.html", "title": "Local Storage", "num": 212}, {"file": "213_SessionStorage.html", "title": "Local & Session Storage Example", "num": 213}, {"file": "214_Debounce.html", "title": "Debounce", "num": 214}, {"file": "215_Debouncing.html", "title": "Debouncing", "num": 215}, {"file": "216_Debouncing1.html", "title": "Debouncing1", "num": 216}, {"file": "217_debouncing.html", "title": "Debouncing", "num": 217}, {"file": "218_PolyFillForDebounce.html", "title": "Polyfill For Debounce", "num": 218}, {"file": "219_Throttle.html", "title": "Throttle", "num": 219}, {"file": "220_PolyfillForThrottling.html", "title": "Polyfill For Throttling", "num": 220}, {"file": "221_DesignPrinciples.html", "title": "Design Principles", "num": 221}, {"file": "222_AuthenticationAuthorization.html", "title": "Authentication vs Authorization", "num": 222}, {"file": "223_DifferenceMockingSpying.html", "title": "Difference: Mocking vs Spying", "num": 223}, {"file": "224_unitTastingDemo.html", "title": "Unit Testing Demo", "num": 224}, {"file": "225_customHook.html", "title": "Custom Hook (React)", "num": 225}, {"file": "226_ErrorBoundary.html", "title": "Error Boundary (React)", "num": 226}, {"file": "227_Palindrome.html", "title": "Palindrome", "num": 227}, {"file": "228_anagram.html", "title": "Anagram Check", "num": 228}, {"file": "229_AnagramCheck.html", "title": "Anagram Check", "num": 229}, {"file": "230_IsoMorphic.html", "title": "Isomorphic Strings", "num": 230}, {"file": "231_ReverseString.html", "title": "Reverse A String", "num": 231}, {"file": "232_reverseString.html", "title": "Reverse String", "num": 232}, {"file": "233_ReverseWord.html", "title": "Reverse Word", "num": 233}, {"file": "234_reverseWords.html", "title": "reverse Words", "num": 234}, {"file": "235_ReverseEachWordString.html", "title": "Reverse Each Word In String", "num": 235}, {"file": "236_CapitalizeWord.html", "title": "Capitalize Word", "num": 236}, {"file": "237_CountVowel.html", "title": "Count Vowel", "num": 237}, {"file": "238_firstNonRepetitiveChar.html", "title": "First Non-Repetitive Character", "num": 238}, {"file": "239_DuplicationCharacter.html", "title": "Find Duplicate Characters", "num": 239}, {"file": "240_FindLongestWordInSentence.html", "title": "Find Longest Word In Sentence", "num": 240}, {"file": "241_decodeSecretCode.html", "title": "decode Secret Code", "num": 241}, {"file": "242_EvenOddNumber.html", "title": "Even & Odd Number Check", "num": 242}, {"file": "243_MaxMinFromArray.html", "title": "Max Min From Array", "num": 243}, {"file": "244_MaxMinNumberArray.html", "title": "Max & Min Number From Array", "num": 244}, {"file": "245_findLargestNumberFromArray.html", "title": "find Largest Number From Array", "num": 245}, {"file": "246_findSmallestNumberFromArray.html", "title": "findSmallestNumberFromArray", "num": 246}, {"file": "247_FormLargestNumber.html", "title": "Form Largest Number", "num": 247}, {"file": "248_FormLargestAndSmallestNumber.html", "title": "Form Largest And Smallest Number from an given Array", "num": 248}, {"file": "249_SecondHighestNumberFromArray.html", "title": "Second Highest Number From Array", "num": 249}, {"file": "250_sumArray.html", "title": "sum Array", "num": 250}, {"file": "251_sumN.html", "title": "sum N", "num": 251}, {"file": "252_sumArguments.html", "title": "sum Arguments", "num": 252}, {"file": "253_countEvens.html", "title": "count Evens", "num": 253}, {"file": "254_countNegatives.html", "title": "count Negatives", "num": 254}, {"file": "255_checkVotingEligibility.html", "title": "check Voting Eligibility", "num": 255}, {"file": "256_generateAtoZ.html", "title": "generate Ato Z", "num": 256}, {"file": "257_FromMixArrayDifferentiateNumandChar.html", "title": "From Mixed Array: Differentiate Numbers and Characters", "num": 257}, {"file": "258_DuplicateEleArray.html", "title": "Remove Duplicate Elements From Array", "num": 258}, {"file": "259_DuplicateElementsArray.html", "title": "Find Duplicate Elements In Array", "num": 259}, {"file": "260_DuplicationInArrayObject.html", "title": "Duplication In Array Of Objects", "num": 260}, {"file": "261_FindDuplicate.html", "title": "Find Duplicate Elements", "num": 261}, {"file": "262_RemoveDuplicateFromArray.html", "title": "Remove Duplicate From Array", "num": 262}, {"file": "263_removeDuplicates.html", "title": "remove Duplicates", "num": 263}, {"file": "264_FindMissingNumber.html", "title": "Find Missing Number", "num": 264}, {"file": "265_FindPairSumZero.html", "title": "Find Pair Whose Sum Is Zero", "num": 265}, {"file": "266_maximumProduct.html", "title": "maximum Product", "num": 266}, {"file": "267_Shuffle.html", "title": "Shuffle", "num": 267}, {"file": "268_getResultByPath.html", "title": "get Result By Path", "num": 268}, {"file": "269_GlobalLogic_output.html", "title": "Global Logic - Output Questions", "num": 269}, {"file": "270_question1.html", "title": "Output Question 1", "num": 270}, {"file": "271_question2.html", "title": "Output Question 2", "num": 271}, {"file": "272_question3.html", "title": "Output Question 3", "num": 272}, {"file": "273_question4.html", "title": "Output Question 4", "num": 273}, {"file": "274_question5.html", "title": "Output Question 5", "num": 274}, {"file": "275_question6.html", "title": "Output Question 6", "num": 275}, {"file": "276_question7.html", "title": "Output Question 7", "num": 276}, {"file": "277_question8.html", "title": "Output Question 8", "num": 277}, {"file": "278_question9.html", "title": "Output Question 9", "num": 278}, {"file": "279_question10.html", "title": "Output Question 10", "num": 279}, {"file": "280_MiscPractice_28Nov2024.html", "title": "Misc Practice (28 Nov 2024)", "num": 280}, {"file": "281_practice.html", "title": "Practice Questions", "num": 281}, {"file": "282_script.html", "title": "General Script Practice", "num": 282}, {"file": "283_interview1.html", "title": "Interview Questions - Set 1", "num": 283}, {"file": "284_test1.html", "title": "test1", "num": 284}, {"file": "285_cars24Question.html", "title": "Cars24 Interview Questions", "num": 285}, {"file": "286_cars24Practice.html", "title": "Cars24 Practice Questions", "num": 286}, {"file": "287_cornerStoneInterviewQues.html", "title": "Cornerstone Interview Questions", "num": 287}, {"file": "288_sbsInterviewQues.html", "title": "SBS Interview Questions", "num": 288}, {"file": "289_TelekomDigitalInterview.html", "title": "Telekom Digital Interview Questions", "num": 289}, {"file": "290_IBMInterview.html", "title": "IBM Interview Questions", "num": 290}, {"file": "291_AllQuestions.html", "title": "All Questions", "num": 291}, {"file": "292_accordion.html", "title": "accordion", "num": 292}, {"file": "293_Carousel.html", "title": "JavaScript Carousel", "num": 293}, {"file": "294_carouselTest.html", "title": "carousel Test", "num": 294}, {"file": "295_modal.html", "title": "JavaScript Modal", "num": 295}, {"file": "296_bootstrap5modal.html", "title": "bootstrap5modal", "num": 296}, {"file": "297_tab.html", "title": "tab", "num": 297}, {"file": "298_navbar.html", "title": "navbar", "num": 298}, {"file": "299_NestedDropdown.html", "title": "Nested Dropdown - Company, Industry, Product", "num": 299}, {"file": "300_zoominzoomout.html", "title": "Image Zoom", "num": 300}, {"file": "301_randomColorGenerator.html", "title": "BG color change", "num": 301}, {"file": "302_checkboxfilter.html", "title": "Product Filter", "num": 302}, {"file": "303_getName.html", "title": "get Name", "num": 303}, {"file": "304_reviews.html", "title": "reviews", "num": 304}, {"file": "305_catalogue.html", "title": "Shopping Cart with Filters", "num": 305}, {"file": "306_ToDoList.html", "title": "Todo List Implementation", "num": 306}, {"file": "307_todo-app.html", "title": "todo app", "num": 307}, {"file": "308_TodoAppWithLocalStorage.html", "title": "To-Do List App", "num": 308}, {"file": "309_EmployeeDatabaseManagement.html", "title": "Employee Database Manager", "num": 309}, {"file": "310_cryptoDashboard.html", "title": "Crypto Dashboard", "num": 310}, {"file": "311_productDashboard.html", "title": "product Dashboard", "num": 311}, {"file": "312_Tic-Tac-Toe.html", "title": "Tic-Tac-Toe", "num": 312}, {"file": "313_testjQuery.html", "title": "jQuery Test", "num": 313}, {"file": "314_LexicalEnvironment.html", "title": "Lexical Environment", "num": 314}, {"file": "315_StrictMode.html", "title": "Strict Mode \u2014 use strict", "num": 315}, {"file": "316_CallbackHell.html", "title": "Callback Hell", "num": 316}, {"file": "317_Prototype.html", "title": "Prototype & Prototype Chain", "num": 317}, {"file": "318_ObjectFreezeAndSeal.html", "title": "Object.freeze() and Object.seal()", "num": 318}, {"file": "319_ArrayFindSomeEvery.html", "title": "Array Methods: find, findIndex, some, every", "num": 319}, {"file": "320_MicrotasksMacrotasks.html", "title": "Microtasks vs Macrotasks", "num": 320}, {"file": "321_AbortController.html", "title": "AbortController", "num": 321}, {"file": "322_EventPropagationAndListener.html", "title": "Event Propagation & Event Listener", "num": 322}, {"file": "323_Cookies.html", "title": "Cookies", "num": 323}, {"file": "324_RegexBasics.html", "title": "Regular Expressions (Regex)", "num": 324}, {"file": "325_OptionalChainingNullish.html", "title": "Optional Chaining (?.) and Nullish Coalescing (??)", "num": 325}, {"file": "326_ModulesImportExport.html", "title": "Modules \u2014 import / export / Dynamic Import", "num": 326}, {"file": "327_Symbol.html", "title": "Symbol", "num": 327}, {"file": "328_Iterators.html", "title": "Iterators & Iteration Protocol", "num": 328}, {"file": "329_GarbageCollectionMemoryLeaks.html", "title": "Garbage Collection & Memory Leaks", "num": 329}, {"file": "330_JSONParseStringify.html", "title": "JSON.parse() and JSON.stringify()", "num": 330}, {"file": "331_FlattenNestedObjects.html", "title": "Flatten Nested Objects", "num": 331}, {"file": "332_PipeAndCompose.html", "title": "Pipe and Compose", "num": 332}, {"file": "333_EASY_MaxSubArray.html", "title": "Max SubArray", "num": 333}, {"file": "334_EASY_Sum.html", "title": "sum() \u2014 Sum All Arguments", "num": 334}, {"file": "335_EASY_PowerOfFour.html", "title": "Power of Four", "num": 335}, {"file": "336_MEDIUM_RateLimiter.html", "title": "Rate Limiter \u2014 Sliding Window", "num": 336}, {"file": "337_MEDIUM_PromiseAllConcurrency.html", "title": "Promise.all With Concurrency Limit", "num": 337}, {"file": "338_MEDIUM_JSONStringifyCustom.html", "title": "Custom JSON.stringify", "num": 338}, {"file": "339_MEDIUM_CompressString.html", "title": "Compress String", "num": 339}, {"file": "340_MEDIUM_PyramidPattern.html", "title": "Pyramid Pattern", "num": 340}, {"file": "341_MEDIUM_SearchRotatedArray.html", "title": "Search in Rotated Sorted Array", "num": 341}, {"file": "342_MEDIUM_FindSingleElement.html", "title": "Find Single Element in Sorted Array", "num": 342}, {"file": "343_MEDIUM_SumConsecutive.html", "title": "Sum of Consecutive Integers", "num": 343}, {"file": "344_MEDIUM_ObjectAssignCustom.html", "title": "Custom Object.assign()", "num": 344}, {"file": "345_MEDIUM_LazyEvaluation.html", "title": "Lazy Evaluation", "num": 345}, {"file": "346_MEDIUM_DeepOmit.html", "title": "Deep Omit", "num": 346}, {"file": "347_MEDIUM_MapAsyncLimit.html", "title": "Map Async with Concurrency Limit", "num": 347}, {"file": "348_MEDIUM_LongestSubstringNoRepeat.html", "title": "Longest Substring Without Repeating Characters", "num": 348}, {"file": "349_MEDIUM_MergeArrayById.html", "title": "Merge Array of Objects by ID", "num": 349}, {"file": "350_MEDIUM_SpiralMatrix.html", "title": "Spiral Matrix", "num": 350}, {"file": "351_MEDIUM_Search2DMatrix.html", "title": "Search in 2D Sorted Matrix", "num": 351}, {"file": "352_MEDIUM_CombinationSum.html", "title": "Combination Sum", "num": 352}, {"file": "353_MEDIUM_ImplementPromiseRace.html", "title": "Implement Promise.race()", "num": 353}, {"file": "354_MEDIUM_TopologicalSortDFS.html", "title": "Topological Sort \u2014 DFS", "num": 354}, {"file": "355_MEDIUM_TopologicalSortBFS.html", "title": "Topological Sort \u2014 BFS (Kahn's Algorithm)", "num": 355}, {"file": "356_MEDIUM_ShortestDistanceBFS.html", "title": "Shortest Distance from Source \u2014 BFS", "num": 356}, {"file": "357_MEDIUM_WordSearch.html", "title": "Word Search in Grid", "num": 357}, {"file": "358_MEDIUM_OrangesRotting.html", "title": "Oranges Rotting", "num": 358}, {"file": "359_MEDIUM_SumSubarrayMin.html", "title": "Sum of Subarray Minimums", "num": 359}, {"file": "360_MEDIUM_DetectCycleGraph.html", "title": "Detect Cycle in Undirected Graph \u2014 DFS", "num": 360}, {"file": "361_MEDIUM_PriorityQueue.html", "title": "Priority Queue", "num": 361}, {"file": "362_HARD_LRUCache.html", "title": "Implement LRU Cache", "num": 362}, {"file": "363_HARD_LongestValidParentheses.html", "title": "Longest Valid Parentheses", "num": 363}, {"file": "364_HARD_WorkerPool.html", "title": "Worker Pool", "num": 364}, {"file": "365_HARD_BellmanFord.html", "title": "Shortest Distance \u2014 Bellman-Ford Algorithm", "num": 365}, {"file": "366_HARD_PrimsMST.html", "title": "Prim's MST Algorithm", "num": 366}, {"file": "367_HARD_ImplementGarbageCollector.html", "title": "Implement Garbage Collector Simulation", "num": 367}, {"file": "368_HARD_ChineseRemainderTheorem.html", "title": "Chinese Remainder Theorem", "num": 368}, {"file": "AllBasics.html", "title": "AllBasics \u2014 Web & JS Interview Topics", "num": 0}, {"file": "Day1_JavaScriptBasics.html", "title": "Day 1 \u2014 JavaScript Basics Notes", "num": 0}, {"file": "Day3_Arrays.html", "title": "Day 3 \u2014 Arrays & Closures Notes", "num": 0}, {"file": "JSQuestions.html", "title": "JS Questions (Word Document)", "num": 0}, {"file": "JavaScript_Questions.html", "title": "JavaScript Questions (Word Document)", "num": 0}, {"file": "MAP_DS.html", "title": "Map Data Structure \u2014 Notes", "num": 0}, {"file": "Map.html", "title": "Array map() Method \u2014 Notes", "num": 0}, {"file": "Questions.html", "title": "Output Questions & Tricky Snippets", "num": 0}, {"file": "cars24CompleteQuestion.html", "title": "Cars24 \u2014 Complete Interview Question", "num": 0}];
+const CHAPTERS = [["\ud83d\udd27 JS Fundamentals", 1, 10], ["\ud83d\udd01 Loops", 11, 26], ["\u2699\ufe0f Functions", 27, 41], ["\ud83e\ude9d Hoisting & Scope", 42, 47], ["\ud83d\udd24 Strings", 48, 53], ["\ud83d\udce6 Arrays", 54, 67], ["\ud83e\udde9 Objects & Prototypes", 68, 88], ["\ud83d\udd13 Destructuring & Spread", 89, 97], ["\u2728 ES6+ Features", 98, 105], ["\ud83d\uddfa\ufe0f Map / Filter / Reduce", 106, 120], ["\ud83d\udd12 Closures", 121, 129], ["\ud83d\udccc this / Call / Apply / Bind", 130, 147], ["\ud83c\udf5b Currying", 148, 153], ["\ud83d\udee0\ufe0f Polyfills", 154, 156], ["\u267b\ufe0f Recursion", 157, 162], ["\u23f3 Async JavaScript", 163, 173], ["\ud83e\udd1d Promises", 174, 191], ["\ud83d\ude80 Async / Await", 192, 197], ["\ud83c\udf10 Fetch & API", 198, 200], ["\u274c Error Handling", 201, 203], ["\ud83d\uddb1\ufe0f Events & DOM", 204, 213], ["\u26a1 Debounce & Throttle", 214, 220], ["\ud83c\udfd7\ufe0f Design Patterns", 221, 226], ["\ud83d\udd21 String Problems", 227, 241], ["\ud83d\udd22 Array Problems", 242, 268], ["\ud83e\udde0 Output / Tricky Questions", 269, 284], ["\ud83d\udcbc Company Interview Sets", 285, 291], ["\ud83c\udfa8 UI / DOM Projects", 292, 305], ["\ud83c\udfc6 Full App Projects", 306, 313], ["\ud83d\udcda Advanced Topics", 314, 332], ["\ud83d\udfe2 Easy Challenges", 333, 335], ["\ud83d\udfe1 Medium Challenges", 336, 361], ["\ud83d\udd34 Hard Challenges", 362, 368], ["\ud83d\udcd2 Reference Notes", 0, 0]];
+const WEEKS    = [["Week 1", "JS Fundamentals, Loops, Functions, Hoisting & Scope", 1, 47, "#388bfd"], ["Week 2", "Strings, Arrays, Objects & Prototypes, Destructuring, ES6+, Map/Filter/Reduce", 48, 120, "#3fb950"], ["Week 3", "Closures, this/Call/Apply/Bind, Currying, Polyfills, Recursion", 121, 162, "#d29922"], ["Week 4", "Async JS, Promises, Async/Await, Fetch, Error Handling", 163, 203, "#f78166"], ["Week 5", "Events & DOM, Debounce/Throttle, Design Patterns, Advanced Topics, Projects", 204, 332, "#bc8cff"], ["Week 6", "All Interview Challenges \u2014 Easy \u2192 Medium \u2192 Hard", 333, 368, "#f85149"]];
+const TOTAL    = 377;
+
+let activeWeek  = null;
+let searchQuery = '';
+
+function init() {
+  buildWeekButtons();
+  applyFilters();
+}
+
+function buildWeekButtons() {
+  const el = document.getElementById('weekFilters');
+  el.innerHTML = `<button class="week-btn active" data-week="all" onclick="setWeek(this)">
+    <span class="dot" style="background:var(--accent)"></span>All Weeks
+    <span class="cnt">${TOTAL}</span></button>`;
+
+  WEEKS.forEach(([label, desc, start, end, color]) => {
+    const cnt = FILES.filter(f => f.num >= start && f.num <= end).length;
+    el.innerHTML += `<button class="week-btn" data-week="${label}"
+      onclick="setWeek(this,'${label}',${start},${end},'${color}','${desc}')">
+      <span class="dot" style="background:${color}"></span>${label}
+      <span class="cnt">${cnt}</span></button>`;
+  });
+}
+
+function setWeek(btn, label, start, end, color, desc) {
+  document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeWeek = label ? {label, start, end, color, desc} : null;
+  applyFilters();
+}
+
+function applyFilters() {
+  searchQuery = document.getElementById('searchBox').value.toLowerCase().trim();
+
+  const visible = FILES.filter(f => {
+    if (activeWeek && (f.num < activeWeek.start || f.num > activeWeek.end)) return false;
+    if (searchQuery && !f.title.toLowerCase().includes(searchQuery) &&
+        !f.file.toLowerCase().includes(searchQuery)) return false;
+    return true;
+  });
+
+  const banner = document.getElementById('weekBanner');
+  if (activeWeek) {
+    banner.className = 'week-banner';
+    banner.style.cssText = `background:${activeWeek.color}12;border-color:${activeWeek.color}44;color:${activeWeek.color}`;
+    banner.innerHTML = `
+      <div>
+        <div class="wb-num">${activeWeek.label}</div>
+        <div class="wb-range">Files ${String(activeWeek.start).padStart(3,'0')} — ${String(activeWeek.end).padStart(3,'0')}</div>
+      </div>
+      <div>
+        <div class="wb-desc">${activeWeek.desc}</div>
+        <div class="wb-tip">✦ Open each file, read the concept, then write the code yourself before checking the solution.</div>
+      </div>`;
+  } else {
+    banner.className = 'week-banner hidden';
+  }
+
+  renderChapters(visible);
+  document.getElementById('s-shown').textContent = visible.length;
+  document.getElementById('resultInfo').textContent =
+    visible.length === TOTAL
+      ? `Showing all ${TOTAL} files`
+      : `Showing ${visible.length} of ${TOTAL} files`;
+  document.getElementById('emptyState').classList.toggle('hidden', visible.length > 0);
+}
+
+function renderChapters(visible) {
+  const container = document.getElementById('chaptersContainer');
+  container.innerHTML = '';
+  CHAPTERS.forEach(([name, start, end]) => {
+    const chFiles = (start === 0 && end === 0)
+      ? visible.filter(f => f.num === 0)
+      : visible.filter(f => f.num >= start && f.num <= end);
+    if (!chFiles.length) return;
+
+    const div = document.createElement('div');
+    div.className = 'chapter';
+    div.innerHTML = `
+      <div class="chapter-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="chapter-title">${name}</span>
+        <span class="chapter-count">${chFiles.length}</span>
+        <span class="chapter-toggle">▾</span>
+      </div>
+      <div class="cards">${chFiles.map(cardHTML).join('')}</div>`;
+    container.appendChild(div);
+  });
+}
+
+function cardHTML(f) {
+  return `<div class="card" onclick="window.open('${f.file}','_blank')">
+    <div class="card-num">#${String(f.num).padStart(3,'0')}</div>
+    <div class="card-title">${f.title}</div>
+  </div>`;
+}
+
+init();
+</script>
+</body>
+</html>

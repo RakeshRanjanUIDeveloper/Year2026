@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Two Objects</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Add Two Objects</h1>
+    <pre><code>const obj = { fname: 'Jaya', lname: 'Shukla' };
+const obj2 = { ...obj, age: 26 };
+
+console.log(obj2);
+console.log(obj);
+
+const obj1 = { a: 1, b: 2 };
+const obj22 = { b: 3, c: 4 };
+
+const mergedObj = Object.assign({}, obj1, obj22);
+console.log(mergedObj); // { a: 1, b: 3, c: 4 }</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+const obj = { fname: 'Jaya', lname: 'Shukla' };
+const obj2 = { ...obj, age: 26 };
+
+console.log(obj2);
+console.log(obj);
+
+const obj1 = { a: 1, b: 2 };
+const obj22 = { b: 3, c: 4 };
+
+const mergedObj = Object.assign({}, obj1, obj22);
+console.log(mergedObj); // { a: 1, b: 3, c: 4 }
+    </script>
+</body>
+</html>

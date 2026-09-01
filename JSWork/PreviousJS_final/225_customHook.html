@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Hook (React)</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div style="background:#3a2500;padding:10px;border-left:3px solid #ff8c00;margin-bottom:12px;font-family:monospace;">
+        ⚛️ <strong>React Code</strong> — This file contains a React component/hook.<br>
+        It requires a React environment (e.g. Create React App, Vite, or CodeSandbox) to run.<br>
+        The code is shown below for reference.
+    </div>
+
+    <h1>Custom Hook (React)</h1>
+    <pre><code>import { useState, useEffect } from 'react';
+
+const useFetch = (url, options = {}) =&gt; {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    const fetchData = async () =&gt; {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url, options]);
+
+  return { data, loading, error };
+};
+
+export default useFetch;
+
+
+
+//Used in component
+import React from 'react';
+import useFetch from './useFetch'; // Adjust the path based on your file structure
+
+const App = () =&gt; {
+  const { data, loading, error } = useFetch('https://jsonplaceholder.typicode.com/posts');
+
+  if (loading) {
+    return &lt;div&gt;Loading...&lt;/div&gt;;
+  }
+
+  if (error) {
+    return &lt;div&gt;Error: {error}&lt;/div&gt;;
+  }
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Posts&lt;/h1&gt;
+      &lt;ul&gt;
+        {data.map(post =&gt; (
+          &lt;li key={post.id}&gt;{post.title}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+};
+
+
+</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+import { useState, useEffect } from 'react';
+
+const useFetch = (url, options = {}) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url, options]);
+
+  return { data, loading, error };
+};
+
+export default useFetch;
+
+
+
+//Used in component
+import React from 'react';
+import useFetch from './useFetch'; // Adjust the path based on your file structure
+
+const App = () => {
+  const { data, loading, error } = useFetch('https://jsonplaceholder.typicode.com/posts');
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <div>
+      <h1>Posts</h1>
+      <ul>
+        {data.map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+
+
+    </script>
+</body>
+</html>

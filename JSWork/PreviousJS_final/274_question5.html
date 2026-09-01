@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Output Question 5</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Output Question 5</h1>
+    <pre><code>// function that takes an array of numbers and returns a new array with only the even numbers
+
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const output = [];
+const output1 = [];
+
+function getEven(arr) {
+    arr.filter((items) =&gt; {
+        if (items % 2 == 0) {
+            output.push(items);
+        }
+    })
+    return output
+}
+
+// console.log(getEven(arr));
+
+
+function checkEven(arr) {
+    for (let i = 0; i &lt; arr.length; i++) {
+        if (arr[i] % 2 == 0) {
+            output1.push(arr[i]);
+        }
+    }
+    return output1;
+}
+
+console.log(checkEven(arr));
+
+</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// function that takes an array of numbers and returns a new array with only the even numbers
+
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const output = [];
+const output1 = [];
+
+function getEven(arr) {
+    arr.filter((items) => {
+        if (items % 2 == 0) {
+            output.push(items);
+        }
+    })
+    return output
+}
+
+// console.log(getEven(arr));
+
+
+function checkEven(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] % 2 == 0) {
+            output1.push(arr[i]);
+        }
+    }
+    return output1;
+}
+
+console.log(checkEven(arr));
+
+
+    </script>
+</body>
+</html>

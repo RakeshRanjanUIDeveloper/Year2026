@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array map() Method — Notes</title>
+  <style>
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.8;max-width:900px;margin:0 auto}
+    h1{color:#58a6ff;font-size:1.5em;margin-bottom:4px}
+    .subtitle{color:#8b949e;font-size:.85em;margin-bottom:24px}
+    pre{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;white-space:pre-wrap;word-wrap:break-word;font-family:'Cascadia Code','Fira Code',monospace;font-size:.88em;color:#e6edf3;overflow-x:auto}
+  </style>
+</head>
+<body>
+  <h1>Array map() Method — Notes</h1>
+  <p class="subtitle">Reference Notes</p>
+  <pre>Map-
+ - map() is a method available on arrays in JavaScript.
+ - It is used to transform each element of an array
+ - It returns a new array with the same number of elements.
+Syntax - 
+    - const newArray = arr.map(callback(currentValue, index,array), thisArgs);
+    - thisArgs - ? check in the call today
+KeyPoints -
+    - Does not mutate the original array.
+    - Returns a new array.
+    - Commonly used for transforming data,
+- If we use curly braces {} but forget return, we'll get undefined in the output
+- If we dont return anything then resulting array will contain undefined.
+- map() can returns a nested array if each callback returns an array.
+- map() skips empty slots (holes), but retains them in the result as empty slots.
+
+</pre>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBM Interview Questions</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>IBM Interview Questions</h1>
+    <pre><code>const arr1=[{name:'jaya', age:26, city:'Lucknow'}, {name:'jaya2', age:27, city:'Kanpur'},{name:'jaya3', age:28, city:'Lucknow'}];
+const output=arr1.map((val, index, arr)=&gt; 
+val.city === 'Lucknow' ? [...arr, val.address='abc'] : [...arr, val.address='xyz']  
+
+);
+console.log(output);
+// const arr1=[{name:'jaya', age:26, city:'Lucknow'}, {name:'jaya2', age:27, city:'Kanpur'},{name:'jaya3', age:28, city:'Lucknow'}];
+// const output=arr1.map((val,index,arr)=&gt;{ 
+// val.city === 'Lucknow' ? val.address='abc': val.address='xyz';
+// return arr;
+// });
+// console.log(output);
+// output======&gt;&gt;&gt;&gt;
+// [[{
+//     address: "abc",
+//     age: 26,
+//     city: "Lucknow",
+//     name: "jaya"
+//   }, {
+//     address: "xyz",
+//     age: 27,
+//     city: "Kanpur",
+//     name: "jaya2"
+//   }, {
+//     address: "abc",
+//     age: 28,
+//     city: "Lucknow",
+//     name: "jaya3"
+//   }], [circular object Array], [circular object Array]]</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+const arr1=[{name:'jaya', age:26, city:'Lucknow'}, {name:'jaya2', age:27, city:'Kanpur'},{name:'jaya3', age:28, city:'Lucknow'}];
+const output=arr1.map((val, index, arr)=> 
+val.city === 'Lucknow' ? [...arr, val.address='abc'] : [...arr, val.address='xyz']  
+
+);
+console.log(output);
+// const arr1=[{name:'jaya', age:26, city:'Lucknow'}, {name:'jaya2', age:27, city:'Kanpur'},{name:'jaya3', age:28, city:'Lucknow'}];
+// const output=arr1.map((val,index,arr)=>{ 
+// val.city === 'Lucknow' ? val.address='abc': val.address='xyz';
+// return arr;
+// });
+// console.log(output);
+// output======>>>>
+// [[{
+//     address: "abc",
+//     age: 26,
+//     city: "Lucknow",
+//     name: "jaya"
+//   }, {
+//     address: "xyz",
+//     age: 27,
+//     city: "Kanpur",
+//     name: "jaya2"
+//   }, {
+//     address: "abc",
+//     age: 28,
+//     city: "Lucknow",
+//     name: "jaya3"
+//   }], [circular object Array], [circular object Array]]
+    </script>
+</body>
+</html>

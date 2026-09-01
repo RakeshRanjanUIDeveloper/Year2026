@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Output Question 10</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Output Question 10</h1>
+    <pre><code>// program to convert a string to title case (capitalize the first letter of each word)
+
+
+
+// const name = "rajat das"
+// let filteredName = name.split(' ')
+
+// function Convertor(filteredName) {
+//     for (let i = 0; i &lt; filteredName.length; i++) {
+//         //let innerName = filteredName[i];
+//         console.log(filteredName[i].charAt(0).toUpperCase());
+//         // for (let j = 0; j &lt; innerName.length; j++) {
+//         //     console.log(innerName[j])
+//         // }
+//     }
+// }
+
+// Convertor(filteredName)
+
+
+var result = [];
+for (var i = 0; i &lt; 10; i++) {
+    result.push(function () {
+        return i;
+    })
+}
+console.log(result[1]());</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// program to convert a string to title case (capitalize the first letter of each word)
+
+
+
+// const name = "rajat das"
+// let filteredName = name.split(' ')
+
+// function Convertor(filteredName) {
+//     for (let i = 0; i < filteredName.length; i++) {
+//         //let innerName = filteredName[i];
+//         console.log(filteredName[i].charAt(0).toUpperCase());
+//         // for (let j = 0; j < innerName.length; j++) {
+//         //     console.log(innerName[j])
+//         // }
+//     }
+// }
+
+// Convertor(filteredName)
+
+
+var result = [];
+for (var i = 0; i < 10; i++) {
+    result.push(function () {
+        return i;
+    })
+}
+console.log(result[1]());
+    </script>
+</body>
+</html>

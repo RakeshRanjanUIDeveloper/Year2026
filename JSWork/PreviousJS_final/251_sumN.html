@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sum N</title>
+</head>
+
+<body>
+    <script>
+        function sumN(n) {
+            if (typeof n !== "number" || Number.isNaN(n) || n < 0 || !Number.isInteger(n)) {
+                return false;
+            }
+
+            if (n === 0) {
+                return 0;
+            }
+
+            return n + sumN(n - 1);
+        }
+
+        console.log(sumN("a"));
+        console.log(sumN(-2));
+        console.log(sumN(0));
+        console.log(sumN(1));
+        console.log(sumN(5));
+    </script>
+</body>
+
+</html>

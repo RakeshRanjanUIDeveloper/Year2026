@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closures</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Closures</h1>
+    <pre><code>// Closures - a combinatin of functions that are bundled together with 
+// reference to its lexical environment.
+
+// Set TimeOut
+
+function x() {
+    for (let i = 1; i &lt;= 5; i++) {
+        setTimeout(function () {
+            //console.log(i);
+        }, i * 1000)
+    }
+
+    // console.log("Namaste Javascript");
+}
+
+x();
+
+// if cant use let then
+
+
+function y() {
+    for (var m = 1; m &lt;= 5; m++) {
+        function closures(param) {
+            setTimeout(function () {
+                console.log("value is ..", param)
+            }, param * 1000);
+        }
+        closures(m)
+    }
+}
+
+y();
+
+
+// function x() {
+//     var a = 7;
+//     function y() {
+//         console.log(a)
+//     }
+//     a = 100;
+//     return y
+// }
+// var z = x();
+// console.log(z)
+// z();
+
+
+function outest() {
+    var y = 20;
+    function outer(param) {
+        let x = 100;
+        function inner() {
+            console.log(x + ' , ' + param + ' , ' + y);
+        }
+        return inner;
+    }
+    return outer
+}
+let x = 200;
+var z = outest()("Hello World");
+z();</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// Closures - a combinatin of functions that are bundled together with 
+// reference to its lexical environment.
+
+// Set TimeOut
+
+function x() {
+    for (let i = 1; i <= 5; i++) {
+        setTimeout(function () {
+            //console.log(i);
+        }, i * 1000)
+    }
+
+    // console.log("Namaste Javascript");
+}
+
+x();
+
+// if cant use let then
+
+
+function y() {
+    for (var m = 1; m <= 5; m++) {
+        function closures(param) {
+            setTimeout(function () {
+                console.log("value is ..", param)
+            }, param * 1000);
+        }
+        closures(m)
+    }
+}
+
+y();
+
+
+// function x() {
+//     var a = 7;
+//     function y() {
+//         console.log(a)
+//     }
+//     a = 100;
+//     return y
+// }
+// var z = x();
+// console.log(z)
+// z();
+
+
+function outest() {
+    var y = 20;
+    function outer(param) {
+        let x = 100;
+        function inner() {
+            console.log(x + ' , ' + param + ' , ' + y);
+        }
+        return inner;
+    }
+    return outer
+}
+let x = 200;
+var z = outest()("Hello World");
+z();
+    </script>
+</body>
+</html>

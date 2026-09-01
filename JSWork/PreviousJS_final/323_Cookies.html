@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookies</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7}
+    h1{color:#58a6ff;font-size:1.6em;margin-bottom:6px}
+    .subtitle{color:#8b949e;font-size:.9em;margin-bottom:24px}
+    .concept{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin-bottom:28px}
+    .concept h2{color:#79c0ff;font-size:1em;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+    .concept p,.concept li{color:#c9d1d9;font-size:.93em;margin-bottom:8px}
+    .concept ul{padding-left:20px}
+    .concept code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.88em}
+    .challenges h2{color:#79c0ff;font-size:1em;margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em}
+    .challenge{background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;overflow:hidden}
+    .challenge-header{padding:12px 16px;display:flex;align-items:center;gap:10px}
+    .badge{color:#fff;padding:2px 10px;border-radius:20px;font-size:.72em;font-weight:700;letter-spacing:.05em}
+    .desc{padding:10px 16px;color:#8b949e;font-size:.88em;border-top:1px solid #21262d}
+    pre{margin:0;overflow-x:auto}
+    pre code{display:block;padding:14px 16px;font-size:.83em;font-family:'Cascadia Code','Fira Code',monospace;line-height:1.6}
+    .starter code{color:#e6edf3;background:#0d1117}
+    .solution code{color:#aff5b4;background:#0a1f0a}
+    details{border-top:1px solid #21262d}
+    summary{padding:10px 16px;cursor:pointer;color:#58a6ff;font-size:.85em;user-select:none}
+    summary:hover{color:#79c0ff}
+    .output-area{background:#0d1117;border-top:1px solid #21262d;padding:10px 16px;min-height:32px;font-size:.82em;color:#3fb950;font-family:monospace}
+    .run-btn{margin:8px 16px 12px;background:#238636;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.82em}
+    .run-btn:hover{background:#2ea043}
+  </style>
+</head>
+<body>
+  <h1>Cookies</h1>
+  <p class="subtitle">JavaScript Interview Topic — Easy · Medium · Hard Challenges</p>
+
+  <div class="concept">
+    <h2>📖 Concept</h2>
+    <p>Cookies are small key-value strings stored in the browser and sent with every HTTP request to the same domain. Unlike localStorage they have expiry, domain scope, and security flags.</p>
+<ul>
+  <li>Set: <code>document.cookie = "key=value; expires=...; path=/"</code></li>
+  <li>Read: <code>document.cookie</code> returns ALL cookies as one string</li>
+  <li>Delete: set the same cookie with an expired date</li>
+  <li>Flags: <code>Secure</code> (HTTPS only), <code>HttpOnly</code> (JS can't read — server-set), <code>SameSite</code></li>
+</ul>
+  </div>
+
+  <div class="challenges">
+    <h2>🎯 Interview Challenges</h2>
+    
+        <div class="challenge easy">
+          <div class="challenge-header" style="background:#3fb95022;border-left:4px solid #3fb950">
+            <span class="badge" style="background:#3fb950">EASY</span>
+            <strong>Set, Read, Delete a cookie</strong>
+          </div>
+          <p class="desc">Write three utility functions: setCookie(name, value, days), getCookie(name), deleteCookie(name).</p>
+          <pre class="starter"><code>// Starter Code
+function setCookie(name, value, days) {
+  // set cookie with expiry
+}
+
+function getCookie(name) {
+  // parse document.cookie and return value or null
+}
+
+function deleteCookie(name) {
+  // expire it
+}
+
+setCookie('user', 'Alice', 7);
+console.log(getCookie('user')); // 'Alice'
+deleteCookie('user');
+console.log(getCookie('user')); // null</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function setCookie(name, value, days) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+}
+
+function getCookie(name) {
+  const key = encodeURIComponent(name) + '=';
+  const found = document.cookie.split(';').map(c => c.trim()).find(c => c.startsWith(key));
+  return found ? decodeURIComponent(found.slice(key.length)) : null;
+}
+
+function deleteCookie(name) {
+  document.cookie = `${encodeURIComponent(name)}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+}
+
+setCookie('user', 'Alice', 7);
+console.log(getCookie('user')); // 'Alice'
+deleteCookie('user');
+console.log(getCookie('user')); // null</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge medium">
+          <div class="challenge-header" style="background:#d2992222;border-left:4px solid #d29922">
+            <span class="badge" style="background:#d29922">MEDIUM</span>
+            <strong>Cookie vs localStorage — when to use which?</strong>
+          </div>
+          <p class="desc">Write a comparison function that stores user preferences in both. Show the key difference: cookies are sent to the server, localStorage is not.</p>
+          <pre class="starter"><code>// Starter Code
+// Store theme preference
+// Use localStorage for client-only state
+// Use cookie for state the server also needs (e.g. auth token, locale)
+
+function savePreferences(theme, locale) {
+  // theme → localStorage (client only)
+  // locale → cookie (server also needs it for SSR)
+}
+
+function loadPreferences() {
+  // read both back
+}
+
+savePreferences('dark', 'en-US');
+console.log(loadPreferences()); // { theme: 'dark', locale: 'en-US' }</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function setCookie(name, value, days=30) {
+  const e = new Date(Date.now() + days*864e5).toUTCString();
+  document.cookie = `${name}=${value}; expires=${e}; path=/`;
+}
+function getCookie(name) {
+  const c = document.cookie.split(';').map(s=>s.trim()).find(s=>s.startsWith(name+'='));
+  return c ? c.split('=')[1] : null;
+}
+
+function savePreferences(theme, locale) {
+  localStorage.setItem('theme', theme); // stays on client
+  setCookie('locale', locale);          // sent to server on every request
+}
+
+function loadPreferences() {
+  return {
+    theme: localStorage.getItem('theme'),
+    locale: getCookie('locale')
+  };
+}
+
+savePreferences('dark', 'en-US');
+console.log(loadPreferences()); // { theme: 'dark', locale: 'en-US' }</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge hard">
+          <div class="challenge-header" style="background:#f8514922;border-left:4px solid #f85149">
+            <span class="badge" style="background:#f85149">HARD</span>
+            <strong>Secure cookie manager with JSON support</strong>
+          </div>
+          <p class="desc">Build a CookieManager that supports storing objects (JSON-serialized), has SameSite=Strict flag, and returns typed values.</p>
+          <pre class="starter"><code>// Starter Code
+const CookieManager = {
+  set(name, value, days = 7) {
+    // JSON.stringify value, add SameSite=Strict
+  },
+  get(name) {
+    // JSON.parse return value, or null
+  },
+  remove(name) { },
+  getAll() {
+    // return object with all cookies parsed
+  }
+};
+
+CookieManager.set('prefs', { theme: 'dark', lang: 'en' });
+console.log(CookieManager.get('prefs')); // { theme: 'dark', lang: 'en' }</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>const CookieManager = {
+  set(name, value, days = 7) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    const encoded = encodeURIComponent(JSON.stringify(value));
+    document.cookie = `${name}=${encoded}; expires=${expires}; path=/; SameSite=Strict`;
+  },
+  get(name) {
+    const c = document.cookie.split(';').map(s=>s.trim()).find(s=>s.startsWith(name+'='));
+    if (!c) return null;
+    try { return JSON.parse(decodeURIComponent(c.slice(name.length + 1))); }
+    catch { return null; }
+  },
+  remove(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+  },
+  getAll() {
+    return Object.fromEntries(
+      document.cookie.split(';')
+        .map(c => c.trim().split('='))
+        .filter(([k]) => k)
+        .map(([k, v]) => {
+          try { return [k, JSON.parse(decodeURIComponent(v))]; }
+          catch { return [k, decodeURIComponent(v)]; }
+        })
+    );
+  }
+};
+
+CookieManager.set('prefs', { theme: 'dark', lang: 'en' });
+console.log(CookieManager.get('prefs')); // { theme: 'dark', lang: 'en' }
+console.log(CookieManager.getAll());</code></pre>
+          </details>
+        </div>
+  </div>
+
+  <script>
+    // Console capture for run buttons (if added later)
+    const _log = console.log;
+    console.log = function(...a){
+      _log(...a);
+    };
+  </script>
+</body>
+</html>

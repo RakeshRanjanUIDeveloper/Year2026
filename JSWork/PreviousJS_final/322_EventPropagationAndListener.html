@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Propagation & Event Listener</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7}
+    h1{color:#58a6ff;font-size:1.6em;margin-bottom:6px}
+    .subtitle{color:#8b949e;font-size:.9em;margin-bottom:24px}
+    .concept{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin-bottom:28px}
+    .concept h2{color:#79c0ff;font-size:1em;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+    .concept p,.concept li{color:#c9d1d9;font-size:.93em;margin-bottom:8px}
+    .concept ul{padding-left:20px}
+    .concept code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.88em}
+    .challenges h2{color:#79c0ff;font-size:1em;margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em}
+    .challenge{background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;overflow:hidden}
+    .challenge-header{padding:12px 16px;display:flex;align-items:center;gap:10px}
+    .badge{color:#fff;padding:2px 10px;border-radius:20px;font-size:.72em;font-weight:700;letter-spacing:.05em}
+    .desc{padding:10px 16px;color:#8b949e;font-size:.88em;border-top:1px solid #21262d}
+    pre{margin:0;overflow-x:auto}
+    pre code{display:block;padding:14px 16px;font-size:.83em;font-family:'Cascadia Code','Fira Code',monospace;line-height:1.6}
+    .starter code{color:#e6edf3;background:#0d1117}
+    .solution code{color:#aff5b4;background:#0a1f0a}
+    details{border-top:1px solid #21262d}
+    summary{padding:10px 16px;cursor:pointer;color:#58a6ff;font-size:.85em;user-select:none}
+    summary:hover{color:#79c0ff}
+    .output-area{background:#0d1117;border-top:1px solid #21262d;padding:10px 16px;min-height:32px;font-size:.82em;color:#3fb950;font-family:monospace}
+    .run-btn{margin:8px 16px 12px;background:#238636;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.82em}
+    .run-btn:hover{background:#2ea043}
+  </style>
+</head>
+<body>
+  <h1>Event Propagation & Event Listener</h1>
+  <p class="subtitle">JavaScript Interview Topic — Easy · Medium · Hard Challenges</p>
+
+  <div class="concept">
+    <h2>📖 Concept</h2>
+    <p>When an event fires on a DOM element, it travels in 3 phases:</p>
+<ol>
+  <li><strong>Capture phase</strong> — from window down to the target</li>
+  <li><strong>Target phase</strong> — the element itself</li>
+  <li><strong>Bubble phase</strong> — from target back up to window</li>
+</ol>
+<ul>
+  <li><code>addEventListener(event, fn, true)</code> — capture phase</li>
+  <li><code>addEventListener(event, fn, false)</code> — bubble phase (default)</li>
+  <li><code>event.stopPropagation()</code> — stop travelling</li>
+  <li><code>event.preventDefault()</code> — prevent default browser action</li>
+  <li><code>event.target</code> — element that triggered the event</li>
+  <li><code>event.currentTarget</code> — element the listener is attached to</li>
+</ul>
+  </div>
+
+  <div class="challenges">
+    <h2>🎯 Interview Challenges</h2>
+    
+        <div class="challenge easy">
+          <div class="challenge-header" style="background:#3fb95022;border-left:4px solid #3fb950">
+            <span class="badge" style="background:#3fb950">EASY</span>
+            <strong>stopPropagation vs preventDefault</strong>
+          </div>
+          <p class="desc">Create a div containing a button. Clicking the button should NOT bubble to the div. Clicking a link should NOT navigate. Show both concepts.</p>
+          <pre class="starter"><code>// Starter Code
+<!-- Paste in browser or use the body tag approach -->
+<div id="outer" style="padding:20px;background:#eee">
+  Outer div
+  <button id="btn">Click Me</button>
+  <a id="link" href="https://google.com">Go to Google</a>
+</div>
+<script>
+document.getElementById('outer').addEventListener('click', () => {
+  console.log('outer clicked'); // should NOT fire when button clicked
+});
+
+document.getElementById('btn').addEventListener('click', (e) => {
+  // stop propagation here
+  console.log('button clicked');
+});
+
+document.getElementById('link').addEventListener('click', (e) => {
+  // prevent navigation here
+  console.log('link clicked but no navigation');
+});
+</script></code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>document.getElementById('outer').addEventListener('click', () => {
+  console.log('outer clicked');
+});
+
+document.getElementById('btn').addEventListener('click', (e) => {
+  e.stopPropagation(); // stops bubble → outer click never fires
+  console.log('button clicked');
+});
+
+document.getElementById('link').addEventListener('click', (e) => {
+  e.preventDefault(); // no navigation
+  console.log('link clicked but no navigation');
+});</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge medium">
+          <div class="challenge-header" style="background:#d2992222;border-left:4px solid #d29922">
+            <span class="badge" style="background:#d29922">MEDIUM</span>
+            <strong>once, passive, and removeEventListener</strong>
+          </div>
+          <p class="desc">Demonstrate: (1) a listener that fires only once using the once option, (2) removing a listener, (3) why passive:true matters for scroll performance.</p>
+          <pre class="starter"><code>// Starter Code
+const btn = document.createElement('button');
+btn.textContent = 'Click me';
+document.body.appendChild(btn);
+
+// 1. Fire only once
+btn.addEventListener('click', () => console.log('fired!'), { once: true });
+
+// 2. Add then remove a listener
+function handleClick() { console.log('removable'); }
+btn.addEventListener('click', handleClick);
+btn.removeEventListener('click', handleClick); // does this work? why?
+
+// 3. passive scroll listener — explain why this matters
+window.addEventListener('scroll', () => {}, { passive: true });</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>// 1. { once: true } — browser auto-removes after first call
+btn.addEventListener('click', () => console.log('fired once!'), { once: true });
+
+// 2. removeEventListener needs the SAME function reference
+//    arrow functions create new refs each time — this is why named functions matter
+function handleClick() { console.log('removable'); }
+btn.addEventListener('click', handleClick);
+btn.removeEventListener('click', handleClick); // ✅ works — same reference
+
+// 3. passive: true tells browser "this listener won't call preventDefault()"
+//    Browser can then scroll immediately without waiting for JS → smoother scroll
+//    Never call e.preventDefault() inside a passive listener — it's ignored</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge hard">
+          <div class="challenge-header" style="background:#f8514922;border-left:4px solid #f85149">
+            <span class="badge" style="background:#f85149">HARD</span>
+            <strong>Build Event Emitter (pub/sub) from scratch</strong>
+          </div>
+          <p class="desc">Implement a custom EventEmitter class with on(event, fn), off(event, fn), emit(event, ...args), and once(event, fn).</p>
+          <pre class="starter"><code>// Starter Code
+class EventEmitter {
+  // implement on, off, emit, once
+}
+
+const emitter = new EventEmitter();
+const handler = (msg) => console.log('received:', msg);
+
+emitter.on('message', handler);
+emitter.emit('message', 'hello');   // received: hello
+emitter.emit('message', 'world');   // received: world
+emitter.off('message', handler);
+emitter.emit('message', 'gone');    // nothing
+
+emitter.once('ping', () => console.log('pong'));
+emitter.emit('ping'); // pong
+emitter.emit('ping'); // nothing</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>class EventEmitter {
+  constructor() { this._events = {}; }
+
+  on(event, fn) {
+    (this._events[event] = this._events[event] || []).push(fn);
+    return this;
+  }
+
+  off(event, fn) {
+    if (this._events[event])
+      this._events[event] = this._events[event].filter(f => f !== fn && f._original !== fn);
+    return this;
+  }
+
+  emit(event, ...args) {
+    (this._events[event] || []).slice().forEach(fn => fn(...args));
+    return this;
+  }
+
+  once(event, fn) {
+    const wrapper = (...args) => { fn(...args); this.off(event, wrapper); };
+    wrapper._original = fn;
+    return this.on(event, wrapper);
+  }
+}
+
+const emitter = new EventEmitter();
+const handler = (msg) => console.log('received:', msg);
+emitter.on('message', handler);
+emitter.emit('message', 'hello');
+emitter.emit('message', 'world');
+emitter.off('message', handler);
+emitter.emit('message', 'gone');
+emitter.once('ping', () => console.log('pong'));
+emitter.emit('ping');
+emitter.emit('ping');</code></pre>
+          </details>
+        </div>
+  </div>
+
+  <script>
+    // Console capture for run buttons (if added later)
+    const _log = console.log;
+    console.log = function(...a){
+      _log(...a);
+    };
+  </script>
+</body>
+</html>

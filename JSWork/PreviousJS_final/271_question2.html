@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Output Question 2</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Output Question 2</h1>
+    <pre><code>// find the maximum number in an array
+
+const num1 = [2, 100, 3, 4, 5, 6, 7]
+
+// using Max function
+let result = num1.sort().reverse()
+console.log(result[result.length - 1]);
+
+
+//using for loop
+let maxval = 0;
+function max1(num1) {
+    for (var i = 0; i &lt; num1.length; i++) {
+        if (maxval &lt; num1[i]) {
+            maxval = num1[i];
+        }
+    }
+    return maxval;
+}
+// console.log(max1(num1));
+
+// using map function
+let maxval1 = 0;
+function max(num1) {
+    num1.map((items) =&gt; {
+        if (maxval1 &lt; items) {
+            maxval1 = items
+        }
+    })
+    // console.log(maxval1)
+}
+max(num1)
+</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// find the maximum number in an array
+
+const num1 = [2, 100, 3, 4, 5, 6, 7]
+
+// using Max function
+let result = num1.sort().reverse()
+console.log(result[result.length - 1]);
+
+
+//using for loop
+let maxval = 0;
+function max1(num1) {
+    for (var i = 0; i < num1.length; i++) {
+        if (maxval < num1[i]) {
+            maxval = num1[i];
+        }
+    }
+    return maxval;
+}
+// console.log(max1(num1));
+
+// using map function
+let maxval1 = 0;
+function max(num1) {
+    num1.map((items) => {
+        if (maxval1 < items) {
+            maxval1 = items
+        }
+    })
+    // console.log(maxval1)
+}
+max(num1)
+
+    </script>
+</body>
+</html>

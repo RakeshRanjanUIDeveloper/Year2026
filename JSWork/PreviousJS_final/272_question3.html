@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Output Question 3</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Output Question 3</h1>
+    <pre><code>// function to check if a given string is a palindrome
+
+
+const pallim = "hello";
+
+function pallim1(pallim) {
+    let reverse = String(pallim.split('').reverse()).replace(/,/g, '')
+    if (pallim == reverse) {
+        console.log("Pallimdrom...")
+    }
+    else {
+        console.log("Not a Pallimdrom...")
+    }
+
+}
+
+// pallim1(pallim)
+
+
+function pallimCheck(pallim) {
+    if (pallim === pallim.split('').reverse().join('')) {
+        console.log("Pallimdrom...")
+    }
+    else {
+        console.log("Not a Pallimdrom...")
+    }
+
+}
+
+pallimCheck(pallim)
+
+</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// function to check if a given string is a palindrome
+
+
+const pallim = "hello";
+
+function pallim1(pallim) {
+    let reverse = String(pallim.split('').reverse()).replace(/,/g, '')
+    if (pallim == reverse) {
+        console.log("Pallimdrom...")
+    }
+    else {
+        console.log("Not a Pallimdrom...")
+    }
+
+}
+
+// pallim1(pallim)
+
+
+function pallimCheck(pallim) {
+    if (pallim === pallim.split('').reverse().join('')) {
+        console.log("Pallimdrom...")
+    }
+    else {
+        console.log("Not a Pallimdrom...")
+    }
+
+}
+
+pallimCheck(pallim)
+
+
+    </script>
+</body>
+</html>

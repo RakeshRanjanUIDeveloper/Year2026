@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AbortController</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7}
+    h1{color:#58a6ff;font-size:1.6em;margin-bottom:6px}
+    .subtitle{color:#8b949e;font-size:.9em;margin-bottom:24px}
+    .concept{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin-bottom:28px}
+    .concept h2{color:#79c0ff;font-size:1em;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+    .concept p,.concept li{color:#c9d1d9;font-size:.93em;margin-bottom:8px}
+    .concept ul{padding-left:20px}
+    .concept code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.88em}
+    .challenges h2{color:#79c0ff;font-size:1em;margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em}
+    .challenge{background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;overflow:hidden}
+    .challenge-header{padding:12px 16px;display:flex;align-items:center;gap:10px}
+    .badge{color:#fff;padding:2px 10px;border-radius:20px;font-size:.72em;font-weight:700;letter-spacing:.05em}
+    .desc{padding:10px 16px;color:#8b949e;font-size:.88em;border-top:1px solid #21262d}
+    pre{margin:0;overflow-x:auto}
+    pre code{display:block;padding:14px 16px;font-size:.83em;font-family:'Cascadia Code','Fira Code',monospace;line-height:1.6}
+    .starter code{color:#e6edf3;background:#0d1117}
+    .solution code{color:#aff5b4;background:#0a1f0a}
+    details{border-top:1px solid #21262d}
+    summary{padding:10px 16px;cursor:pointer;color:#58a6ff;font-size:.85em;user-select:none}
+    summary:hover{color:#79c0ff}
+    .output-area{background:#0d1117;border-top:1px solid #21262d;padding:10px 16px;min-height:32px;font-size:.82em;color:#3fb950;font-family:monospace}
+    .run-btn{margin:8px 16px 12px;background:#238636;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.82em}
+    .run-btn:hover{background:#2ea043}
+  </style>
+</head>
+<body>
+  <h1>AbortController</h1>
+  <p class="subtitle">JavaScript Interview Topic — Easy · Medium · Hard Challenges</p>
+
+  <div class="concept">
+    <h2>📖 Concept</h2>
+    <p><code>AbortController</code> lets you cancel in-flight <code>fetch</code> requests (or any async operation that accepts a signal).</p>
+<ul>
+  <li>Create: <code>const controller = new AbortController();</code></li>
+  <li>Pass signal: <code>fetch(url, { signal: controller.signal })</code></li>
+  <li>Cancel: <code>controller.abort()</code></li>
+  <li>On abort, fetch throws a <code>DOMException</code> with <code>name === 'AbortError'</code></li>
+</ul>
+<pre><code style="background:#0d1117;color:#e6edf3;display:block;padding:10px;border-radius:6px;font-size:.85em">const controller = new AbortController();
+setTimeout(() => controller.abort(), 2000); // cancel after 2s
+fetch(url, { signal: controller.signal })
+  .then(res => res.json())
+  .catch(err => {
+    if (err.name === 'AbortError') console.log('Request cancelled');
+  });</code></pre>
+  </div>
+
+  <div class="challenges">
+    <h2>🎯 Interview Challenges</h2>
+    
+        <div class="challenge easy">
+          <div class="challenge-header" style="background:#3fb95022;border-left:4px solid #3fb950">
+            <span class="badge" style="background:#3fb950">EASY</span>
+            <strong>Cancel a fetch after timeout</strong>
+          </div>
+          <p class="desc">Write a fetchWithTimeout(url, ms) that automatically cancels the request if it takes longer than ms milliseconds.</p>
+          <pre class="starter"><code>// Starter Code
+async function fetchWithTimeout(url, ms) {
+  // use AbortController + setTimeout
+  // throw a meaningful error on timeout
+}
+
+// Test (uses JSONPlaceholder)
+fetchWithTimeout('https://jsonplaceholder.typicode.com/posts/1', 5000)
+  .then(data => console.log(data.title))
+  .catch(err => console.log('Error:', err.message));</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>async function fetchWithTimeout(url, ms) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timer);
+    return await res.json();
+  } catch (err) {
+    if (err.name === 'AbortError') throw new Error(`Request timed out after ${ms}ms`);
+    throw err;
+  }
+}
+
+fetchWithTimeout('https://jsonplaceholder.typicode.com/posts/1', 5000)
+  .then(data => console.log(data.title))
+  .catch(err => console.log('Error:', err.message));</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge medium">
+          <div class="challenge-header" style="background:#d2992222;border-left:4px solid #d29922">
+            <span class="badge" style="background:#d29922">MEDIUM</span>
+            <strong>Cancel previous request on new input (search pattern)</strong>
+          </div>
+          <p class="desc">Build a search function that cancels the previous API call whenever a new search term is typed. This is the real-world debounce + AbortController pattern.</p>
+          <pre class="starter"><code>// Starter Code
+function createSearch() {
+  // return a search(term) function that cancels previous call
+}
+
+const search = createSearch();
+search('java');       // cancelled immediately by next call
+search('javascript'); // this one should complete</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function createSearch() {
+  let controller = null;
+  return async function search(term) {
+    if (controller) controller.abort(); // cancel previous
+    controller = new AbortController();
+    try {
+      const res = await fetch(
+        `https://jsonplaceholder.typicode.com/posts?q=${term}`,
+        { signal: controller.signal }
+      );
+      const data = await res.json();
+      console.log(`Results for "${term}":`, data.length);
+    } catch (err) {
+      if (err.name === 'AbortError') console.log(`Cancelled: "${term}"`);
+      else console.error(err);
+    }
+  };
+}
+
+const search = createSearch();
+search('java');
+search('javascript');</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge hard">
+          <div class="challenge-header" style="background:#f8514922;border-left:4px solid #f85149">
+            <span class="badge" style="background:#f85149">HARD</span>
+            <strong>Abortable Promise wrapper</strong>
+          </div>
+          <p class="desc">fetch natively supports AbortController, but regular Promises don't. Write makeAbortable(promise) that returns { promise, abort }. Calling abort() rejects the promise with an AbortError.</p>
+          <pre class="starter"><code>// Starter Code
+function makeAbortable(promise) {
+  // return { promise, abort }
+}
+
+const longTask = new Promise(resolve => setTimeout(() => resolve('done'), 3000));
+const { promise, abort } = makeAbortable(longTask);
+
+promise
+  .then(v => console.log('Result:', v))
+  .catch(e => console.log('Aborted:', e.message));
+
+setTimeout(abort, 1000); // abort after 1s</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function makeAbortable(promise) {
+  let rejectFn;
+  const wrapper = new Promise((resolve, reject) => {
+    rejectFn = reject;
+    promise.then(resolve, reject);
+  });
+  return {
+    promise: wrapper,
+    abort() {
+      const err = new DOMException('Aborted', 'AbortError');
+      rejectFn(err);
+    }
+  };
+}
+
+const longTask = new Promise(resolve => setTimeout(() => resolve('done'), 3000));
+const { promise, abort } = makeAbortable(longTask);
+
+promise
+  .then(v => console.log('Result:', v))
+  .catch(e => console.log('Aborted:', e.message)); // Aborted: Aborted
+
+setTimeout(abort, 1000);</code></pre>
+          </details>
+        </div>
+  </div>
+
+  <script>
+    // Console capture for run buttons (if added later)
+    const _log = console.log;
+    console.log = function(...a){
+      _log(...a);
+    };
+  </script>
+</body>
+</html>

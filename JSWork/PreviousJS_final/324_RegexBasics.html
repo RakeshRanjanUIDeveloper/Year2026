@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regular Expressions (Regex)</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7}
+    h1{color:#58a6ff;font-size:1.6em;margin-bottom:6px}
+    .subtitle{color:#8b949e;font-size:.9em;margin-bottom:24px}
+    .concept{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin-bottom:28px}
+    .concept h2{color:#79c0ff;font-size:1em;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+    .concept p,.concept li{color:#c9d1d9;font-size:.93em;margin-bottom:8px}
+    .concept ul{padding-left:20px}
+    .concept code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.88em}
+    .challenges h2{color:#79c0ff;font-size:1em;margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em}
+    .challenge{background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;overflow:hidden}
+    .challenge-header{padding:12px 16px;display:flex;align-items:center;gap:10px}
+    .badge{color:#fff;padding:2px 10px;border-radius:20px;font-size:.72em;font-weight:700;letter-spacing:.05em}
+    .desc{padding:10px 16px;color:#8b949e;font-size:.88em;border-top:1px solid #21262d}
+    pre{margin:0;overflow-x:auto}
+    pre code{display:block;padding:14px 16px;font-size:.83em;font-family:'Cascadia Code','Fira Code',monospace;line-height:1.6}
+    .starter code{color:#e6edf3;background:#0d1117}
+    .solution code{color:#aff5b4;background:#0a1f0a}
+    details{border-top:1px solid #21262d}
+    summary{padding:10px 16px;cursor:pointer;color:#58a6ff;font-size:.85em;user-select:none}
+    summary:hover{color:#79c0ff}
+    .output-area{background:#0d1117;border-top:1px solid #21262d;padding:10px 16px;min-height:32px;font-size:.82em;color:#3fb950;font-family:monospace}
+    .run-btn{margin:8px 16px 12px;background:#238636;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.82em}
+    .run-btn:hover{background:#2ea043}
+  </style>
+</head>
+<body>
+  <h1>Regular Expressions (Regex)</h1>
+  <p class="subtitle">JavaScript Interview Topic — Easy · Medium · Hard Challenges</p>
+
+  <div class="concept">
+    <h2>📖 Concept</h2>
+    <p>Regex lets you search, match, and replace patterns in strings.</p>
+<ul>
+  <li><code>/pattern/flags</code> — literal syntax. Flags: <code>g</code>lobal, <code>i</code>case-insensitive, <code>m</code>ultiline</li>
+  <li><code>str.match(regex)</code>, <code>str.test(regex)</code> → boolean, <code>str.replace(regex, fn)</code></li>
+  <li>Common patterns: <code>\d</code> digit, <code>\w</code> word char, <code>\s</code> whitespace, <code>.</code> any, <code>^</code> start, <code>$</code> end</li>
+  <li>Quantifiers: <code>*</code> 0+, <code>+</code> 1+, <code>?</code> 0/1, <code>{n,m}</code> range</li>
+</ul>
+<pre><code style="background:#0d1117;color:#e6edf3;display:block;padding:10px;border-radius:6px;font-size:.85em">/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test('a@b.com'); // true</code></pre>
+  </div>
+
+  <div class="challenges">
+    <h2>🎯 Interview Challenges</h2>
+    
+        <div class="challenge easy">
+          <div class="challenge-header" style="background:#3fb95022;border-left:4px solid #3fb950">
+            <span class="badge" style="background:#3fb950">EASY</span>
+            <strong>Validate common formats</strong>
+          </div>
+          <p class="desc">Write regex to validate: (1) email, (2) phone number (10 digits), (3) strong password (min 8 chars, 1 uppercase, 1 digit).</p>
+          <pre class="starter"><code>// Starter Code
+const emailRegex = // your regex
+const phoneRegex = // your regex  
+const passwordRegex = // your regex
+
+console.log(emailRegex.test('user@example.com')); // true
+console.log(emailRegex.test('bad-email'));         // false
+console.log(phoneRegex.test('9876543210'));        // true
+console.log(passwordRegex.test('Pass1234'));       // true
+console.log(passwordRegex.test('weakpass'));       // false</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const phoneRegex = /^[0-9]{10}$/;
+const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+console.log(emailRegex.test('user@example.com')); // true
+console.log(emailRegex.test('bad-email'));         // false
+console.log(phoneRegex.test('9876543210'));        // true
+console.log(passwordRegex.test('Pass1234'));       // true
+console.log(passwordRegex.test('weakpass'));       // false</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge medium">
+          <div class="challenge-header" style="background:#d2992222;border-left:4px solid #d29922">
+            <span class="badge" style="background:#d29922">MEDIUM</span>
+            <strong>Extract and replace patterns</strong>
+          </div>
+          <p class="desc">Write functions to: (1) extract all hashtags from a string, (2) mask a credit card (show only last 4 digits).</p>
+          <pre class="starter"><code>// Starter Code
+function extractHashtags(str) {
+  // return array of hashtags (without #)
+}
+
+function maskCard(cardNumber) {
+  // replace all but last 4 digits with *
+}
+
+console.log(extractHashtags('I love #javascript and #coding!'));
+// ['javascript', 'coding']
+console.log(maskCard('1234567890123456'));
+// '************3456'</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function extractHashtags(str) {
+  const matches = str.match(/#(\w+)/g) || [];
+  return matches.map(m => m.slice(1));
+}
+
+function maskCard(cardNumber) {
+  return cardNumber.replace(/\d(?=\d{4})/g, '*');
+}
+
+console.log(extractHashtags('I love #javascript and #coding!'));
+// ['javascript', 'coding']
+console.log(maskCard('1234567890123456'));
+// '************3456'</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge hard">
+          <div class="challenge-header" style="background:#f8514922;border-left:4px solid #f85149">
+            <span class="badge" style="background:#f85149">HARD</span>
+            <strong>Build a template engine using Regex</strong>
+          </div>
+          <p class="desc">Build a render(template, data) function that replaces {{key}} placeholders with values from a data object. Support nested keys like {{user.name}}.</p>
+          <pre class="starter"><code>// Starter Code
+function render(template, data) {
+  // replace all {{key}} and {{a.b.c}} with values from data
+  // if key not found, leave as empty string
+}
+
+const tmpl = 'Hello {{name}}, your order #{{order.id}} total is ${{order.total}}';
+const data = { name: 'Alice', order: { id: 42, total: 99.99 } };
+console.log(render(tmpl, data));
+// 'Hello Alice, your order #42 total is $99.99'</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function render(template, data) {
+  return template.replace(/\{\{([\w.]+)\}\}/g, (_, path) => {
+    const value = path.split('.').reduce((obj, key) => obj?.[key], data);
+    return value !== undefined ? value : '';
+  });
+}
+
+const tmpl = 'Hello {{name}}, your order #{{order.id}} total is ${{order.total}}';
+const data = { name: 'Alice', order: { id: 42, total: 99.99 } };
+console.log(render(tmpl, data));
+// 'Hello Alice, your order #42 total is $99.99'</code></pre>
+          </details>
+        </div>
+  </div>
+
+  <script>
+    // Console capture for run buttons (if added later)
+    const _log = console.log;
+    console.log = function(...a){
+      _log(...a);
+    };
+  </script>
+</body>
+</html>

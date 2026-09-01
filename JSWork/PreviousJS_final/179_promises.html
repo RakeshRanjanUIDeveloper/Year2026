@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Promises</h1>
+    <pre><code>// Validate Cart
+// Order Id
+// proceed to Payment
+
+const cart = ['shirt', 'pant', 'shoes'];
+
+
+createOrder(cart) 
+    .then(function (orderId) {
+        console.log(orderId);
+        return orderId;
+    })
+    .then(function (orderId) {
+        return proceedToPayment(orderId)
+    })
+    .then(function (paymentInfo) {
+        console.log(paymentInfo)
+    })
+    .catch(function (err) {
+        console.log(err.message)
+    })
+
+
+
+
+function createOrder(cart) {
+
+    const pr = new Promise((resolve, reject) =&gt; {
+        // validatecard
+        // proceed to payment
+        // order summary
+
+        if (!validateCart(cart)) {
+            const err = new Error('cart is not valid');
+            reject(err);
+        }
+
+        orderId = '12345'
+        if (orderId) {
+            resolve(orderId);
+        }
+
+    });
+
+    return pr;
+}
+
+function proceedToPayment(orderId) {
+    return new Promise((resolve, reject) =&gt; {
+        resolve("Payment Successful !!!")
+    })
+}
+
+function validateCart() {
+    return true;
+}
+</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// Validate Cart
+// Order Id
+// proceed to Payment
+
+const cart = ['shirt', 'pant', 'shoes'];
+
+
+createOrder(cart) 
+    .then(function (orderId) {
+        console.log(orderId);
+        return orderId;
+    })
+    .then(function (orderId) {
+        return proceedToPayment(orderId)
+    })
+    .then(function (paymentInfo) {
+        console.log(paymentInfo)
+    })
+    .catch(function (err) {
+        console.log(err.message)
+    })
+
+
+
+
+function createOrder(cart) {
+
+    const pr = new Promise((resolve, reject) => {
+        // validatecard
+        // proceed to payment
+        // order summary
+
+        if (!validateCart(cart)) {
+            const err = new Error('cart is not valid');
+            reject(err);
+        }
+
+        orderId = '12345'
+        if (orderId) {
+            resolve(orderId);
+        }
+
+    });
+
+    return pr;
+}
+
+function proceedToPayment(orderId) {
+    return new Promise((resolve, reject) => {
+        resolve("Payment Successful !!!")
+    })
+}
+
+function validateCart() {
+    return true;
+}
+
+    </script>
+</body>
+</html>

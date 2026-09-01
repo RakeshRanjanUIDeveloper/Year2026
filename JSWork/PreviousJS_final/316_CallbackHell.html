@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Callback Hell</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7}
+    h1{color:#58a6ff;font-size:1.6em;margin-bottom:6px}
+    .subtitle{color:#8b949e;font-size:.9em;margin-bottom:24px}
+    .concept{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin-bottom:28px}
+    .concept h2{color:#79c0ff;font-size:1em;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+    .concept p,.concept li{color:#c9d1d9;font-size:.93em;margin-bottom:8px}
+    .concept ul{padding-left:20px}
+    .concept code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.88em}
+    .challenges h2{color:#79c0ff;font-size:1em;margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em}
+    .challenge{background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;overflow:hidden}
+    .challenge-header{padding:12px 16px;display:flex;align-items:center;gap:10px}
+    .badge{color:#fff;padding:2px 10px;border-radius:20px;font-size:.72em;font-weight:700;letter-spacing:.05em}
+    .desc{padding:10px 16px;color:#8b949e;font-size:.88em;border-top:1px solid #21262d}
+    pre{margin:0;overflow-x:auto}
+    pre code{display:block;padding:14px 16px;font-size:.83em;font-family:'Cascadia Code','Fira Code',monospace;line-height:1.6}
+    .starter code{color:#e6edf3;background:#0d1117}
+    .solution code{color:#aff5b4;background:#0a1f0a}
+    details{border-top:1px solid #21262d}
+    summary{padding:10px 16px;cursor:pointer;color:#58a6ff;font-size:.85em;user-select:none}
+    summary:hover{color:#79c0ff}
+    .output-area{background:#0d1117;border-top:1px solid #21262d;padding:10px 16px;min-height:32px;font-size:.82em;color:#3fb950;font-family:monospace}
+    .run-btn{margin:8px 16px 12px;background:#238636;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.82em}
+    .run-btn:hover{background:#2ea043}
+  </style>
+</head>
+<body>
+  <h1>Callback Hell</h1>
+  <p class="subtitle">JavaScript Interview Topic — Easy · Medium · Hard Challenges</p>
+
+  <div class="concept">
+    <h2>📖 Concept</h2>
+    <p><strong>Callback Hell</strong> (also called the "Pyramid of Doom") occurs when callbacks are nested inside callbacks multiple levels deep, making code hard to read, debug, and maintain.</p>
+<pre><code style="background:#0d1117;color:#e6edf3;display:block;padding:10px;border-radius:6px;font-size:.85em">getData(function(a) {
+  getMoreData(a, function(b) {
+    getEvenMore(b, function(c) {
+      // deeply nested — callback hell
+    });
+  });
+});</code></pre>
+<p><strong>Solutions:</strong> Named functions → Promises → async/await</p>
+  </div>
+
+  <div class="challenges">
+    <h2>🎯 Interview Challenges</h2>
+    
+        <div class="challenge easy">
+          <div class="challenge-header" style="background:#3fb95022;border-left:4px solid #3fb950">
+            <span class="badge" style="background:#3fb950">EASY</span>
+            <strong>Identify the Problem</strong>
+          </div>
+          <p class="desc">Rewrite this callback hell using named functions to flatten the nesting (same behaviour, readable structure).</p>
+          <pre class="starter"><code>// Starter Code
+function getUser(id, cb) { setTimeout(() => cb({ id, name: 'Alice' }), 100); }
+function getOrders(user, cb) { setTimeout(() => cb([1, 2, 3]), 100); }
+function getOrderDetail(id, cb) { setTimeout(() => cb({ id, total: 99 }), 100); }
+
+// Callback hell version:
+getUser(1, function(user) {
+  getOrders(user, function(orders) {
+    getOrderDetail(orders[0], function(detail) {
+      console.log(detail);
+    });
+  });
+});</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function getUser(id, cb) { setTimeout(() => cb({ id, name: 'Alice' }), 100); }
+function getOrders(user, cb) { setTimeout(() => cb([1, 2, 3]), 100); }
+function getOrderDetail(id, cb) { setTimeout(() => cb({ id, total: 99 }), 100); }
+
+// Named function approach — flat, readable:
+function handleDetail(detail) { console.log(detail); }
+function handleOrders(orders) { getOrderDetail(orders[0], handleDetail); }
+function handleUser(user) { getOrders(user, handleOrders); }
+
+getUser(1, handleUser);</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge medium">
+          <div class="challenge-header" style="background:#d2992222;border-left:4px solid #d29922">
+            <span class="badge" style="background:#d29922">MEDIUM</span>
+            <strong>Convert to Promises</strong>
+          </div>
+          <p class="desc">Wrap the three callback functions above in Promises and chain them cleanly.</p>
+          <pre class="starter"><code>// Starter Code
+function getUser(id) {
+  return new Promise(resolve => setTimeout(() => resolve({ id, name: 'Alice' }), 100));
+}
+function getOrders(user) {
+  // wrap in Promise
+}
+function getOrderDetail(id) {
+  // wrap in Promise
+}
+
+// Chain them:
+getUser(1)
+  .then(/* ... */)
+  .then(/* ... */)
+  .then(detail => console.log(detail));</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function getUser(id) {
+  return new Promise(resolve => setTimeout(() => resolve({ id, name: 'Alice' }), 100));
+}
+function getOrders(user) {
+  return new Promise(resolve => setTimeout(() => resolve([1, 2, 3]), 100));
+}
+function getOrderDetail(id) {
+  return new Promise(resolve => setTimeout(() => resolve({ id, total: 99 }), 100));
+}
+
+getUser(1)
+  .then(user => getOrders(user))
+  .then(orders => getOrderDetail(orders[0]))
+  .then(detail => console.log(detail)); // { id: 1, total: 99 }</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge hard">
+          <div class="challenge-header" style="background:#f8514922;border-left:4px solid #f85149">
+            <span class="badge" style="background:#f85149">HARD</span>
+            <strong>Convert to async/await with Error Handling</strong>
+          </div>
+          <p class="desc">Convert the Promise chain above to async/await. Add error handling so if any step fails, log the error and continue gracefully.</p>
+          <pre class="starter"><code>// Starter Code
+// Use same Promise-based functions from medium challenge
+async function loadOrderDetail(userId) {
+  // implement with try/catch
+}
+
+loadOrderDetail(1);</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function getUser(id) {
+  return new Promise(resolve => setTimeout(() => resolve({ id, name: 'Alice' }), 100));
+}
+function getOrders(user) {
+  return new Promise(resolve => setTimeout(() => resolve([1, 2, 3]), 100));
+}
+function getOrderDetail(id) {
+  return new Promise(resolve => setTimeout(() => resolve({ id, total: 99 }), 100));
+}
+
+async function loadOrderDetail(userId) {
+  try {
+    const user = await getUser(userId);
+    const orders = await getOrders(user);
+    const detail = await getOrderDetail(orders[0]);
+    console.log('Detail:', detail);
+    return detail;
+  } catch (err) {
+    console.error('Failed to load order:', err.message);
+    return null;
+  }
+}
+
+loadOrderDetail(1);</code></pre>
+          </details>
+        </div>
+  </div>
+
+  <script>
+    // Console capture for run buttons (if added later)
+    const _log = console.log;
+    console.log = function(...a){
+      _log(...a);
+    };
+  </script>
+</body>
+</html>

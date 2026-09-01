@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart with Filters</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    margin-top: 20px;
+}
+
+.sidebar {
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
+
+.product-list {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.checkboxDiv {
+    margin-bottom: 20px;
+}
+
+.checkboxDiv h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.check_box input {
+    margin-right: 10px;
+}
+
+.product-card {
+    display: inline-block;
+    width: 180px;
+    margin: 10px;
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-card h5 {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.product-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h3>Filters</h3>
+
+            <div class="checkboxDiv">
+                <h4>Colors</h4>
+                <div class="check_box">
+                    <input type="checkbox" value="Black" name="color" />
+                    <label>Black</label><br/>
+                    <input type="checkbox" value="Blue" name="color" />
+                    <label>Blue</label><br/>
+                    <input type="checkbox" value="Green" name="color" />
+                    <label>Green</label><br/>
+                    <input type="checkbox" value="Red" name="color" />
+                    <label>Red</label><br/>
+                    <input type="checkbox" value="White" name="color" />
+                    <label>White</label><br/>
+                    <input type="checkbox" value="Grey" name="color" />
+                    <label>Grey</label><br/>
+                    <input type="checkbox" value="Purple" name="color" />
+                    <label>Purple</label><br/>
+                    <input type="checkbox" value="Yellow" name="color" />
+                    <label>Yellow</label>
+                </div>
+            </div>
+
+            <div class="checkboxDiv">
+                <h4>Gender</h4>
+                <div class="check_box">
+                    <input type="checkbox" value="Men" name="gender" />
+                    <label>Men</label><br/>
+                    <input type="checkbox" value="Women" name="gender" />
+                    <label>Women</label>
+                </div>
+            </div>
+
+            <div class="checkboxDiv">
+                <h4>Price</h4>
+                <div class="check_box">
+                    <input type="checkbox" value="0-250" name="price" />
+                    <label>0-250</label><br/>
+                    <input type="checkbox" value="251-400" name="price" />
+                    <label>251-400</label><br/>
+                    <input type="checkbox" value="401-500" name="price" />
+                    <label>401-500</label><br/>
+                    <input type="checkbox" value="500+" name="price" />
+                    <label>500+</label>
+                </div>
+            </div>
+
+            <div class="checkboxDiv">
+                <h4>Type</h4>
+                <div class="check_box">
+                    <input type="checkbox" value="Polo" name="type" />
+                    <label>Polo</label><br/>
+                    <input type="checkbox" value="Hoodie" name="type" />
+                    <label>Hoodie</label><br/>
+                    <input type="checkbox" value="Basic" name="type" />
+                    <label>Basic</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-list">
+            <h3>Products</h3>
+            <div id="productContainer"></div>
+        </div>
+    </div>
+
+    <script>
+const products =[
+    {
+      "id": 1,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/black-polo-men.png",
+      "name": "Black Polo",
+      "type": "Polo",
+      "price": 250,
+      "currency": "INR",
+      "color": "Black",
+      "gender": "Men",
+      "quantity": 3
+    },
+    {
+      "id": 2,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/blue-polo-women.png",
+      "name": "Blue Polo",
+      "type": "Polo",
+      "price": 350,
+      "currency": "INR",
+      "color": "Blue",
+      "gender": "Women",
+      "quantity": 3
+    },
+    {
+      "id": 3,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/pink-polo-women.png",
+      "name": "Pink Polo",
+      "type": "Polo",
+      "price": 350,
+      "currency": "INR",
+      "color": "Pink",
+      "gender": "Women",
+      "quantity": 6
+    },
+    {
+      "id": 4,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/black-hoodie-men.png",
+      "name": "Black Hoodie",
+      "type": "Hoodie",
+      "price": 500,
+      "currency": "INR",
+      "color": "Black",
+      "gender": "Men",
+      "quantity": 2
+    },
+    {
+      "id": 5,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/green-polo-men.png",
+      "name": "Green Polo",
+      "type": "Polo",
+      "price": 250,
+      "currency": "INR",
+      "color": "Green",
+      "gender": "Men",
+      "quantity": 1
+    },
+    {
+      "id": 6,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/green-polo-women.png",
+      "name": "Green Polo",
+      "type": "Polo",
+      "price": 350,
+      "currency": "INR",
+      "color": "Green",
+      "gender": "Women",
+      "quantity": 1
+    },
+    {
+      "id": 7,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/blue-hoodie-women.png",
+      "name": "Blue Hoodie",
+      "type": "Hoodie",
+      "price": 500,
+      "currency": "INR",
+      "color": "Blue",
+      "gender": "Women",
+      "quantity": 2
+    },
+    {
+      "id": 8,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/black-hoodie-women.png",
+      "name": "Black Hoodie",
+      "type": "Hoodie",
+      "price": 500,
+      "currency": "INR",
+      "color": "Black",
+      "gender": "Women",
+      "quantity": 5
+    },
+    {
+      "id": 9,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/blue-round-men.png",
+      "name": "Blue Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "Blue",
+      "gender": "Men",
+      "quantity": 2
+    },
+    {
+      "id": 10,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/red-round-women.png",
+      "name": "Red Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "Red",
+      "gender": "Women",
+      "quantity": 2
+    },
+    {
+      "id": 11,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/grey-round-men.png",
+      "name": "Grey Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "Grey",
+      "gender": "Men",
+      "quantity": 1
+    },
+    {
+      "id": 12,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/purple-hoodie-women.png",
+      "name": "Purple Hoodie",
+      "type": "Hoodie",
+      "price": 500,
+      "currency": "INR",
+      "color": "Purple",
+      "gender": "Women",
+      "quantity": 3
+    },
+    {
+      "id": 13,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/grey-round-women.png",
+      "name": "Grey Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "Grey",
+      "gender": "Women",
+      "quantity": 1
+    },
+    {
+      "id": 14,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/white-round-women.png",
+      "name": "White Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "White",
+      "gender": "Women",
+      "quantity": 0
+    },
+    {
+      "id": 15,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/black-round-men.png",
+      "name": "Black Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "Black",
+      "gender": "Men",
+      "quantity": 7
+    },
+    {
+      "id": 16,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/purple-round-men.png",
+      "name": "Purple Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "Purple",
+      "gender": "Men",
+      "quantity": 1
+    },
+    {
+      "id": 17,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/white-round-men.png",
+      "name": "White Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "White",
+      "gender": "Men",
+      "quantity": 2
+    },
+    {
+      "id": 18,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/blue-round-women.png",
+      "name": "Blue Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "Blue",
+      "gender": "Women",
+      "quantity": 3
+    },
+    {
+      "id": 19,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/yellow-hoodie-women.png",
+      "name": "Yellow Hoodie",
+      "type": "Hoodie",
+      "price": 500,
+      "currency": "INR",
+      "color": "Yellow",
+      "gender": "Women",
+      "quantity": 1
+    },
+    {
+      "id": 20,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/white-polo-women.png",
+      "name": "White Polo",
+      "type": "Polo",
+      "price": 350,
+      "currency": "INR",
+      "color": "White",
+      "gender": "Women",
+      "quantity": 4
+    },
+    {
+      "id": 21,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/red-polo-men.png",
+      "name": "Red Polo",
+      "type": "Polo",
+      "price": 250,
+      "currency": "INR",
+      "color": "Red",
+      "gender": "Men",
+      "quantity": 2
+    },
+    {
+      "id": 22,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/blue-hoodie-men.png",
+      "name": "Blue Hoodie",
+      "type": "Hoodie",
+      "price": 500,
+      "currency": "INR",
+      "color": "Blue",
+      "gender": "Men",
+      "quantity": 0
+    },
+    {
+      "id": 23,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/grey-hoodie-men.png",
+      "name": "Grey Hoodie",
+      "type": "Hoodie",
+      "price": 500,
+      "currency": "INR",
+      "color": "Grey",
+      "gender": "Men",
+      "quantity": 2
+    },
+    {
+      "id": 24,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/grey-polo-men.png",
+      "name": "Grey Polo",
+      "type": "Polo",
+      "price": 300,
+      "currency": "INR",
+      "color": "Grey",
+      "gender": "Men",
+      "quantity": 3
+    },
+    {
+      "id": 25,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/red-hoodie-men.png",
+      "name": "Red Hoodie",
+      "type": "Hoodie",
+      "price": 300,
+      "currency": "INR",
+      "color": "Red",
+      "gender": "Men",
+      "quantity": 0
+    },
+    {
+      "id": 26,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/white-polo-men.png",
+      "name": "White Polo",
+      "type": "Polo",
+      "price": 300,
+      "currency": "INR",
+      "color": "White",
+      "gender": "Men",
+      "quantity": 1
+    },
+    {
+      "id": 27,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/white-hoodie-women.png",
+      "name": "White Hoodie",
+      "type": "Hoodie",
+      "price": 500,
+      "currency": "INR",
+      "color": "White",
+      "gender": "Women",
+      "quantity": 3
+    },
+    {
+      "id": 28,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/grey-round-men.png",
+      "name": "Grey Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "Grey",
+      "gender": "Men",
+      "quantity": 0
+    },
+    {
+      "id": 29,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/black-round-women.png",
+      "name": "Black Round",
+      "type": "Basic",
+      "price": 300,
+      "currency": "INR",
+      "color": "Black",
+      "gender": "Women",
+      "quantity": 0
+    },
+    {
+      "id": 30,
+      "imageURL": "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/black-polo-women.png",
+      "name": "Black Polo",
+      "type": "Polo",
+      "price": 300,
+      "currency": "INR",
+      "color": "Black",
+      "gender": "Women",
+      "quantity": 4
+    }
+  ]
+  // Sample product data from JSON
+ 
+
+// Helper function to get selected filter values
+function getSelectedValues(name) {
+  const selectedValues = [];
+  document.querySelectorAll(`input[name="${name}"]:checked`).forEach(checkbox => {
+      selectedValues.push(checkbox.value);
+  });
+  return selectedValues;
+}
+
+// Render product cards based on the filtered data
+function renderCatalogue(filteredData) {
+  const container = document.getElementById('productContainer');
+  container.innerHTML = '';
+
+  filteredData.forEach(item => {
+      const productCard = document.createElement('div');
+      productCard.classList.add('product-card');
+
+      productCard.innerHTML = `
+          <img src="${item.imageURL}" alt="${item.name}" />
+          <h5>${item.name}</h5>
+          <p>₹${item.price}</p>
+          <p>Stock: ${item.quantity}</p>
+      `;
+
+      container.appendChild(productCard);
+  });
+}
+
+// Apply filters based on selected options
+function applyFilters() {
+  const selectedColors = getSelectedValues('color');
+  const selectedGenders = getSelectedValues('gender');
+  const selectedPrices = getSelectedValues('price');
+  const selectedTypes = getSelectedValues('type');
+
+  const filteredData = products.filter(item => {
+      const isColorMatch = selectedColors.length === 0 || selectedColors.includes(item.color);
+      const isGenderMatch = selectedGenders.length === 0 || selectedGenders.includes(item.gender);
+      const isPriceMatch = selectedPrices.length === 0 || selectedPrices.some(price => {
+          if (price === '0-250') return item.price <= 250;
+          if (price === '251-400') return item.price > 250 && item.price <= 400;
+          if (price === '401-500') return item.price > 400 && item.price <= 500;
+          if (price === '500+') return item.price > 500;
+          return false;
+      });
+      const isTypeMatch = selectedTypes.length === 0 || selectedTypes.includes(item.type);
+
+      return isColorMatch && isGenderMatch && isPriceMatch && isTypeMatch;
+  });
+
+  renderCatalogue(filteredData);
+}
+
+// Add event listeners to filter checkboxes
+function setupFilterListeners() {
+  const filterElements = document.querySelectorAll('input[type="checkbox"]');
+  filterElements.forEach(element => {
+      element.addEventListener('change', applyFilters);
+  });
+}
+
+// Initial setup when the page loads
+function init() {
+  renderCatalogue(products);  // Show all products initially
+  setupFilterListeners();      // Set up filter listeners
+}
+
+// Initialize on page load
+window.onload = init;
+
+</script>
+</body>
+</html>

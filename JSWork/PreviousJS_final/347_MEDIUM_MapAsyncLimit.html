@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map Async with Concurrency Limit</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7;max-width:960px;margin:0 auto}
+    h1{color:#58a6ff;font-size:1.5em;margin-bottom:8px}
+    .meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+    .badge{padding:3px 12px;border-radius:20px;font-size:.75em;font-weight:700;color:#fff;background:#d29922}
+    .company{background:#21262d;color:#8b949e;padding:2px 8px;border-radius:4px;font-size:.75em;border:1px solid #30363d}
+    .section{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:18px;margin-bottom:16px}
+    .section h2{color:#79c0ff;font-size:.85em;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+    p,li{color:#c9d1d9;font-size:.92em;margin-bottom:6px}
+    ul{padding-left:18px}
+    code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.85em}
+    pre{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;overflow-x:auto;margin-top:8px}
+    pre code{background:none;color:#e6edf3;padding:0;font-family:'Cascadia Code','Fira Code',monospace;font-size:.84em;line-height:1.7}
+    .solution pre code{color:#aff5b4}
+    .complexity{display:flex;gap:16px;flex-wrap:wrap}
+    .complexity span{background:#21262d;padding:4px 12px;border-radius:6px;font-size:.82em;color:#79c0ff;border:1px solid #30363d}
+    .tag{color:#8b949e;font-size:.8em}
+    details summary{cursor:pointer;color:#58a6ff;font-size:.9em;padding:4px 0;user-select:none}
+    details summary:hover{color:#79c0ff}
+    .output{background:#0a1f0a;border:1px solid #238636;border-radius:6px;padding:12px;margin-top:8px;font-family:monospace;font-size:.83em;color:#3fb950}
+  </style>
+</head>
+<body>
+  <h1>Map Async with Concurrency Limit</h1>
+  <div class="meta">
+    <span class="badge">MEDIUM</span>
+    <span class="company">netflix</span><span class="company">uber</span><span class="company">tcs</span>
+  </div>
+
+  <div class="section">
+    <h2>📋 Problem</h2>
+    <p>Run an async function over an array with a concurrency limit. Like Promise.all but only N items run at once.</p>
+    <pre><code>const results = await mapAsyncLimit(
+  [1,2,3,4,5],
+  async n => fetchUser(n),
+  2           // max 2 concurrent
+);
+// results in original order</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>💡 Approach</h2>
+    <p>Similar to promiseAllLimit but takes mapper fn. Maintain a pool of running promises. As each resolves, start the next. Collect results preserving index order.</p>
+  </div>
+
+  <div class="section solution">
+    <h2>✅ Solution</h2>
+    <pre><code>async function mapAsyncLimit(arr, asyncFn, limit) {
+  const results = new Array(arr.length);
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < arr.length) {
+      const i = nextIndex++;
+      results[i] = await asyncFn(arr[i], i, arr);
+    }
+  }
+
+  // Spawn 'limit' concurrent workers
+  await Promise.all(
+    Array.from({ length: Math.min(limit, arr.length) }, worker)
+  );
+
+  return results;
+}
+
+// Demo
+function fakeApiCall(id) {
+  return new Promise(resolve => {
+    const delay = Math.random() * 300 + 100;
+    setTimeout(() => {
+      console.log(`Fetched item ${id}`);
+      resolve({ id, data: `result_${id}` });
+    }, delay);
+  });
+}
+
+mapAsyncLimit([1,2,3,4,5], fakeApiCall, 2).then(results => {
+  console.log('All done:', results.map(r => r.data));
+});</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>⏱ Complexity</h2>
+    <div class="complexity"><span>Time: O(n)</span><span>Space: O(limit)</span></div>
+  </div>
+
+  <div class="section">
+    <h2>▶ Run Output</h2>
+    <div class="output" id="out"></div>
+  </div>
+
+  <script>
+    const out = document.getElementById('out');
+    const _log = console.log;
+    console.log = (...a) => {
+      _log(...a);
+      const d = document.createElement('div');
+      d.textContent = a.map(x => typeof x === 'object' ? JSON.stringify(x,null,2) : String(x)).join(' ');
+      out.appendChild(d);
+    };
+  </script>
+  <script>
+async function mapAsyncLimit(arr, asyncFn, limit) {
+  const results = new Array(arr.length);
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < arr.length) {
+      const i = nextIndex++;
+      results[i] = await asyncFn(arr[i], i, arr);
+    }
+  }
+
+  // Spawn 'limit' concurrent workers
+  await Promise.all(
+    Array.from({ length: Math.min(limit, arr.length) }, worker)
+  );
+
+  return results;
+}
+
+// Demo
+function fakeApiCall(id) {
+  return new Promise(resolve => {
+    const delay = Math.random() * 300 + 100;
+    setTimeout(() => {
+      console.log(`Fetched item ${id}`);
+      resolve({ id, data: `result_${id}` });
+    }, delay);
+  });
+}
+
+mapAsyncLimit([1,2,3,4,5], fakeApiCall, 2).then(results => {
+  console.log('All done:', results.map(r => r.data));
+});
+  </script>
+</body>
+</html>

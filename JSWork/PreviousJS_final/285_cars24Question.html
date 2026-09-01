@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars24 Interview Questions</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Cars24 Interview Questions</h1>
+    <pre><code>class EventEmitter {
+    constructor() {
+        this.events = {};
+    }
+
+    subscribe(eventName, callback) {
+        // If the event does not exist, create a new array for it
+        if (!this.events[eventName]) {
+            this.events[eventName] = [];
+        }
+
+        // Push the callback function to the array of callbacks for this event
+        this.events[eventName].push(callback);
+
+        // Return an object with an unsubscribe method
+        return {
+            unsubscribe: () =&gt; {
+                this.events[eventName] = this.events[eventName].filter(cb =&gt; cb !== callback);
+            }
+        };
+    }
+
+    emit(eventName, args = []) {
+        // If the event does not exist, return an empty array
+        if (!this.events[eventName]) {
+            return [];
+        }
+
+        // Get the array of callbacks for this event
+        const callbacks = this.events[eventName];
+
+        // Call each callback with the provided arguments and store the results
+        const results = callbacks.map(callback =&gt; callback(...args));
+
+        return results;
+    }
+}
+
+// Example usage:
+const emitter = new EventEmitter();
+
+console.log(emitter.emit("firstEvent")); // Output: [], no callbacks are subscribed yet
+
+emitter.subscribe("firstEvent", function cb1() { return 5; });
+emitter.subscribe("firstEvent", function cb2() { return 6; });
+
+console.log(emitter.emit("firstEvent")); // Output: [5, 6], returns the output of cb1 and cb2
+</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+class EventEmitter {
+    constructor() {
+        this.events = {};
+    }
+
+    subscribe(eventName, callback) {
+        // If the event does not exist, create a new array for it
+        if (!this.events[eventName]) {
+            this.events[eventName] = [];
+        }
+
+        // Push the callback function to the array of callbacks for this event
+        this.events[eventName].push(callback);
+
+        // Return an object with an unsubscribe method
+        return {
+            unsubscribe: () => {
+                this.events[eventName] = this.events[eventName].filter(cb => cb !== callback);
+            }
+        };
+    }
+
+    emit(eventName, args = []) {
+        // If the event does not exist, return an empty array
+        if (!this.events[eventName]) {
+            return [];
+        }
+
+        // Get the array of callbacks for this event
+        const callbacks = this.events[eventName];
+
+        // Call each callback with the provided arguments and store the results
+        const results = callbacks.map(callback => callback(...args));
+
+        return results;
+    }
+}
+
+// Example usage:
+const emitter = new EventEmitter();
+
+console.log(emitter.emit("firstEvent")); // Output: [], no callbacks are subscribed yet
+
+emitter.subscribe("firstEvent", function cb1() { return 5; });
+emitter.subscribe("firstEvent", function cb2() { return 6; });
+
+console.log(emitter.emit("firstEvent")); // Output: [5, 6], returns the output of cb1 and cb2
+
+    </script>
+</body>
+</html>

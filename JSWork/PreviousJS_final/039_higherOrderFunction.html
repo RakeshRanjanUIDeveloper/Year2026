@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Higher Order Functions</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Higher Order Functions</h1>
+    <pre><code>// A function that passes another function as a argument or returns a function from it 
+
+const radius = [3, 1, 2, 4];
+
+const area = function (radius) {
+    return (Math.PI * radius * radius);
+}
+
+const daimeter = function (radius) {
+    return (2 * radius);
+}
+
+
+const operation = function (operator, arr) {
+    const output = [];
+    for (let i = 0; i &lt; arr.length; i++) {
+        output.push(operator(arr[i]));
+    }
+    return output;
+}
+
+console.log(operation(area, radius));
+console.log(operation(daimeter, radius));
+
+</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// A function that passes another function as a argument or returns a function from it 
+
+const radius = [3, 1, 2, 4];
+
+const area = function (radius) {
+    return (Math.PI * radius * radius);
+}
+
+const daimeter = function (radius) {
+    return (2 * radius);
+}
+
+
+const operation = function (operator, arr) {
+    const output = [];
+    for (let i = 0; i < arr.length; i++) {
+        output.push(operator(arr[i]));
+    }
+    return output;
+}
+
+console.log(operation(area, radius));
+console.log(operation(daimeter, radius));
+
+
+    </script>
+</body>
+</html>

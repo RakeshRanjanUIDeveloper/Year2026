@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Output Question 7</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Output Question 7</h1>
+    <pre><code>// function to check if a given number is prime
+
+const num = 1;
+let isPrime = true;
+
+function checkPrime(num) {
+    if (num &lt; 1) {
+        console.log('Prime number does not exists for : ' + num);
+    }
+    else if (num == 1) {
+        console.log('1 is not a prime number!!');
+    }
+    else {
+        for (let i = 2; i &lt; num; i++) {
+            if (num % i == 0) {
+                isPrime = false;
+            }
+
+        }
+        if (isPrime == false) {
+            console.log(num + " is not a prime number..");
+        }
+        else {
+            console.log(num + " is a prime number..");
+        }
+    }
+
+}
+
+
+checkPrime(num);</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// function to check if a given number is prime
+
+const num = 1;
+let isPrime = true;
+
+function checkPrime(num) {
+    if (num < 1) {
+        console.log('Prime number does not exists for : ' + num);
+    }
+    else if (num == 1) {
+        console.log('1 is not a prime number!!');
+    }
+    else {
+        for (let i = 2; i < num; i++) {
+            if (num % i == 0) {
+                isPrime = false;
+            }
+
+        }
+        if (isPrime == false) {
+            console.log(num + " is not a prime number..");
+        }
+        else {
+            console.log(num + " is a prime number..");
+        }
+    }
+
+}
+
+
+checkPrime(num);
+    </script>
+</body>
+</html>

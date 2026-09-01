@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Event Emitter</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div style="background:#3a3a00;padding:10px;border-left:3px solid #ffcc00;margin-bottom:12px;">
+        ⚠️ This code uses Node.js <code>EventEmitter</code> which doesn't run in a browser.<br>
+        A browser-compatible version is shown below the original code.
+    </div>
+
+    <h1>Node.js Event Emitter</h1>
+    <pre><code>// import EventEmitter from 'events'
+// const event = new EventEmitter();
+// let count = 0;
+// event.on('countAPI',() =&gt; {
+//     console.log('api called', count++);
+// })
+
+// app.get('/update', (req, res) =&gt; {
+//     res.send('update called');
+//     event.emit('countAPI');
+// })
+
+
+// app.get('/profile', (req, res) =&gt; {
+//     res.send('profile called');
+//     event.emit('countAPI');
+// })
+
+// app.get('/api', (req, res) =&gt; {
+//     res.send('api called');
+//     event.emit('countAPI');
+// })</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// import EventEmitter from 'events'
+// const event = new EventEmitter();
+// let count = 0;
+// event.on('countAPI',() => {
+//     console.log('api called', count++);
+// })
+
+// app.get('/update', (req, res) => {
+//     res.send('update called');
+//     event.emit('countAPI');
+// })
+
+
+// app.get('/profile', (req, res) => {
+//     res.send('profile called');
+//     event.emit('countAPI');
+// })
+
+// app.get('/api', (req, res) => {
+//     res.send('api called');
+//     event.emit('countAPI');
+// })
+    </script>
+
+    <hr style="border-color:#444;margin:20px 0;">
+    <h2 style="color:#569cd6;font-size:1em;">Browser-Compatible EventEmitter</h2>
+    <div id="browser-output" style="background:#252526;padding:16px;border-radius:6px;"></div>
+    <script>
+        // Browser-compatible EventEmitter
+        class EventEmitter {
+            constructor() { this.events = {}; }
+            on(event, listener) {
+                if (!this.events[event]) this.events[event] = [];
+                this.events[event].push(listener);
+                return this;
+            }
+            emit(event, ...args) {
+                if (this.events[event]) this.events[event].forEach(l => l(...args));
+                return this;
+            }
+            off(event, listener) {
+                if (this.events[event])
+                    this.events[event] = this.events[event].filter(l => l !== listener);
+                return this;
+            }
+        }
+
+        const out = document.getElementById('browser-output');
+        const log = (...args) => {
+            const d = document.createElement('div');
+            d.textContent = args.join(' ');
+            out.appendChild(d);
+        };
+
+        const emitter = new EventEmitter();
+        emitter.on('greet', (name) => log('Hello,', name));
+        emitter.on('greet', (name) => log('Welcome,', name));
+        emitter.emit('greet', 'Alice');
+        emitter.emit('greet', 'Bob');
+    </script>
+
+</body>
+</html>

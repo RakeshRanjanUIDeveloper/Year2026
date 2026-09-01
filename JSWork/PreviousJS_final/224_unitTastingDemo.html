@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Testing Demo</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Unit Testing Demo</h1>
+    <pre><code>// MyComponent.js
+import React from 'react';
+
+const MyComponent = () =&gt; (
+  &lt;div&gt;
+    &lt;h1 data-testid="heading"&gt;Welcome to Jest Testing&lt;/h1&gt;
+    &lt;button data-testid="button"&gt;Click Me&lt;/button&gt;
+  &lt;/div&gt;
+);
+
+export default MyComponent;
+
+
+//Testing
+
+// MyComponent.test.js
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect'; // for additional matchers like toBeInTheDocument
+import MyComponent from './MyComponent';
+
+test('renders the heading and button', () =&gt; {
+  // Render the component
+  render(&lt;MyComponent /&gt;);
+
+  // Select the heading element using getByTestId
+  const headingElement = screen.getByTestId('heading');
+  expect(headingElement).toBeInTheDocument();
+  expect(headingElement).toHaveTextContent('Welcome to Jest Testing');
+
+  // Select the button element using getByTestId
+  const buttonElement = screen.getByTestId('button');
+  expect(buttonElement).toBeInTheDocument();
+  expect(buttonElement).toHaveTextContent('Click Me');
+});
+</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// MyComponent.js
+import React from 'react';
+
+const MyComponent = () => (
+  <div>
+    <h1 data-testid="heading">Welcome to Jest Testing</h1>
+    <button data-testid="button">Click Me</button>
+  </div>
+);
+
+export default MyComponent;
+
+
+//Testing
+
+// MyComponent.test.js
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect'; // for additional matchers like toBeInTheDocument
+import MyComponent from './MyComponent';
+
+test('renders the heading and button', () => {
+  // Render the component
+  render(<MyComponent />);
+
+  // Select the heading element using getByTestId
+  const headingElement = screen.getByTestId('heading');
+  expect(headingElement).toBeInTheDocument();
+  expect(headingElement).toHaveTextContent('Welcome to Jest Testing');
+
+  // Select the button element using getByTestId
+  const buttonElement = screen.getByTestId('button');
+  expect(buttonElement).toBeInTheDocument();
+  expect(buttonElement).toHaveTextContent('Click Me');
+});
+
+    </script>
+</body>
+</html>

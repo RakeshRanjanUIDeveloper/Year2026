@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cars24 — Complete Interview Question</title>
+  <style>
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.8;max-width:900px;margin:0 auto}
+    h1{color:#58a6ff;font-size:1.5em;margin-bottom:4px}
+    .subtitle{color:#8b949e;font-size:.85em;margin-bottom:24px}
+    pre{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;white-space:pre-wrap;word-wrap:break-word;font-family:'Cascadia Code','Fira Code',monospace;font-size:.88em;color:#e6edf3;overflow-x:auto}
+  </style>
+</head>
+<body>
+  <h1>Cars24 — Complete Interview Question</h1>
+  <p class="subtitle">Reference Notes</p>
+  <pre>Implement an EventEmitter class.This class is important for creating event-driven
+ applications and involves subscribing to events, emitting them, handling optional
+  parameters, and managing subscriptions.
+The main focus of this lab is to implement the EventEmitter class with the following 
+two methods:
+subscribe - This method will accept two arguments: the name of an event as a string 
+and a callback function. When the event is emitted, the callback function will be 
+executed. Events can have multiple listeners and their callbacks must be invoked in
+ the order they were added. The method should return an object with an unsubscribe
+  method that a user can use to unsubscribe.
+emit - This method will receive the name of an event and an optional array of arguments 
+that will be provided to the associated callbacks. If no callbacks are subscribed to the
+ event, an empty array should be returned, otherwise, an array with the results of all 
+ callbacks should be returned, in order of their addition.
+Here are some examples to help you understand the desired EventEmitter class 
+implementation:
+Example 1:
+const emitter = new EventEmitter();
+emitter.emit("firstEvent"); // [], no callbacks are subscribed yet
+emitter.subscribe("firstEvent", function cb1() { return 5; });
+emitter.subscribe("firstEvent", function cb2() { return 6; });
+emitter.emit("firstEvent"); // [5, 6], returns the output of cb1 and cb2
+Example 2:
+const emitter = new EventEmitter();
+emitter.subscribe("firstEvent", function cb1(...args) { return args.join(','); });
+emitter.emit("firstEvent", [1, 2, 3]); // ["1,2,3"]
+emitter.emit("firstEvent", [3, 4, 6]); // ["3,4,6"]
+Note that the emit method should be able to accept an OPTIONAL array of arguments.
+Example 3:
+const emitter = new EventEmitter();
+const sub = emitter.subscribe("firstEvent", (...args) =&gt; args.join(','));
+emitter.emit("firstEvent", [1, 2, 3]); // ["1,2,3"]
+sub.unsubscribe(); // undefined
+emitter.emit("firstEvent", [4, 5, 6]); // [], there are no subscriptions
+Const obj={};
+Obj
+class EventEmitter{
+
+function subscribe(eventName, callBackFn){
+const obj={};
+obj.eventName=callBackFn;
+
+}
+function emit(eventName){
+if(obj[eventName]){
+
+}else{
+return obj
+}
+}
+}
+const emitter = new EventEmitter();
+emitter.emit("firstEvent");
+emitter.subscribe("firstEvent", function cb1() { return 5; });
+emitter.subscribe("firstEvent", function cb2() { return 6; });
+
+
+</pre>
+</body>
+</html>

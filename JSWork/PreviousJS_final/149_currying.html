@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currying</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Currying</h1>
+    <pre><code>/* let multiply=function(x,y){
+console.log(x*y);
+} */
+/* let multiplyByTwo=multiply.bind(this,2);
+multiplyByTwo(5);
+let multiplyByThree=multiply.bind(this,3);
+multiplyByThree(5); */
+
+let multiply=function(x){
+    return function(y){
+    console.log(x*y);
+    }
+    }
+    let multiplyByTwo=multiply(2);
+    multiplyByTwo(3);
+    let multiplyByThree=multiply(3);
+    multiplyByThree(3);
+
+//print 1 to 5 after 1 sec of delay
+for (let i = 1; i &lt;= 5; i++) {
+    setTimeout(() =&gt; {
+      console.log(i);
+    }, i * 1000);
+  } </code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+/* let multiply=function(x,y){
+console.log(x*y);
+} */
+/* let multiplyByTwo=multiply.bind(this,2);
+multiplyByTwo(5);
+let multiplyByThree=multiply.bind(this,3);
+multiplyByThree(5); */
+
+let multiply=function(x){
+    return function(y){
+    console.log(x*y);
+    }
+    }
+    let multiplyByTwo=multiply(2);
+    multiplyByTwo(3);
+    let multiplyByThree=multiply(3);
+    multiplyByThree(3);
+
+//print 1 to 5 after 1 sec of delay
+for (let i = 1; i <= 5; i++) {
+    setTimeout(() => {
+      console.log(i);
+    }, i * 1000);
+  } 
+    </script>
+</body>
+</html>

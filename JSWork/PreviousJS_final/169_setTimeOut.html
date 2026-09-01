@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>set Time Out</title>
+</head>
+
+<body>
+    <script>
+        // Write a program that logs numbers from 1 to 5
+        // with a delay of 1 second between each log using setTimeout.
+
+        // Using let (block scoped - works correctly)
+        for (let i = 1; i <= 5; i++) {
+            setTimeout(() => {
+                console.log('With let:', i);
+            }, i * 1000);
+        }
+
+        // Using var + closure to fix the classic problem
+        for (var j = 1; j <= 5; j++) {
+            (function(num) {
+                setTimeout(() => {
+                    console.log('With var+closure:', num);
+                }, num * 1000);
+            })(j);
+        }
+</script>
+</body>
+
+</html>

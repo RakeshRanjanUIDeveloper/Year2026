@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combination Sum</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7;max-width:960px;margin:0 auto}
+    h1{color:#58a6ff;font-size:1.5em;margin-bottom:8px}
+    .meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+    .badge{padding:3px 12px;border-radius:20px;font-size:.75em;font-weight:700;color:#fff;background:#d29922}
+    .company{background:#21262d;color:#8b949e;padding:2px 8px;border-radius:4px;font-size:.75em;border:1px solid #30363d}
+    .section{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:18px;margin-bottom:16px}
+    .section h2{color:#79c0ff;font-size:.85em;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+    p,li{color:#c9d1d9;font-size:.92em;margin-bottom:6px}
+    ul{padding-left:18px}
+    code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.85em}
+    pre{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;overflow-x:auto;margin-top:8px}
+    pre code{background:none;color:#e6edf3;padding:0;font-family:'Cascadia Code','Fira Code',monospace;font-size:.84em;line-height:1.7}
+    .solution pre code{color:#aff5b4}
+    .complexity{display:flex;gap:16px;flex-wrap:wrap}
+    .complexity span{background:#21262d;padding:4px 12px;border-radius:6px;font-size:.82em;color:#79c0ff;border:1px solid #30363d}
+    .tag{color:#8b949e;font-size:.8em}
+    details summary{cursor:pointer;color:#58a6ff;font-size:.9em;padding:4px 0;user-select:none}
+    details summary:hover{color:#79c0ff}
+    .output{background:#0a1f0a;border:1px solid #238636;border-radius:6px;padding:12px;margin-top:8px;font-family:monospace;font-size:.83em;color:#3fb950}
+  </style>
+</head>
+<body>
+  <h1>Combination Sum</h1>
+  <div class="meta">
+    <span class="badge">MEDIUM</span>
+    <span class="company">amazon</span><span class="company">meesho</span><span class="company">airbnb</span>
+  </div>
+
+  <div class="section">
+    <h2>📋 Problem</h2>
+    <p>Find all unique combinations of candidates that sum to target. Each number may be used unlimited times. Return all combinations.</p>
+    <pre><code>combinationSum([2,3,6,7], 7)
+// [[2,2,3],[7]]
+
+combinationSum([2,3,5], 8)
+// [[2,2,2,2],[2,3,3],[3,5]]</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>💡 Approach</h2>
+    <p>Backtracking: sort candidates, then recursively try each candidate. Allow reuse by not advancing index. Prune when sum exceeds target.</p>
+  </div>
+
+  <div class="section solution">
+    <h2>✅ Solution</h2>
+    <pre><code>function combinationSum(candidates, target) {
+  const result = [];
+  candidates.sort((a, b) => a - b);
+
+  function backtrack(start, current, remaining) {
+    if (remaining === 0) {
+      result.push([...current]);
+      return;
+    }
+    for (let i = start; i < candidates.length; i++) {
+      if (candidates[i] > remaining) break; // pruning
+      current.push(candidates[i]);
+      backtrack(i, current, remaining - candidates[i]); // reuse same i
+      current.pop();
+    }
+  }
+
+  backtrack(0, [], target);
+  return result;
+}
+
+console.log(combinationSum([2,3,6,7], 7));
+// [[2,2,3],[7]]
+
+console.log(combinationSum([2,3,5], 8));
+// [[2,2,2,2],[2,3,3],[3,5]]</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>⏱ Complexity</h2>
+    <div class="complexity"><span>Time: O(n^(t/m))</span><span>Space: O(t/m) depth</span></div>
+  </div>
+
+  <div class="section">
+    <h2>▶ Run Output</h2>
+    <div class="output" id="out"></div>
+  </div>
+
+  <script>
+    const out = document.getElementById('out');
+    const _log = console.log;
+    console.log = (...a) => {
+      _log(...a);
+      const d = document.createElement('div');
+      d.textContent = a.map(x => typeof x === 'object' ? JSON.stringify(x,null,2) : String(x)).join(' ');
+      out.appendChild(d);
+    };
+  </script>
+  <script>
+function combinationSum(candidates, target) {
+  const result = [];
+  candidates.sort((a, b) => a - b);
+
+  function backtrack(start, current, remaining) {
+    if (remaining === 0) {
+      result.push([...current]);
+      return;
+    }
+    for (let i = start; i < candidates.length; i++) {
+      if (candidates[i] > remaining) break; // pruning
+      current.push(candidates[i]);
+      backtrack(i, current, remaining - candidates[i]); // reuse same i
+      current.pop();
+    }
+  }
+
+  backtrack(0, [], target);
+  return result;
+}
+
+console.log(combinationSum([2,3,6,7], 7));
+// [[2,2,3],[7]]
+
+console.log(combinationSum([2,3,5], 8));
+// [[2,2,2,2],[2,3,3],[3,5]]
+  </script>
+</body>
+</html>

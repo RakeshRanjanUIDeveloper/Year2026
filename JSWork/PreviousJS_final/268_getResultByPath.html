@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>get Result By Path</title>
+</head>
+
+<body>
+    <script>
+        const obj = {
+            data: {
+                results:
+                {
+                    status: "completed",
+                    error: "",
+                }
+            },
+        }
+        const path = "data.results.status";
+        function getResultByPath(path, obj) {
+            const formattedPath = path.replace(/\[(\d+)\]/g, ".$1");
+            const keys = formattedPath.split(".");
+            let result = obj;
+            for (const key of keys) {
+                if (result == null || result[key] === undefined) {
+                    return undefined;
+                }
+                result = result[key]
+            }
+            return result
+        }
+        console.log(getResultByPath(path, obj));
+
+    </script>
+</body>
+
+</html>

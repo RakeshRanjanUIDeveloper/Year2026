@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Questions - Set 1</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Interview Questions - Set 1</h1>
+    <pre><code>// let arr = [2023, 2024, 2025, 2026, 2027, 2028, 2029];
+
+// console.log(arr.filter((res) =&gt; res % 4 == 0));
+
+
+// 10209187126
+// 10*****7126
+
+// let curr = 10209187126;
+// let firstVal = 2;
+// let lastVal = 7;
+
+
+// console.log(String(curr).split('').map((res, index) =&gt; {
+//     if (index &gt;= firstVal && index &lt;= lastVal) {
+//         return '*';
+//     }
+//     return res;
+// }).join(''));
+
+
+console.log('Delhi');
+setTimeout(function () {
+    console.log('Mumbai')
+}, 0)
+
+const p1 = () =&gt; {
+    return new Promise((resolve, reject) =&gt; {
+        console.log('Agra')
+        resolve('Kolkata')
+        console.log('Kochi')
+    })
+}
+
+console.log('Ajmer')
+
+p1().then((res) =&gt; {
+    console.log(res)
+})
+
+// Delhi 
+// Ajmer
+// Agra
+// Kochi
+// Kolkata
+// Mumbai</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+// let arr = [2023, 2024, 2025, 2026, 2027, 2028, 2029];
+
+// console.log(arr.filter((res) => res % 4 == 0));
+
+
+// 10209187126
+// 10*****7126
+
+// let curr = 10209187126;
+// let firstVal = 2;
+// let lastVal = 7;
+
+
+// console.log(String(curr).split('').map((res, index) => {
+//     if (index >= firstVal && index <= lastVal) {
+//         return '*';
+//     }
+//     return res;
+// }).join(''));
+
+
+console.log('Delhi');
+setTimeout(function () {
+    console.log('Mumbai')
+}, 0)
+
+const p1 = () => {
+    return new Promise((resolve, reject) => {
+        console.log('Agra')
+        resolve('Kolkata')
+        console.log('Kochi')
+    })
+}
+
+console.log('Ajmer')
+
+p1().then((res) => {
+    console.log(res)
+})
+
+// Delhi 
+// Ajmer
+// Agra
+// Kochi
+// Kolkata
+// Mumbai
+    </script>
+</body>
+</html>

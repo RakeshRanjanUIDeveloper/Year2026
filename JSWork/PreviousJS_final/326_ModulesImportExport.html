@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modules — import / export / Dynamic Import</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7}
+    h1{color:#58a6ff;font-size:1.6em;margin-bottom:6px}
+    .subtitle{color:#8b949e;font-size:.9em;margin-bottom:24px}
+    .concept{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin-bottom:28px}
+    .concept h2{color:#79c0ff;font-size:1em;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+    .concept p,.concept li{color:#c9d1d9;font-size:.93em;margin-bottom:8px}
+    .concept ul{padding-left:20px}
+    .concept code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.88em}
+    .challenges h2{color:#79c0ff;font-size:1em;margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em}
+    .challenge{background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;overflow:hidden}
+    .challenge-header{padding:12px 16px;display:flex;align-items:center;gap:10px}
+    .badge{color:#fff;padding:2px 10px;border-radius:20px;font-size:.72em;font-weight:700;letter-spacing:.05em}
+    .desc{padding:10px 16px;color:#8b949e;font-size:.88em;border-top:1px solid #21262d}
+    pre{margin:0;overflow-x:auto}
+    pre code{display:block;padding:14px 16px;font-size:.83em;font-family:'Cascadia Code','Fira Code',monospace;line-height:1.6}
+    .starter code{color:#e6edf3;background:#0d1117}
+    .solution code{color:#aff5b4;background:#0a1f0a}
+    details{border-top:1px solid #21262d}
+    summary{padding:10px 16px;cursor:pointer;color:#58a6ff;font-size:.85em;user-select:none}
+    summary:hover{color:#79c0ff}
+    .output-area{background:#0d1117;border-top:1px solid #21262d;padding:10px 16px;min-height:32px;font-size:.82em;color:#3fb950;font-family:monospace}
+    .run-btn{margin:8px 16px 12px;background:#238636;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.82em}
+    .run-btn:hover{background:#2ea043}
+  </style>
+</head>
+<body>
+  <h1>Modules — import / export / Dynamic Import</h1>
+  <p class="subtitle">JavaScript Interview Topic — Easy · Medium · Hard Challenges</p>
+
+  <div class="concept">
+    <h2>📖 Concept</h2>
+    <p>ES Modules let you split code into reusable files. Browsers support them natively with <code>type="module"</code>.</p>
+<ul>
+  <li><strong>Named export:</strong> <code>export const fn = () => {}</code> — import as <code>import { fn } from './file.js'</code></li>
+  <li><strong>Default export:</strong> <code>export default class MyClass {}</code> — import as <code>import MyClass from './file.js'</code></li>
+  <li><strong>Re-export:</strong> <code>export { fn } from './other.js'</code></li>
+  <li><strong>Dynamic import:</strong> <code>const mod = await import('./heavy.js')</code> — loads on demand</li>
+  <li>Modules are always strict mode, run once and are cached</li>
+</ul>
+<pre><code style="background:#0d1117;color:#e6edf3;display:block;padding:10px;border-radius:6px;font-size:.85em">// math.js
+export const add = (a,b) => a + b;
+export default function multiply(a,b) { return a*b; }
+
+// app.js
+import multiply, { add } from './math.js';
+import('./heavy.js').then(mod => mod.init()); // dynamic</code></pre>
+  </div>
+
+  <div class="challenges">
+    <h2>🎯 Interview Challenges</h2>
+    
+        <div class="challenge easy">
+          <div class="challenge-header" style="background:#3fb95022;border-left:4px solid #3fb950">
+            <span class="badge" style="background:#3fb950">EASY</span>
+            <strong>Named vs Default export — what is the difference?</strong>
+          </div>
+          <p class="desc">Explain and demonstrate: when to use default vs named export, and how renaming works on import.</p>
+          <pre class="starter"><code>// Starter Code
+// Imagine these are separate files — demonstrate the pattern inline
+
+// Named exports — a module can have many
+const PI = 3.14159;
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+// export { PI, add, subtract };
+
+// Default export — a module can have only ONE
+// export default class Calculator {}
+
+// Import examples:
+// import { add, subtract, PI } from './math.js';
+// import { add as sum } from './math.js'; // rename
+// import Calculator from './calc.js';     // default - any name works
+// import Calculator, { add } from './math.js'; // both together</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>// Key rules:
+// 1. Named: import name MUST match export name (or use 'as')
+// 2. Default: import name can be anything
+// 3. One default per file; unlimited named exports
+// 4. Prefer named exports — they're easier to tree-shake and IDE-autocomplete
+
+// Real usage pattern:
+// utils.js
+const formatDate = d => d.toISOString().slice(0,10);
+const formatCurrency = n => '$' + n.toFixed(2);
+// export { formatDate, formatCurrency };  // named — use specific ones you need
+
+// UserService.js
+// export default class UserService { ... } // default — the main thing a file provides
+
+// app.js
+// import UserService from './UserService.js';
+// import { formatDate, formatCurrency } from './utils.js';
+
+console.log('Module pattern demonstrated in comments above');</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge medium">
+          <div class="challenge-header" style="background:#d2992222;border-left:4px solid #d29922">
+            <span class="badge" style="background:#d29922">MEDIUM</span>
+            <strong>Dynamic Import for code splitting</strong>
+          </div>
+          <p class="desc">Show how dynamic import() is used for lazy loading — only load a heavy module when actually needed (e.g. on button click).</p>
+          <pre class="starter"><code>// Starter Code
+// Simulate a heavy module
+const heavyModule = {
+  processData: (data) => data.map(x => x * 2)
+};
+
+// Without dynamic import — loaded even if never used:
+// import { processData } from './heavy.js';
+
+// With dynamic import — only loaded on demand:
+async function onButtonClick(data) {
+  // dynamically import only when needed
+  const { processData } = await import('./heavy.js'); // in real code
+  // For demo, simulate the dynamic load:
+  const mod = await Promise.resolve(heavyModule);
+  return mod.processData(data);
+}
+
+onButtonClick([1, 2, 3]).then(result => console.log(result)); // [2, 4, 6]</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>// Real dynamic import patterns:
+
+// 1. Lazy load on user action
+document.getElementById?.('btn')?.addEventListener('click', async () => {
+  const { Chart } = await import('./Chart.js'); // loads only on click
+  new Chart(data);
+});
+
+// 2. Conditional load based on env
+async function loadPolyfill() {
+  if (!window.IntersectionObserver) {
+    await import('./intersection-observer-polyfill.js');
+  }
+}
+
+// 3. Load by route (React-like code splitting)
+async function loadRoute(routeName) {
+  const module = await import(`./routes/${routeName}.js`);
+  return module.default; // the page component
+}
+
+// Demo simulation:
+async function onButtonClick(data) {
+  const mod = await Promise.resolve({ processData: arr => arr.map(x => x * 2) });
+  return mod.processData(data);
+}
+
+onButtonClick([1, 2, 3]).then(r => console.log(r)); // [2, 4, 6]</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge hard">
+          <div class="challenge-header" style="background:#f8514922;border-left:4px solid #f85149">
+            <span class="badge" style="background:#f85149">HARD</span>
+            <strong>Build a plugin system using dynamic imports</strong>
+          </div>
+          <p class="desc">Create a PluginManager that registers plugins by name and loads them lazily (simulated). Plugins follow a standard interface: { name, init(context) }.</p>
+          <pre class="starter"><code>// Starter Code
+// Simulated plugin modules
+const plugins = {
+  logger: { name: 'logger', init(ctx) { ctx.log = console.log; console.log('Logger ready'); } },
+  analytics: { name: 'analytics', init(ctx) { ctx.track = (e) => console.log('track:', e); console.log('Analytics ready'); } },
+};
+
+class PluginManager {
+  constructor() {
+    this.context = {};
+    this.loaded = new Set();
+  }
+
+  async load(name) {
+    // simulate dynamic import
+    // call plugin.init(this.context)
+    // track loaded plugins
+  }
+
+  async loadAll(names) {
+    // load all in parallel
+  }
+}
+
+const pm = new PluginManager();
+pm.loadAll(['logger', 'analytics']).then(() => {
+  pm.context.log('Hello from plugin system');
+  pm.context.track('page_view');
+});</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>const plugins = {
+  logger:    { name: 'logger',    init(ctx) { ctx.log = console.log; console.log('Logger ready'); }},
+  analytics: { name: 'analytics', init(ctx) { ctx.track = e => console.log('track:', e); console.log('Analytics ready'); }},
+};
+
+class PluginManager {
+  constructor() { this.context = {}; this.loaded = new Set(); }
+
+  async load(name) {
+    if (this.loaded.has(name)) return; // cached — don't load twice
+    const plugin = await Promise.resolve(plugins[name]); // simulate dynamic import
+    if (!plugin) throw new Error(`Plugin "${name}" not found`);
+    plugin.init(this.context);
+    this.loaded.add(name);
+  }
+
+  async loadAll(names) {
+    await Promise.all(names.map(n => this.load(n)));
+  }
+}
+
+const pm = new PluginManager();
+pm.loadAll(['logger', 'analytics']).then(() => {
+  pm.context.log('Hello');
+  pm.context.track('page_view');
+});</code></pre>
+          </details>
+        </div>
+  </div>
+
+  <script>
+    // Console capture for run buttons (if added later)
+    const _log = console.log;
+    console.log = function(...a){
+      _log(...a);
+    };
+  </script>
+</body>
+</html>

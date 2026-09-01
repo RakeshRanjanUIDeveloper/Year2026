@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create A Promise</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        h1 { color: #569cd6; font-size: 1.2em; margin-bottom: 10px; }
+        pre { background: #252526; padding: 16px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+        #output { background: #252526; padding: 16px; border-radius: 6px; margin-top: 16px; min-height: 40px; }
+        #output::before { content: '// Output'; color: #608b4e; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Create A Promise</h1>
+    <pre><code>const cart = ["shirts", "trousers", "shoes"];
+
+
+// Consumer
+createOrder(cart)
+    .then(function (orderId) {
+        console.log(orderId);
+        return orderId
+    })
+    .then((orderId) =&gt; {
+        return proceedToPayment(orderId);
+    })
+    .then((paymentInfo) =&gt; {
+        console.log(paymentInfo);
+    })
+    .then(() =&gt; {
+        return showOrderSummary();
+    })
+    .then((orderStatus) =&gt; {
+        console.log(orderStatus);
+    })
+    .then(() =&gt; {
+        return updateWallet();
+    })
+    .then((walletBal) =&gt; {
+        console.log(walletBal);
+    })
+    .catch((err) =&gt; {
+        console.log(err.message);
+    })
+
+
+
+function createOrder(cart) {
+    // Producer
+    const pr = new Promise(function (resolve, reject) {
+
+        // createOrder
+        // validateCart
+        // orderId
+        if (!isValidateCart(cart)) {
+            const err = new Error("Cart is not Valid");
+            reject(err);
+        }
+
+        // logic for createOrder
+        const orderId = "12345";
+        setTimeout(() =&gt; {
+            resolve(orderId)
+        }, 5000);
+    });
+
+    return pr;
+};
+
+function proceedToPayment(orderId) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(() =&gt; {
+            resolve('Payment Successful');
+        }, 3000);
+    })
+}
+
+function showOrderSummary() {
+    const msg = "Shirts ordered successfully"
+    return new Promise(function (resolve, reject) {
+        setTimeout(() =&gt; {
+            resolve(msg);
+        }, 2000)
+    })
+
+}
+
+function updateWallet() {
+    const walletbalance = "₹ 100"
+    return new Promise(function (resolve, reject) {
+        setTimeout(() =&gt; {
+            resolve(walletbalance);
+        }, 2000);
+    })
+}
+
+
+function isValidateCart(cart) {
+    return true;
+}</code></pre>
+    <div id="output"></div>
+    <script>
+        // Capture console.log output and display on page
+        const outputDiv = document.getElementById('output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const line = document.createElement('div');
+            line.textContent = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+            outputDiv.appendChild(line);
+        };
+    </script>
+    <script>
+const cart = ["shirts", "trousers", "shoes"];
+
+
+// Consumer
+createOrder(cart)
+    .then(function (orderId) {
+        console.log(orderId);
+        return orderId
+    })
+    .then((orderId) => {
+        return proceedToPayment(orderId);
+    })
+    .then((paymentInfo) => {
+        console.log(paymentInfo);
+    })
+    .then(() => {
+        return showOrderSummary();
+    })
+    .then((orderStatus) => {
+        console.log(orderStatus);
+    })
+    .then(() => {
+        return updateWallet();
+    })
+    .then((walletBal) => {
+        console.log(walletBal);
+    })
+    .catch((err) => {
+        console.log(err.message);
+    })
+
+
+
+function createOrder(cart) {
+    // Producer
+    const pr = new Promise(function (resolve, reject) {
+
+        // createOrder
+        // validateCart
+        // orderId
+        if (!isValidateCart(cart)) {
+            const err = new Error("Cart is not Valid");
+            reject(err);
+        }
+
+        // logic for createOrder
+        const orderId = "12345";
+        setTimeout(() => {
+            resolve(orderId)
+        }, 5000);
+    });
+
+    return pr;
+};
+
+function proceedToPayment(orderId) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(() => {
+            resolve('Payment Successful');
+        }, 3000);
+    })
+}
+
+function showOrderSummary() {
+    const msg = "Shirts ordered successfully"
+    return new Promise(function (resolve, reject) {
+        setTimeout(() => {
+            resolve(msg);
+        }, 2000)
+    })
+
+}
+
+function updateWallet() {
+    const walletbalance = "₹ 100"
+    return new Promise(function (resolve, reject) {
+        setTimeout(() => {
+            resolve(walletbalance);
+        }, 2000);
+    })
+}
+
+
+function isValidateCart(cart) {
+    return true;
+}
+    </script>
+</body>
+</html>

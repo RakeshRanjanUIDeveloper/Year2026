@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Output Questions & Tricky Snippets</title>
+  <style>
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.8;max-width:900px;margin:0 auto}
+    h1{color:#58a6ff;font-size:1.5em;margin-bottom:4px}
+    .subtitle{color:#8b949e;font-size:.85em;margin-bottom:24px}
+    pre{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;white-space:pre-wrap;word-wrap:break-word;font-family:'Cascadia Code','Fira Code',monospace;font-size:.88em;color:#e6edf3;overflow-x:auto}
+  </style>
+</head>
+<body>
+  <h1>Output Questions & Tricky Snippets</h1>
+  <p class="subtitle">Reference Notes</p>
+  <pre>
+==========================
+const a = {};
+const b = { key: 'b' };
+const c = { key: 'c' };
+ 
+a[b] = 123;
+a[c] = 456;
+ 
+console.log(a[b]); // 456
+==========================
+ function Counter() {
+
+  const [count, setCount] = React.useState(0);
+ 
+  function handleClick() {
+
+    setTimeout(() =&gt; {
+
+      setCount(count + 1); // 1
+
+    }, 1000);
+
+  }
+ 
+  return &lt;button onClick={handleClick}&gt;Click&lt;/button&gt;;
+
+}
+ 
+===========================================================
+function App() {
+  return
+    &lt;div&gt;Hello&lt;/div&gt;; 
+}
+============================================================
+    const [a, setA] = useState(0);
+const [b, setB] = useState(0);
+
+function update() {
+  setA(prevA =&gt; prevA + 1);
+  setB(prevB =&gt; prevB + 1);
+  console.log(a, b); // 👀 This logs 0, 0 — not 1, 1
+}
+
+useEffect(() =&gt; {
+  update();
+}, []);
+useEffect(() =&gt; {
+  console.log(a,b) // 1, 1
+}, [a,b]);
+=========================================
+</pre>
+</body>
+</html>

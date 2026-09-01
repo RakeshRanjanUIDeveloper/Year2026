@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strict Mode — use strict</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7}
+    h1{color:#58a6ff;font-size:1.6em;margin-bottom:6px}
+    .subtitle{color:#8b949e;font-size:.9em;margin-bottom:24px}
+    .concept{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin-bottom:28px}
+    .concept h2{color:#79c0ff;font-size:1em;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+    .concept p,.concept li{color:#c9d1d9;font-size:.93em;margin-bottom:8px}
+    .concept ul{padding-left:20px}
+    .concept code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.88em}
+    .challenges h2{color:#79c0ff;font-size:1em;margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em}
+    .challenge{background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;overflow:hidden}
+    .challenge-header{padding:12px 16px;display:flex;align-items:center;gap:10px}
+    .badge{color:#fff;padding:2px 10px;border-radius:20px;font-size:.72em;font-weight:700;letter-spacing:.05em}
+    .desc{padding:10px 16px;color:#8b949e;font-size:.88em;border-top:1px solid #21262d}
+    pre{margin:0;overflow-x:auto}
+    pre code{display:block;padding:14px 16px;font-size:.83em;font-family:'Cascadia Code','Fira Code',monospace;line-height:1.6}
+    .starter code{color:#e6edf3;background:#0d1117}
+    .solution code{color:#aff5b4;background:#0a1f0a}
+    details{border-top:1px solid #21262d}
+    summary{padding:10px 16px;cursor:pointer;color:#58a6ff;font-size:.85em;user-select:none}
+    summary:hover{color:#79c0ff}
+    .output-area{background:#0d1117;border-top:1px solid #21262d;padding:10px 16px;min-height:32px;font-size:.82em;color:#3fb950;font-family:monospace}
+    .run-btn{margin:8px 16px 12px;background:#238636;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.82em}
+    .run-btn:hover{background:#2ea043}
+  </style>
+</head>
+<body>
+  <h1>Strict Mode — use strict</h1>
+  <p class="subtitle">JavaScript Interview Topic — Easy · Medium · Hard Challenges</p>
+
+  <div class="concept">
+    <h2>📖 Concept</h2>
+    <p><code>"use strict"</code> activates strict mode — a restricted variant of JS that catches common mistakes and prevents unsafe features.</p>
+<ul>
+  <li>Eliminates silent errors (throws them instead)</li>
+  <li>Prevents using undeclared variables</li>
+  <li><code>this</code> is <code>undefined</code> in regular functions (not global)</li>
+  <li>Disallows duplicate parameter names</li>
+  <li>Makes <code>eval</code> and <code>arguments</code> safer</li>
+  <li>Can be applied to a whole file or individual functions</li>
+</ul>
+<pre><code style="background:#0d1117;color:#e6edf3;display:block;padding:10px;border-radius:6px;font-size:.85em">"use strict";
+x = 5; // ReferenceError: x is not defined
+function f() { return this; } // undefined, not window</code></pre>
+  </div>
+
+  <div class="challenges">
+    <h2>🎯 Interview Challenges</h2>
+    
+        <div class="challenge easy">
+          <div class="challenge-header" style="background:#3fb95022;border-left:4px solid #3fb950">
+            <span class="badge" style="background:#3fb950">EASY</span>
+            <strong>Spot the Strict Mode Error</strong>
+          </div>
+          <p class="desc">Which of these lines will throw in strict mode? Identify each one.</p>
+          <pre class="starter"><code>// Starter Code
+"use strict";
+
+// Line A
+undeclared = 10;
+
+// Line B
+let obj = {};
+Object.defineProperty(obj, 'x', { value: 42, writable: false });
+obj.x = 100;
+
+// Line C
+function sum(a, a) { return a + a; }
+
+// Which lines throw?</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>// Line A → ReferenceError: undeclared is not defined
+//   (without strict mode, it silently creates a global)
+
+// Line B → TypeError: Cannot assign to read only property 'x'
+//   (without strict mode, the assignment silently fails)
+
+// Line C → SyntaxError: Duplicate parameter name not allowed in strict mode
+//   (without strict mode, second 'a' just shadows the first)</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge medium">
+          <div class="challenge-header" style="background:#d2992222;border-left:4px solid #d29922">
+            <span class="badge" style="background:#d29922">MEDIUM</span>
+            <strong>this in Strict Mode</strong>
+          </div>
+          <p class="desc">Write two versions of a function — one strict, one not — and show how 'this' differs when called as a plain function (not as a method).</p>
+          <pre class="starter"><code>// Starter Code
+function nonStrict() {
+  console.log(this); // ?
+}
+
+function strict() {
+  "use strict";
+  console.log(this); // ?
+}
+
+nonStrict();
+strict();</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function nonStrict() {
+  console.log(this); // Window (in browser) or global object in Node
+}
+
+function strict() {
+  "use strict";
+  console.log(this); // undefined — strict mode does NOT default 'this' to global
+}
+
+nonStrict(); // [object Window]
+strict();    // undefined
+
+// This matters for constructors and class methods — strict mode prevents
+// accidentally polluting the global object through this.</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge hard">
+          <div class="challenge-header" style="background:#f8514922;border-left:4px solid #f85149">
+            <span class="badge" style="background:#f85149">HARD</span>
+            <strong>Build a Strict-Mode Safe Module Pattern</strong>
+          </div>
+          <p class="desc">Create a BankAccount module using an IIFE with strict mode. It should have deposit(n), withdraw(n), and getBalance(). Withdrawing more than the balance should throw an error.</p>
+          <pre class="starter"><code>// Starter Code
+const BankAccount = (function() {
+  "use strict";
+  // private state
+  // implement: deposit, withdraw, getBalance
+})();
+
+BankAccount.deposit(100);
+BankAccount.deposit(50);
+BankAccount.withdraw(30);
+console.log(BankAccount.getBalance()); // 120
+BankAccount.withdraw(200); // should throw</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>const BankAccount = (function() {
+  "use strict";
+  let balance = 0;
+
+  return {
+    deposit(n) {
+      if (typeof n !== 'number' || n <= 0) throw new Error('Invalid amount');
+      balance += n;
+    },
+    withdraw(n) {
+      if (typeof n !== 'number' || n <= 0) throw new Error('Invalid amount');
+      if (n > balance) throw new Error(`Insufficient funds. Balance: ${balance}`);
+      balance -= n;
+    },
+    getBalance() { return balance; }
+  };
+})();
+
+BankAccount.deposit(100);
+BankAccount.deposit(50);
+BankAccount.withdraw(30);
+console.log(BankAccount.getBalance()); // 120
+try { BankAccount.withdraw(200); } catch(e) { console.log(e.message); }</code></pre>
+          </details>
+        </div>
+  </div>
+
+  <script>
+    // Console capture for run buttons (if added later)
+    const _log = console.log;
+    console.log = function(...a){
+      _log(...a);
+    };
+  </script>
+</body>
+</html>

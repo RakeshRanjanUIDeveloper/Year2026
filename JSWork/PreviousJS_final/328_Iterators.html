@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iterators & Iteration Protocol</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7}
+    h1{color:#58a6ff;font-size:1.6em;margin-bottom:6px}
+    .subtitle{color:#8b949e;font-size:.9em;margin-bottom:24px}
+    .concept{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin-bottom:28px}
+    .concept h2{color:#79c0ff;font-size:1em;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+    .concept p,.concept li{color:#c9d1d9;font-size:.93em;margin-bottom:8px}
+    .concept ul{padding-left:20px}
+    .concept code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.88em}
+    .challenges h2{color:#79c0ff;font-size:1em;margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em}
+    .challenge{background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;overflow:hidden}
+    .challenge-header{padding:12px 16px;display:flex;align-items:center;gap:10px}
+    .badge{color:#fff;padding:2px 10px;border-radius:20px;font-size:.72em;font-weight:700;letter-spacing:.05em}
+    .desc{padding:10px 16px;color:#8b949e;font-size:.88em;border-top:1px solid #21262d}
+    pre{margin:0;overflow-x:auto}
+    pre code{display:block;padding:14px 16px;font-size:.83em;font-family:'Cascadia Code','Fira Code',monospace;line-height:1.6}
+    .starter code{color:#e6edf3;background:#0d1117}
+    .solution code{color:#aff5b4;background:#0a1f0a}
+    details{border-top:1px solid #21262d}
+    summary{padding:10px 16px;cursor:pointer;color:#58a6ff;font-size:.85em;user-select:none}
+    summary:hover{color:#79c0ff}
+    .output-area{background:#0d1117;border-top:1px solid #21262d;padding:10px 16px;min-height:32px;font-size:.82em;color:#3fb950;font-family:monospace}
+    .run-btn{margin:8px 16px 12px;background:#238636;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:.82em}
+    .run-btn:hover{background:#2ea043}
+  </style>
+</head>
+<body>
+  <h1>Iterators & Iteration Protocol</h1>
+  <p class="subtitle">JavaScript Interview Topic — Easy · Medium · Hard Challenges</p>
+
+  <div class="concept">
+    <h2>📖 Concept</h2>
+    <p>An <strong>iterator</strong> is any object with a <code>next()</code> method returning <code>{ value, done }</code>. An <strong>iterable</strong> is any object with <code>[Symbol.iterator]()</code> that returns an iterator.</p>
+<ul>
+  <li>Built-in iterables: Array, String, Map, Set, arguments, NodeList</li>
+  <li><code>for...of</code>, spread <code>...</code>, destructuring all use the iterator protocol internally</li>
+  <li>You can make any object iterable by implementing <code>[Symbol.iterator]</code></li>
+</ul>
+<pre><code style="background:#0d1117;color:#e6edf3;display:block;padding:10px;border-radius:6px;font-size:.85em">const iter = [1,2,3][Symbol.iterator]();
+iter.next(); // { value: 1, done: false }
+iter.next(); // { value: 2, done: false }
+iter.next(); // { value: 3, done: false }
+iter.next(); // { value: undefined, done: true }</code></pre>
+  </div>
+
+  <div class="challenges">
+    <h2>🎯 Interview Challenges</h2>
+    
+        <div class="challenge easy">
+          <div class="challenge-header" style="background:#3fb95022;border-left:4px solid #3fb950">
+            <span class="badge" style="background:#3fb950">EASY</span>
+            <strong>Build a manual iterator</strong>
+          </div>
+          <p class="desc">Create a counter iterator that counts from start to end, step by step, using the iterator protocol manually.</p>
+          <pre class="starter"><code>// Starter Code
+function makeCounter(start, end) {
+  let current = start;
+  return {
+    next() {
+      // return { value, done }
+    }
+  };
+}
+
+const counter = makeCounter(1, 3);
+console.log(counter.next()); // { value: 1, done: false }
+console.log(counter.next()); // { value: 2, done: false }
+console.log(counter.next()); // { value: 3, done: false }
+console.log(counter.next()); // { value: undefined, done: true }</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function makeCounter(start, end) {
+  let current = start;
+  return {
+    next() {
+      return current <= end
+        ? { value: current++, done: false }
+        : { value: undefined, done: true };
+    }
+  };
+}
+
+const counter = makeCounter(1, 3);
+console.log(counter.next()); // { value: 1, done: false }
+console.log(counter.next()); // { value: 2, done: false }
+console.log(counter.next()); // { value: 3, done: false }
+console.log(counter.next()); // { value: undefined, done: true }</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge medium">
+          <div class="challenge-header" style="background:#d2992222;border-left:4px solid #d29922">
+            <span class="badge" style="background:#d29922">MEDIUM</span>
+            <strong>Make a custom class iterable</strong>
+          </div>
+          <p class="desc">Make a LinkedList class iterable so it can be used with for...of and spread operator.</p>
+          <pre class="starter"><code>// Starter Code
+class Node {
+  constructor(val, next = null) { this.val = val; this.next = next; }
+}
+
+class LinkedList {
+  constructor() { this.head = null; }
+  push(val) {
+    this.head = new Node(val, this.head);
+    return this;
+  }
+  [Symbol.iterator]() {
+    // traverse from head
+  }
+}
+
+const list = new LinkedList();
+list.push(3).push(2).push(1);
+for (const val of list) console.log(val); // 1, 2, 3
+console.log([...list]); // [1, 2, 3]</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>class Node { constructor(val, next=null) { this.val=val; this.next=next; } }
+
+class LinkedList {
+  constructor() { this.head = null; }
+  push(val) { this.head = new Node(val, this.head); return this; }
+  [Symbol.iterator]() {
+    let current = this.head;
+    return {
+      next() {
+        if (current) { const v = current.val; current = current.next; return { value: v, done: false }; }
+        return { value: undefined, done: true };
+      }
+    };
+  }
+}
+
+const list = new LinkedList();
+list.push(3).push(2).push(1);
+for (const val of list) console.log(val);
+console.log([...list]);</code></pre>
+          </details>
+        </div>
+    
+        <div class="challenge hard">
+          <div class="challenge-header" style="background:#f8514922;border-left:4px solid #f85149">
+            <span class="badge" style="background:#f85149">HARD</span>
+            <strong>Infinite iterator with early termination</strong>
+          </div>
+          <p class="desc">Build an infinite Fibonacci iterator. Use it to get the first N Fibonacci numbers, then stop (with return() method for cleanup).</p>
+          <pre class="starter"><code>// Starter Code
+function fibIterator() {
+  // infinite — never returns done: true on its own
+  // must implement return() for cleanup
+}
+
+function takeN(iterator, n) {
+  // collect first n values then call iterator.return()
+}
+
+const fibs = fibIterator();
+console.log(takeN(fibs, 8)); // [0, 1, 1, 2, 3, 5, 8, 13]</code></pre>
+          <details>
+            <summary>▶ Show Solution</summary>
+            <pre class="solution"><code>function fibIterator() {
+  let a = 0, b = 1;
+  return {
+    next() { const val = a; [a, b] = [b, a + b]; return { value: val, done: false }; },
+    return(val) { console.log('iterator closed'); return { value: val, done: true }; },
+    [Symbol.iterator]() { return this; }
+  };
+}
+
+function takeN(iterator, n) {
+  const result = [];
+  for (const val of iterator) {
+    result.push(val);
+    if (result.length === n) break; // triggers iterator.return()
+  }
+  return result;
+}
+
+const fibs = fibIterator();
+console.log(takeN(fibs, 8)); // [0,1,1,2,3,5,8,13]</code></pre>
+          </details>
+        </div>
+  </div>
+
+  <script>
+    // Console capture for run buttons (if added later)
+    const _log = console.log;
+    console.log = function(...a){
+      _log(...a);
+    };
+  </script>
+</body>
+</html>

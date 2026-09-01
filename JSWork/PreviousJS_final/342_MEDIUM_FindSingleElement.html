@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Single Element in Sorted Array</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7;max-width:960px;margin:0 auto}
+    h1{color:#58a6ff;font-size:1.5em;margin-bottom:8px}
+    .meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+    .badge{padding:3px 12px;border-radius:20px;font-size:.75em;font-weight:700;color:#fff;background:#d29922}
+    .company{background:#21262d;color:#8b949e;padding:2px 8px;border-radius:4px;font-size:.75em;border:1px solid #30363d}
+    .section{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:18px;margin-bottom:16px}
+    .section h2{color:#79c0ff;font-size:.85em;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+    p,li{color:#c9d1d9;font-size:.92em;margin-bottom:6px}
+    ul{padding-left:18px}
+    code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.85em}
+    pre{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;overflow-x:auto;margin-top:8px}
+    pre code{background:none;color:#e6edf3;padding:0;font-family:'Cascadia Code','Fira Code',monospace;font-size:.84em;line-height:1.7}
+    .solution pre code{color:#aff5b4}
+    .complexity{display:flex;gap:16px;flex-wrap:wrap}
+    .complexity span{background:#21262d;padding:4px 12px;border-radius:6px;font-size:.82em;color:#79c0ff;border:1px solid #30363d}
+    .tag{color:#8b949e;font-size:.8em}
+    details summary{cursor:pointer;color:#58a6ff;font-size:.9em;padding:4px 0;user-select:none}
+    details summary:hover{color:#79c0ff}
+    .output{background:#0a1f0a;border:1px solid #238636;border-radius:6px;padding:12px;margin-top:8px;font-family:monospace;font-size:.83em;color:#3fb950}
+  </style>
+</head>
+<body>
+  <h1>Find Single Element in Sorted Array</h1>
+  <div class="meta">
+    <span class="badge">MEDIUM</span>
+    <span class="company">amazon</span><span class="company">apple</span><span class="company">netflix</span>
+  </div>
+
+  <div class="section">
+    <h2>📋 Problem</h2>
+    <p>Given a sorted array where every element appears exactly twice except one, find that single element. Must run in O(log n) time.</p>
+    <pre><code>singleNonDuplicate([1,1,2,3,3,4,4,8,8]) // 2
+singleNonDuplicate([3,3,7,7,10,11,11])   // 10</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>💡 Approach</h2>
+    <p>Binary search on even indices. Before the single element, pairs start at even indices. After it, pairs start at odd indices. Use this to shrink the search space.</p>
+  </div>
+
+  <div class="section solution">
+    <h2>✅ Solution</h2>
+    <pre><code>function singleNonDuplicate(nums) {
+  let left = 0, right = nums.length - 1;
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2);
+    // Ensure mid is even for consistent pair comparison
+    if (mid % 2 === 1) mid--;
+
+    if (nums[mid] === nums[mid + 1]) {
+      // Pair is intact — single element is to the right
+      left = mid + 2;
+    } else {
+      // Pair is broken — single element is here or to the left
+      right = mid;
+    }
+  }
+  return nums[left];
+}
+
+console.log(singleNonDuplicate([1,1,2,3,3,4,4,8,8])); // 2
+console.log(singleNonDuplicate([3,3,7,7,10,11,11]));   // 10
+console.log(singleNonDuplicate([1]));                   // 1</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>⏱ Complexity</h2>
+    <div class="complexity"><span>Time: O(log n)</span><span>Space: O(1)</span></div>
+  </div>
+
+  <div class="section">
+    <h2>▶ Run Output</h2>
+    <div class="output" id="out"></div>
+  </div>
+
+  <script>
+    const out = document.getElementById('out');
+    const _log = console.log;
+    console.log = (...a) => {
+      _log(...a);
+      const d = document.createElement('div');
+      d.textContent = a.map(x => typeof x === 'object' ? JSON.stringify(x,null,2) : String(x)).join(' ');
+      out.appendChild(d);
+    };
+  </script>
+  <script>
+function singleNonDuplicate(nums) {
+  let left = 0, right = nums.length - 1;
+
+  while (left < right) {
+    let mid = Math.floor((left + right) / 2);
+    // Ensure mid is even for consistent pair comparison
+    if (mid % 2 === 1) mid--;
+
+    if (nums[mid] === nums[mid + 1]) {
+      // Pair is intact — single element is to the right
+      left = mid + 2;
+    } else {
+      // Pair is broken — single element is here or to the left
+      right = mid;
+    }
+  }
+  return nums[left];
+}
+
+console.log(singleNonDuplicate([1,1,2,3,3,4,4,8,8])); // 2
+console.log(singleNonDuplicate([3,3,7,7,10,11,11]));   // 10
+console.log(singleNonDuplicate([1]));                   // 1
+  </script>
+</body>
+</html>

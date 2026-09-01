@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Implement LRU Cache</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:24px;line-height:1.7;max-width:960px;margin:0 auto}
+    h1{color:#58a6ff;font-size:1.5em;margin-bottom:8px}
+    .meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+    .badge{padding:3px 12px;border-radius:20px;font-size:.75em;font-weight:700;color:#fff;background:#f85149}
+    .company{background:#21262d;color:#8b949e;padding:2px 8px;border-radius:4px;font-size:.75em;border:1px solid #30363d}
+    .section{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:18px;margin-bottom:16px}
+    .section h2{color:#79c0ff;font-size:.85em;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+    p,li{color:#c9d1d9;font-size:.92em;margin-bottom:6px}
+    ul{padding-left:18px}
+    code{background:#21262d;color:#ff7b72;padding:2px 6px;border-radius:4px;font-size:.85em}
+    pre{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;overflow-x:auto;margin-top:8px}
+    pre code{background:none;color:#e6edf3;padding:0;font-family:'Cascadia Code','Fira Code',monospace;font-size:.84em;line-height:1.7}
+    .solution pre code{color:#aff5b4}
+    .complexity{display:flex;gap:16px;flex-wrap:wrap}
+    .complexity span{background:#21262d;padding:4px 12px;border-radius:6px;font-size:.82em;color:#79c0ff;border:1px solid #30363d}
+    .tag{color:#8b949e;font-size:.8em}
+    details summary{cursor:pointer;color:#58a6ff;font-size:.9em;padding:4px 0;user-select:none}
+    details summary:hover{color:#79c0ff}
+    .output{background:#0a1f0a;border:1px solid #238636;border-radius:6px;padding:12px;margin-top:8px;font-family:monospace;font-size:.83em;color:#3fb950}
+  </style>
+</head>
+<body>
+  <h1>Implement LRU Cache</h1>
+  <div class="meta">
+    <span class="badge">HARD</span>
+    <span class="company">amazon</span><span class="company">microsoft</span><span class="company">oyo</span>
+  </div>
+
+  <div class="section">
+    <h2>📋 Problem</h2>
+    <p>Design a Least Recently Used (LRU) Cache with O(1) get and put operations. When capacity is exceeded, evict the least recently used item.</p>
+    <pre><code>const cache = new LRUCache(2);
+cache.put(1,1); cache.put(2,2);
+cache.get(1);      // 1 (1 now most recent)
+cache.put(3,3);    // evicts key 2
+cache.get(2);      // -1 (evicted)</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>💡 Approach</h2>
+    <p>Combine a HashMap (for O(1) lookup) with a Doubly Linked List (for O(1) insertion/deletion). Most recent at head, least recent at tail. On get/put, move node to head.</p>
+  </div>
+
+  <div class="section solution">
+    <h2>✅ Solution</h2>
+    <pre><code>class LRUCache {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.map = new Map();
+    // Sentinel head and tail nodes
+    this.head = { key: 0, val: 0, prev: null, next: null };
+    this.tail = { key: 0, val: 0, prev: null, next: null };
+    this.head.next = this.tail;
+    this.tail.prev = this.head;
+  }
+
+  _remove(node) {
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+  }
+
+  _insertAtHead(node) {
+    node.next = this.head.next;
+    node.prev = this.head;
+    this.head.next.prev = node;
+    this.head.next = node;
+  }
+
+  get(key) {
+    if (!this.map.has(key)) return -1;
+    const node = this.map.get(key);
+    this._remove(node);
+    this._insertAtHead(node); // mark as recently used
+    return node.val;
+  }
+
+  put(key, val) {
+    if (this.map.has(key)) {
+      const node = this.map.get(key);
+      node.val = val;
+      this._remove(node);
+      this._insertAtHead(node);
+    } else {
+      if (this.map.size === this.capacity) {
+        const lru = this.tail.prev; // evict LRU
+        this._remove(lru);
+        this.map.delete(lru.key);
+      }
+      const node = { key, val, prev: null, next: null };
+      this.map.set(key, node);
+      this._insertAtHead(node);
+    }
+  }
+}
+
+const cache = new LRUCache(2);
+cache.put(1,1); cache.put(2,2);
+console.log(cache.get(1)); // 1
+cache.put(3,3);
+console.log(cache.get(2)); // -1 (evicted)
+cache.put(4,4);
+console.log(cache.get(1)); // -1 (evicted)
+console.log(cache.get(3)); // 3
+console.log(cache.get(4)); // 4</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>⏱ Complexity</h2>
+    <div class="complexity"><span>Time: O(1) get/put</span><span>Space: O(capacity)</span></div>
+  </div>
+
+  <div class="section">
+    <h2>▶ Run Output</h2>
+    <div class="output" id="out"></div>
+  </div>
+
+  <script>
+    const out = document.getElementById('out');
+    const _log = console.log;
+    console.log = (...a) => {
+      _log(...a);
+      const d = document.createElement('div');
+      d.textContent = a.map(x => typeof x === 'object' ? JSON.stringify(x,null,2) : String(x)).join(' ');
+      out.appendChild(d);
+    };
+  </script>
+  <script>
+class LRUCache {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.map = new Map();
+    // Sentinel head and tail nodes
+    this.head = { key: 0, val: 0, prev: null, next: null };
+    this.tail = { key: 0, val: 0, prev: null, next: null };
+    this.head.next = this.tail;
+    this.tail.prev = this.head;
+  }
+
+  _remove(node) {
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+  }
+
+  _insertAtHead(node) {
+    node.next = this.head.next;
+    node.prev = this.head;
+    this.head.next.prev = node;
+    this.head.next = node;
+  }
+
+  get(key) {
+    if (!this.map.has(key)) return -1;
+    const node = this.map.get(key);
+    this._remove(node);
+    this._insertAtHead(node); // mark as recently used
+    return node.val;
+  }
+
+  put(key, val) {
+    if (this.map.has(key)) {
+      const node = this.map.get(key);
+      node.val = val;
+      this._remove(node);
+      this._insertAtHead(node);
+    } else {
+      if (this.map.size === this.capacity) {
+        const lru = this.tail.prev; // evict LRU
+        this._remove(lru);
+        this.map.delete(lru.key);
+      }
+      const node = { key, val, prev: null, next: null };
+      this.map.set(key, node);
+      this._insertAtHead(node);
+    }
+  }
+}
+
+const cache = new LRUCache(2);
+cache.put(1,1); cache.put(2,2);
+console.log(cache.get(1)); // 1
+cache.put(3,3);
+console.log(cache.get(2)); // -1 (evicted)
+cache.put(4,4);
+console.log(cache.get(1)); // -1 (evicted)
+console.log(cache.get(3)); // 3
+console.log(cache.get(4)); // 4
+  </script>
+</body>
+</html>
