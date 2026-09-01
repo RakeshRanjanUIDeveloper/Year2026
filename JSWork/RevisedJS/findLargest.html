@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function findLargest(arr) {
+        if(arr.length === 0){
+            return null
+        }
+        //sort() modifies the original array.
+        const sortedArray = arr.sort((a,b) => a-b);
+
+        // const sortedArray =[...arr].sort((a,b) => a-b)
+        return sortedArray[arr.length-1]
+      }
+      console.log(findLargest([3, 1, 2]));
+      console.log(findLargest([-5, 2, -3, 4]));
+      console.log(findLargest([0, 2, 3]));
+      console.log(findLargest([]));
+    </script>
+  </body>
+</html>

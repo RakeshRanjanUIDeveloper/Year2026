@@ -10,6 +10,8 @@ const ProductList = () => {
   useEffect(() => {
     dispatch(fetchProductsRequest());
   }, [dispatch]);
+
+
   if (loading) return <p className="loading-text">Loading products...</p>;
   if (error) return <p className="error-text">Error: {error}</p>;
 
