@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul>
+      <li>In Node.js => Sync → nextTick queue → microtask queue → macrotask</li>
+      <li>In the browser => Sync → microtask queue → macrotask</li>
+      <li>
+        queueMicrotask is a browser/Node.js built-in function that lets you
+        manually push a callback into the microtask queue.
+      </li>
+    </ul>
+    <h3>MicroTasks:</h3>
+    <ul>
+      <li>Promise.then() / .catch() / .finally()</li>
+      <li>await (everything after await resumes as a microtask)</li>
+      <li>queueMicrotask(() => ...)</li>
+      <li>MutationObserver callbacks (browser-specific)</li>
+      <li>
+        process.nextTick (Node.js only) — actually runs before other microtasks,
+        it has its own queue that drains first
+      </li>
+    </ul>
+    <h3>Macrotasks:</h3>
+    <ul>
+      <li>setTimeout</li>
+      <li>setInterval</li>
+      <li>setImmediate (Node.js only)</li>
+      <li>I/O callbacks (file read, network — Node.js)</li>
+      <li>UI rendering / paint (browser)</li>
+      <li>MessageChannel</li>
+    </ul>
+    <h3>Execution Order</h3>
+    <ul>
+      <li>sync1. Sync — console.log("start")</li>
+      <li>sync2. Sync — Promise executor runs immediately</li>
+      <li>sync3. Sync — inside async fn, before await</li>
+      <li>sync4. Sync — console.log("end")</li>
+      <li>micro5. Microtask — Promise.then()</li>
+      <li>micro6. Microtask — queueMicrotask()</li>
+      <li>micro8. Microtask — after await (resumes as microtask)</li>
+      <li>micro7. Microtask — nested Promise.then() (queued inside step 5)</li>
+      <li>macro9. Macrotask — setTimeout(..., 0)</li>
+    </ul>
+    <script>
+      console.log("sync1. Sync - console.log('start')");
+      const promise = new Promise((resolve) => {
+        console.log("sync2. Sync — Promise executor runs immediately");
+        resolve();
+      });
+      async function test() {
+        console.log("sync3. Sync — inside async fn, before await");
+        await Promise.resolve();
+        console.log("micro8. Microtask — after await (resumes as microtask)");
+      }
+      test();
+      console.log("sync4. Sync — console.log('end')");
+      promise.then(() => {
+        console.log("micro5. Microtask — Promise.then()");
+        Promise.resolve().then(() => {
+          console.log(
+            "micro7. Microtask — nested Promise.then() (queued inside step 5)",
+          );
+        });
+      });
+      queueMicrotask(() => {
+        console.log("micro6. Microtask — queueMicrotask()");
+      });
+      setTimeout(() => {
+        console.log("macro9. Macrotask — setTimeout(..., 0)");
+      }, 0);
+    </script>
+  </body>
+</html>
