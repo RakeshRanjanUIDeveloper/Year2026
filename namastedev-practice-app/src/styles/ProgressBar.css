@@ -1,0 +1,33 @@
+.progressbar-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.progressbar-box {
+    width: 600px;
+    margin: 0 auto;
+    display: block;
+    background-color: lightgray;
+}
+.progressbar{
+    border: 2px solid #000;
+    height:20px;
+    background-color: green;
+}
+.progressbar span{
+    text-align: center;
+    color: azure;
+}
+.progressbar-controller{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.progressbar-controller span{
+    border: 2px solid #000;
+    height: 20px;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+}
