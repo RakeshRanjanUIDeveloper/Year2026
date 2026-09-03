@@ -1,41 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>undefined Not Defined Null</title>
-</head>
-<body>
+  </head>
+  <body>
+    <h3>undefined — variable exists but has no value:</h3>
+    <ul>
+      <li>declared with var but not assigned</li>
+      <li>declared with let but not assigned</li>
+      <li>accessing var before declaration (hoisting)</li>
+      <li>object property that doesn't exist</li>
+      <li>function that returns nothing</li>
+    </ul>
+    <h3>ReferenceError: not defined — variable doesn't exist at all:</h3>
+    <ul>
+      <li>never declared anywhere</li>
+      <li>accessing let / const before declaration (TDZ)</li>
+      <li>declared inside a block/function and accessed outside</li>
+    </ul>
     <script>
-        // Variables: When you declare a variable but do not initialize it, its value is undefined.
-        // Function Return: If a function does not return a value explicitly, it returns undefined by default.
-        // Object Properties: Accessing a property that does not exist on an object will return undefined
+      // Variables: When you declare a variable but do not initialize it, its value is undefined.
+      // Function Return: If a function does not return a value explicitly, it returns undefined by default.
+      // Object Properties: Accessing a property that does not exist on an object will return undefined
 
-        let a;
-        console.log(a); // undefined
+      var a;
+      console.log(a); // undefined
 
-        function myFunc(){
+      let b;
+      console.log(b); // undefined
 
-        }
-        console.log(myFunc()) // undefined
+      console.log(c); // undefined
+      var c = 10;
 
-        const person = {
-            name :"Rakesh"
-        }
-        console.log(person.age); //undefined
+      const obj = {};
+      console.log(obj.name); // undefined
 
-        //Trying to use a variable that has not been declared will cause an error.
+      function test() {}
+      console.log(test()); // undefined
+      let a;
+      console.log(a); // undefined
 
-        console.log(b); // b is not defined.
+      function myFunc() {}
+      console.log(myFunc()); // undefined
 
-        //null is a special value that represents the intentional absence of any object value.
+      const person = {
+        name: "Rakesh",
+      };
+      console.log(person.age); //undefined
 
-        let user = {
-            name:"ranjan",
-            age: 25
-        }
-        user.address = null;
-        console.log(user.address); // null
+      console.log(x); // ❌ ReferenceError — never declared
+
+      console.log(y); // ❌ ReferenceError — TDZ
+      let y = 10;
+
+      {
+        let z = 20;
+      }
+      console.log(z); // ❌ ReferenceError — outside block scope
+
+      function test() {
+        var a = 10;
+      }
+      console.log(a); // ❌ ReferenceError — outside function scope
+
     </script>
-</body>
+  </body>
 </html>

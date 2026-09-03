@@ -7,16 +7,49 @@ function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] bg-purple-700/30 rounded-full blur-[120px] animate-pulse" />
-      <div className="absolute bottom-[-100px] right-[-100px] w-[400px] h-[400px] bg-indigo-700/30 rounded-full blur-[120px] animate-pulse" />
-      <div className="absolute top-[40%] left-[50%] w-[300px] h-[300px] bg-cyan-700/20 rounded-full blur-[100px] animate-pulse" />
-
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 bg-purple-900/40 border border-purple-500/30 rounded-full px-4 py-2 mb-8 backdrop-blur-sm">
-          <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-          <span className="text-purple-300 text-sm tracking-wide">Open to new opportunities</span>
+      <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full blur-[120px] animate-pulse transition-all duration-1000"
+        style={{ background: 'var(--blob-1)' }} />
+      <div className="absolute bottom-[-100px] right-[-100px] w-[400px] h-[400px] rounded-full blur-[120px] animate-pulse transition-all duration-1000"
+        style={{ background: 'var(--blob-2)' }} />
+      <div className="absolute top-[40%] left-[50%] w-[300px] h-[300px] rounded-full blur-[100px] animate-pulse transition-all duration-1000"
+        style={{ background: 'var(--blob-3)' }} />
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-24">
+        {/* Photo Avatar */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex justify-center mb-6"
+        >
+          <div className="relative">
+            <div className="w-24 h-24 rounded-full overflow-hidden ring-4 ring-purple-500/30 shadow-2xl shadow-purple-900/50">
+              <img
+                src="/rakesh-photo.jpg"
+                alt="Rakesh Ranjan"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-[#0f0c29] flex items-center justify-center">
+              <span className="text-xs">✓</span>
+            </div>
+          </div>
         </motion.div>
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 bg-purple-900/40 border border-purple-500/30 
+                     rounded-full px-4 py-2 mb-8 backdrop-blur-sm"
+        >
+          <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+          <span className="text-purple-300 text-sm tracking-wide">
+            Open to new opportunities
+          </span>
+        </motion.div>
+
+
+
 
         <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-5xl md:text-7xl font-bold text-white mb-4 tracking-tight">
           Hey, I'm{' '}
@@ -46,11 +79,15 @@ function Hero() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.8 }} className="flex flex-wrap justify-center gap-4 mb-12">
-          <Link to="projects" smooth={true} duration={600} offset={-70} className="cursor-pointer bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30">
+          <Link to="projects" smooth={true} duration={500} offset={-80} className="cursor-pointer bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30">
             View My Work
           </Link>
           <a href={'mailto:' + personalInfo.email} className="border border-purple-500/40 hover:border-purple-400 text-purple-300 hover:text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 hover:bg-purple-900/30 backdrop-blur-sm">
             Get In Touch
+          </a>
+          <a href="/Rakesh_Ranjan_Resume.pdf" download
+            className="flex items-center gap-2 border border-purple-500/40 hover:border-purple-400 text-purple-300 hover:text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 hover:bg-purple-900/30 backdrop-blur-sm">
+            ↓ Download Resume
           </a>
         </motion.div>
 
@@ -64,7 +101,7 @@ function Hero() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 1.2 }} className="flex justify-center">
-          <Link to="about" smooth={true} duration={600} offset={-70}>
+          <Link to="about" smooth={true} duration={500} offset={-80}>
             <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="text-purple-400 cursor-pointer text-3xl">
               ↓
             </motion.div>

@@ -2,4 +2,13 @@
 
 html {
   scroll-behavior: smooth;
+  --blob-1: rgba(109,40,217,0.3);
+  --blob-2: rgba(67,56,202,0.3);
+  --blob-3: rgba(22,78,99,0.2);
+  --scroll-bar: linear-gradient(to right, #a855f7, #ec4899, #06b6d4);
+}
+
+body {
+  background-color: #0f0c29;
+  color: #ffffff;
 }

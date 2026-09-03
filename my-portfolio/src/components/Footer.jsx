@@ -11,7 +11,7 @@ function Footer() {
 
       <div className="max-w-4xl mx-auto relative z-10">
 
-        {/* Contact Section */}
+        {/* Contact Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -27,13 +27,13 @@ function Footer() {
           </p>
         </motion.div>
 
-        {/* Contact Cards */}
+        {/* Contact Cards — 4 grid */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="grid md:grid-cols-3 gap-4 mb-12"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
         >
           {/* Email */}
           <a href={'mailto:' + personalInfo.email}
@@ -46,11 +46,22 @@ function Footer() {
             <p className="text-gray-400 text-xs break-all">{personalInfo.email}</p>
           </a>
 
+          {/* Phone */}
+          <a href={'tel:+91' + personalInfo.phone}
+            className="group bg-white/5 border border-purple-500/20 backdrop-blur-sm rounded-2xl p-6 text-center hover:border-purple-500/50 hover:bg-white/10 transition-all duration-300 hover:shadow-xl hover:shadow-purple-900/30 hover:-translate-y-1"
+          >
+            <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-xl flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+              📱
+            </div>
+            <p className="text-white font-medium text-sm mb-1">Phone</p>
+            <p className="text-gray-400 text-xs">+91 {personalInfo.phone}</p>
+          </a>
+
           {/* GitHub */}
           <a href={personalInfo.github} target="_blank" rel="noreferrer"
             className="group bg-white/5 border border-purple-500/20 backdrop-blur-sm rounded-2xl p-6 text-center hover:border-purple-500/50 hover:bg-white/10 transition-all duration-300 hover:shadow-xl hover:shadow-purple-900/30 hover:-translate-y-1"
           >
-            <div className="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+            <div className="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
               <FaGithub className="text-white text-xl" />
             </div>
             <p className="text-white font-medium text-sm mb-1">GitHub</p>
@@ -61,12 +72,29 @@ function Footer() {
           <a href={personalInfo.linkedin} target="_blank" rel="noreferrer"
             className="group bg-white/5 border border-purple-500/20 backdrop-blur-sm rounded-2xl p-6 text-center hover:border-purple-500/50 hover:bg-white/10 transition-all duration-300 hover:shadow-xl hover:shadow-purple-900/30 hover:-translate-y-1"
           >
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
               <FaLinkedin className="text-white text-xl" />
             </div>
             <p className="text-white font-medium text-sm mb-1">LinkedIn</p>
             <p className="text-gray-400 text-xs">rakesh-ranjan-b637639b</p>
           </a>
+        </motion.div>
+
+        {/* Location Strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="flex items-center justify-center gap-2 mb-10 text-gray-500 text-sm"
+        >
+          <span>📍</span>
+          <span>{personalInfo.location}</span>
+          <span>·</span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+            <span className="text-green-400">Open to opportunities</span>
+          </span>
         </motion.div>
 
         {/* Big CTA Button */}

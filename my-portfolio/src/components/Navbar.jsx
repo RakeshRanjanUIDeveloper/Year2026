@@ -3,6 +3,7 @@ import { Link } from 'react-scroll'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import { HiMenu, HiX } from 'react-icons/hi'
 import { personalInfo } from '../data/portfolioData'
+import ThemeToggle from './ThemeToggle'
 
 const navLinks = [
   { label: 'About',      to: 'about' },
@@ -43,8 +44,8 @@ function Navbar() {
                 to={link.to}
                 spy={true}
                 smooth={true}
-                duration={600}
-                offset={-70}
+                duration={500}
+                offset={-80}
                 activeClass="text-purple-400 font-medium"
                 className="text-gray-400 hover:text-purple-400 transition-colors duration-200 
                            text-sm cursor-pointer tracking-wide"
@@ -56,16 +57,22 @@ function Navbar() {
         </ul>
 
         {/* Social Icons */}
+                {/* Social Icons + Resume */}
         <div className="hidden md:flex items-center gap-4">
-          <a href={personalInfo.github} target="_blank" rel="noreferrer"
-            className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-xl">
-            <FaGithub />
-          </a>
-          <a href={personalInfo.linkedin} target="_blank" rel="noreferrer"
-            className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-xl">
-            <FaLinkedin />
-          </a>
-        </div>
+  <ThemeToggle />
+  <a href={personalInfo.github} target="_blank" rel="noreferrer"
+    className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-xl">
+    <FaGithub />
+  </a>
+  <a href={personalInfo.linkedin} target="_blank" rel="noreferrer"
+    className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-xl">
+    <FaLinkedin />
+  </a>
+  <a href="/Rakesh_Ranjan_Resume.pdf" download
+    className="flex items-center gap-2 border border-purple-500/50 hover:border-purple-400 text-purple-300 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 hover:bg-purple-900/30 hover:scale-105">
+    ↓ Resume
+  </a>
+</div>
 
         {/* Mobile Hamburger */}
         <button
@@ -86,8 +93,8 @@ function Navbar() {
                   to={link.to}
                   spy={true}
                   smooth={true}
-                  duration={600}
-                  offset={-70}
+                  duration={500}
+                  offset={-80}
                   className="text-gray-400 hover:text-purple-400 transition-colors 
                              duration-200 text-sm cursor-pointer block py-1"
                   onClick={() => setMenuOpen(false)}

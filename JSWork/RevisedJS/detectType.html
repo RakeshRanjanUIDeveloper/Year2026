@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function detectType(){
+            if(value === null){
+                console.log('null is null')
+            }
+        }
+        detectType('hello');
+        detectType(123);
+        detectType(true);
+        detectType(undefined);
+        detectType({});
+        detectType([]);
+        detectType(null);
+        detectType(function () { });
+        detectType(Symbol('id'));
+    </script>
+</body>
+</html>

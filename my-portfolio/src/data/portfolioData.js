@@ -4,39 +4,37 @@ export const personalInfo = {
   subtitle: "Building scalable, performant web applications with 11+ years of expertise",
   github: "https://github.com/RakeshRanjanUIDeveloper",
   linkedin: "https://www.linkedin.com/in/rakesh-ranjan-b637639b/",
-  email: "rakesh.j.ranjan@accenture.com",
+  email: "devrakeshranjan08@gmail.com",
+  phone: "9986961101",
+  location: "Bangalore, India",
   availableForWork: true,
 }
 
 export const techStack = [
-  { name: "React", category: "framework" },
-  { name: "JavaScript", category: "language" },
-  { name: "TypeScript", category: "language" },
-  { name: "Redux", category: "state" },
-  { name: "Redux-Saga", category: "state" },
-  { name: "Jest", category: "testing" },
-  { name: "Playwright", category: "testing" },
-  { name: "SharePoint", category: "platform" },
-  { name: "MSPS", category: "platform" },
-  { name: "HTML5", category: "language" },
-  { name: "CSS3", category: "language" },
-  { name: "Tailwind CSS", category: "styling" },
+  { name: "JavaScript",   category: "language",   level: 95 },
+  { name: "React.js",     category: "framework",  level: 95 },
+  { name: "Redux",        category: "state",      level: 90 },
+  { name: "React Hooks",  category: "state",      level: 95 },
+  { name: "ES6+",         category: "language",   level: 95 },
+  { name: "HTML5",        category: "language",   level: 99 },
+  { name: "CSS3",         category: "language",   level: 95 },
+  { name: "jQuery",       category: "language",   level: 80 },
+  { name: "Azure DevOps", category: "platform",   level: 75 },
+  { name: "SQL",          category: "platform",   level: 70 },
+  { name: "Figma",        category: "tools",      level: 75 },
+  { name: "AJAX",         category: "language",   level: 80 },
+  { name: "Git",          category: "tools",      level: 90 },
+  { name: "SharePoint",   category: "platform",   level: 90 },
+  { name: "Material UI",  category: "styling",    level: 80 },
+  { name: "CI/CD",        category: "tools",      level: 70 },
+  { name: "Jest",         category: "testing",    level: 80 },
+  { name: "TypeScript",   category: "language",   level: 85 },
+  { name: "Bootstrap",    category: "styling",    level: 90 },
+  { name: "Tailwind CSS", category: "styling",    level: 85 },
+  { name: "Redux-Saga",   category: "state",      level: 85 },
+  { name: "Playwright",   category: "testing",    level: 75 },
 ]
 
-export const experiences = [
-  {
-    company: "Accenture",
-    role: "Frontend Development Lead",
-    duration: "2014 — Present",
-    years: "11+ Years",
-    points: [
-      "Leading frontend development for large-scale enterprise applications",
-      "Architecting React + Redux solutions for complex state management",
-      "Mentoring junior developers and conducting code reviews",
-      "Building automated test suites using Jest and Playwright",
-    ],
-  },
-]
 
 export const projects = [
   {
@@ -46,6 +44,8 @@ export const projects = [
     github: "https://github.com/RakeshRanjanUIDeveloper",
     live: "https://github.com/RakeshRanjanUIDeveloper",
     color: "from-purple-500 to-indigo-600",
+    icon: "🛒",
+    type: "personal",
   },
   {
     title: "Job Portal & Recruitment App",
@@ -54,6 +54,8 @@ export const projects = [
     github: "https://github.com/RakeshRanjanUIDeveloper",
     live: "https://github.com/RakeshRanjanUIDeveloper",
     color: "from-cyan-500 to-blue-600",
+    icon: "💼",
+    type: "personal",
   },
   {
     title: "Project Management Dashboard",
@@ -62,15 +64,111 @@ export const projects = [
     github: "https://github.com/RakeshRanjanUIDeveloper",
     live: "https://github.com/RakeshRanjanUIDeveloper",
     color: "from-pink-500 to-rose-600",
+    icon: "📋",
+    type: "personal",
+  },
+]
+
+export const enterpriseProjects = [
+  {
+    name: "T. Rowe Price — Client Portal",
+    duration: "01/2026 — Present",
+    desc: "Leading frontend development for a financial services client portal. Driving technical decisions, stakeholder collaboration, and delivering high-quality UI solutions aligned with business goals.",
+    role: "Tech Lead",
+    impact: "Active · Current",
+    tech: ["React", "TypeScript", "Redux", "REST API"],
+    color: "from-cyan-600 to-blue-700",
+    icon: "💹",
+  },
+  {
+    name: "Design Library (ARC)",
+    duration: "09/2023 — Present",
+    desc: "A collection of editable templates tailored for diverse industries. Enabled developers to download reusable code snippets, streamlining design implementation for different client projects.",
+    role: "Frontend Lead",
+    impact: "Reused across teams",
+    tech: ["React", "Redux", "JavaScript", "CSS", "SharePoint"],
+    color: "from-purple-600 to-indigo-700",
+    icon: "🎨",
+  },
+  {
+    name: "ARC — Request Management System",
+    duration: "07/2022 — 08/2023",
+    desc: "React + Redux platform enabling users to raise and manage requests for creating microsites. Feature-rich filtered table with sorting, searching, and pagination for all request records.",
+    role: "Senior Developer",
+    impact: "Modular & scalable",
+    tech: ["React", "Redux", "JavaScript", "REST API"],
+    color: "from-emerald-600 to-teal-700",
+    icon: "⚙️",
+  },
+  {
+    name: "myConcerto Client Portal",
+    duration: "01/2020 — 06/2022",
+    desc: "Developed 150+ industry-specific microsites for prominent clients including SAP, Oracle, AI Navigator, and Workday. Delivered dynamic, tailored content through meticulous design.",
+    role: "Frontend Developer",
+    impact: "150+ microsites",
+    tech: ["React", "JavaScript", "Bootstrap", "SharePoint"],
+    color: "from-amber-600 to-orange-700",
+    icon: "🌐",
+  },
+  {
+    name: "AEH — Core Transformation",
+    duration: "01/2019 — 12/2019",
+    desc: "Developed a Delivery Mobilization portal using C# and SQL, while creating and managing multiple SharePoint site collections and subsites handling all administrative activities.",
+    role: "Developer",
+    impact: "Full portal delivery",
+    tech: ["C#", "SQL", "SharePoint 2013", "JavaScript"],
+    color: "from-pink-600 to-rose-700",
+    icon: "🏗️",
+  },
+  {
+    name: "Accenture Delivery Tool (MSPS)",
+    duration: "07/2015 — 12/2018",
+    desc: "Oversaw MSPS implementation and maintenance using MSPS 2010 & 2013, provisioning and decommissioning over 1500 MSPS URLs to manage resource work plans and timesheets.",
+    role: "SharePoint Admin",
+    impact: "1500+ URLs managed",
+    tech: ["MSPS 2010", "MSPS 2013", "SharePoint", "SQL"],
+    color: "from-violet-600 to-purple-700",
+    icon: "📊",
   },
 ]
 
 export const aboutMe = {
-  bio: "I'm a Frontend Development Lead with 11+ years of experience building enterprise-grade web applications. I specialize in React ecosystems, state management with Redux and Redux-Saga, and ensuring quality through automated testing with Jest and Playwright.",
+  bio: "Front-End Developer with 11+ years of experience, including 5 years in building responsive, high-performance web applications using HTML, CSS, JavaScript, React.js, Redux, Bootstrap and jQuery — and 4+ years in SharePoint Administration.",
   highlights: [
-    "11+ years of frontend experience",
-    "Expert in React & TypeScript",
+    "11+ years of frontend expertise",
+    "Expert in React, TypeScript & Redux",
     "Strong in testing & code quality",
     "Enterprise & SharePoint solutions",
   ],
 }
+
+export const experiences = [
+  {
+    company: "Accenture",
+    role: "Frontend Development Lead",
+    duration: "04/2015 — Present",
+    years: "11+ Years",
+    type: "Full Time",
+    location: "Bangalore, India",
+    progression: [
+      { role: "Application Development Team Lead",      period: "Dec 2021 — Present",    duration: "4 yrs 10 mos", location: "Bangalore Urban, Karnataka" },
+      { role: "Application Development Senior Analyst", period: "Dec 2019 — Nov 2021",   duration: "2 yrs",        location: "Bangaon, West Bengal" },
+      { role: "Application Development Analyst",        period: "Jun 2016 — Nov 2019",   duration: "3 yrs 6 mos",  location: "Bengaluru, Karnataka" },
+      { role: "Associate Software Engineer",            period: "Apr 2015 — May 2016",   duration: "1 yr 2 mos",   location: "Bengaluru, Karnataka" },
+    ],
+    leadership: [
+      "Leading frontend development for large-scale enterprise applications",
+      "Architecting React + Redux solutions for complex state management",
+      "Mentoring junior developers and conducting code reviews",
+      "Building automated test suites using Jest and Playwright",
+      "Driving technical decisions and collaborating with stakeholders",
+      "Translating business requirements into impactful frontend solutions",
+    ],
+    certifications: [
+      "Microsoft Azure Fundamentals — AZ900",
+      "Developing Microsoft Azure Solution — 70-532",
+      "Programming in C# — 70-483",
+    ],
+    education: "BE — Visvesvaraya Technological University (2010–2014)",
+  },
+]

@@ -1,14 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>undefined</title>
-</head>
-<body>
-  <script>
-    let a;
-    console.log(a);
-  </script>
-</body>
+  </head>
+  <body>
+    <h3>var — hoisted and initialized with undefined:</h3>
+    <ul>
+      <li>hoisted to the top of its scope</li>
+      <li>initialized with undefined automatically</li>
+      <li>can be accessed before declaration, returns undefined</li>
+    </ul>
+    <h3>let — hoisted but NOT initialized (TDZ):</h3>
+    <ul>
+      <li>hoisted to the top of its scope</li>
+      <li>NOT initialized — sits in TDZ (Temporal Dead Zone)</li>
+      <li>cannot be accessed before declaration, throws ReferenceError</li>
+    </ul>
+    <h3>const — same as let:</h3>
+    <ul>
+      <li>hoisted to the top of its scope</li>
+      <li>NOT initialized — sits in TDZ</li>
+      <li>cannot be accessed before declaration, throws ReferenceError</li>
+      <li>must be initialized at declaration</li>
+    </ul>
+    <h3>TDZ (Temporal Dead Zone):</h3>
+    <ul>
+      <li>the period between hoisting and the actual declaration line</li>
+      <li>only applies to let and const</li>
+      <li>variable exists but cannot be touched during this period</li>
+    </ul>
+    <script>
+      // what JS does internally
+      var a = undefined; // hoisted to top
+      console.log(a); // undefined
+      a = 10;
+
+      // let is hoisted but stays in TDZ until declaration line is reached
+      console.log(b); // ❌ ReferenceError: Cannot access 'b' before initialization
+      let b = 20;
+
+      console.log(c); // ❌ ReferenceError
+      const c = 30;
+
+      const d; // ❌ SyntaxError — must initialize at declaration
+    </script>
+  </body>
 </html>
