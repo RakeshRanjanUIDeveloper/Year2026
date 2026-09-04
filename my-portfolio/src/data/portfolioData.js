@@ -133,7 +133,7 @@ export const enterpriseProjects = [
 ]
 
 export const aboutMe = {
-  bio: "Front-End Developer with 11+ years of experience, including 5 years in building responsive, high-performance web applications using HTML, CSS, JavaScript, React.js, Redux, Bootstrap and jQuery — and 4+ years in SharePoint Administration.",
+  bio: "Front-End Developer with 11+ years of experience, including 6+ years in building responsive, high-performance web applications using HTML, CSS, JavaScript, React.js, Redux, Redux-Saga, Bootstrap, jQuery, Jest, and Playwright, along with 5+ years of experience in SharePoint Administration. Experienced with Grafana and Splunk for monitoring and application observability.",
   highlights: [
     "11+ years of frontend expertise",
     "Expert in React, TypeScript & Redux",
