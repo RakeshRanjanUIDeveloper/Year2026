@@ -4,6 +4,7 @@ import AcronymGenerator from './components/AcronymGenerator'
 import DarkModeToggle from './components/DarkModeToggle'
 import InputFocus from './components/InputFocus'
 import Progressbar from './components/ProgressBar'
+import URLValidator from './components/URLValidator'
 
 function App() {
   return (
@@ -11,8 +12,9 @@ function App() {
      {/* <DarkModeToggle /> 
      <Accordion />
      <Progressbar />
-     <InputFocus />*/}
-     <AcronymGenerator />
+     <InputFocus />
+     <AcronymGenerator />*/}
+     <URLValidator />
     </>
   )
 }
