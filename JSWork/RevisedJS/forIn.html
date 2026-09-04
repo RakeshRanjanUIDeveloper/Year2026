@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const car = {
+            make:'Toyota',
+            model:'Camry',
+            year:2023
+        }
+        for(let key in car){
+            console.log(key)
+        }
+
+
+        const object = {
+            first : "Geek",
+            second : "For",
+            third : "Geek"
+        }
+        let text = "";
+        for(let key in object){
+            text = text + object[key] + " "; 
+        }
+        console.log(text)
+    </script>
+</body>
+</html>
