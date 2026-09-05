@@ -15,7 +15,7 @@ const TabSwitcher = () =>{
             <h3>Tab Switcher</h3>
             {
                 tabs.map((tab) =>(
-                    <div key={tab.id}>
+                    <div key={tab.id} style={{display:'flex', flexDirection:'column'}}>
                         <h2 className={tab.id === activeId ? 'active' : ''} onClick={() =>handleTabSwitcher(tab.id)}>{tab.label}</h2>
                         {
                             activeId=== tab.id && <p>{tab.content}</p>
