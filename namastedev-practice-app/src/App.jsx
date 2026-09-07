@@ -5,6 +5,7 @@ import BackToTop from './components/BackToTop'
 import CharacterCount from './components/CharacterCount'
 import DarkModeToggle from './components/DarkModeToggle'
 import InputFocus from './components/InputFocus'
+import PasswordStrength from './components/PasswordStrength'
 import Progressbar from './components/ProgressBar'
 import TabSwitcher from './components/TabSwitcher'
 import URLValidator from './components/URLValidator'
@@ -19,8 +20,9 @@ function App() {
      <AcronymGenerator />
      <URLValidator />
      <TabSwitcher />
-     <BackToTop />*/}
-     <CharacterCount />
+     <BackToTop />
+     <CharacterCount />*/}
+     <PasswordStrength />
     </>
   )
 }
