@@ -4,6 +4,7 @@ import AcronymGenerator from './components/AcronymGenerator'
 import BackToTop from './components/BackToTop'
 import CharacterCount from './components/CharacterCount'
 import DarkModeToggle from './components/DarkModeToggle'
+import FaqAccordion from './components/FaqAccordion'
 import InputFocus from './components/InputFocus'
 import PasswordStrength from './components/PasswordStrength'
 import Progressbar from './components/ProgressBar'
@@ -23,8 +24,9 @@ function App() {
      <TabSwitcher />
      <BackToTop />
      <CharacterCount />
-     <PasswordStrength />*/}
-     <RecipeFilterApp />
+     <PasswordStrength />
+     <RecipeFilterApp />*/}
+     <FaqAccordion />
     </>
   )
 }
