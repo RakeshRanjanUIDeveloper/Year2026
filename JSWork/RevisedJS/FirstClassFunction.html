@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>
+        First CLass Function means that Functions are treadted like any other value, Because of this
+        <ul>
+            <li>Assign a function to a variable</li>
+            <li>Pass a function as an argument</li>
+            <li>Return a function from another function</li>
+            <li>Store functions in an object or array</li>
+        </ul> 
+    </h3>
+    <script>
+        //Assign a function to a variable
+        const greet = function(name){
+            return `Hello ${name}`
+        }
+        console.log(greet("Rakesh"))
+
+        //Pass a function as an argument
+        function sayHello(){
+            console.log("Hello");
+        }
+        function execute(fn){
+            fn()
+        }
+        execute(sayHello)
+
+        //Return a function from another function
+        function multiplier(factor){
+            return function(number){
+                return number * factor
+            }
+        }
+        const double = multiplier(2);
+        console.log(double(5))
+
+        //Store functions in an object or array
+        const calculator = {
+            add(a,b){
+                return a+b
+            },
+            subtract(a,b){
+                return a-b
+            }
+        }
+        console.log(calculator.add(2,3));
+    </script>
+</body>
+</html>
