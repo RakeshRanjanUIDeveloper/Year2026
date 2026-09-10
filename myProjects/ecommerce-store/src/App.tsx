@@ -3,17 +3,20 @@ import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import Layout from "./components/layout/Layout";
 
-const App = () =>{
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/products" element={<ProductsPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-        </BrowserRouter>
-    )
-}
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
+  );
+};
 export default App;
