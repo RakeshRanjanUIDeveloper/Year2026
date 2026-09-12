@@ -6,6 +6,6 @@ const apiClient = axios.create({
 });
 
 export const fetchAllProducts  = async() : Promise<Product[]> =>{
-    const response = await apiClient.get("/products");
+    const response = await apiClient.get<Product[]>("/products");
     return response.data
 }

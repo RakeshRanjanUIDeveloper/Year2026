@@ -1,6 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Product } from "../../types/product.types";
 
-const initialState = {
+interface ProductState{
+    products:Product[];
+    loading:boolean;
+    error: string | null;
+}
+const initialState:ProductState = {
     products : [],
     loading:false,
     error:null
@@ -9,6 +15,19 @@ const initialState = {
 const productSlice = createSlice({
     name:"products",
     initialState,
-    reducers:{}
+    reducers:{
+        fetchProductsStart : (state) =>{
+            state.loading = true;
+        },
+        fetchProductsSuccess : (state, action:PayloadAction<Product []>) =>{
+            state.products = action.payload;
+            state.loading = false
+        },
+        fetchProductsFailure : (state, action: PayloadAction<string>) =>{
+            state.error = action.payload;
+            state.loading = false
+        }
+    }
 })
 export default productSlice.reducer;
+export const {fetchProductsStart, fetchProductsSuccess, fetchProductsFailure} = productSlice.actions
