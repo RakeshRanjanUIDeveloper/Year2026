@@ -3,6 +3,7 @@ import Accordion from './components/Accordion'
 import AcronymGenerator from './components/AcronymGenerator'
 import BackToTop from './components/BackToTop'
 import CharacterCount from './components/CharacterCount'
+import ChipsInput from './components/ChipsInput'
 import DarkModeToggle from './components/DarkModeToggle'
 import FaqAccordion from './components/FaqAccordion'
 import InputFocus from './components/InputFocus'
@@ -25,8 +26,9 @@ function App() {
      <BackToTop />
      <CharacterCount />
      <PasswordStrength />
-     <RecipeFilterApp />*/}
-     <FaqAccordion />
+     <RecipeFilterApp />
+     <FaqAccordion />*/}
+     <ChipsInput />
     </>
   )
 }
