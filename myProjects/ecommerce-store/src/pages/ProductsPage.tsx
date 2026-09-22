@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchProductsStart } from "../store/slices/productSlice";
+import { addToCart } from "../store/slices/cartSlice";
 
 const ProductsPage = () => {
     const dispatch = useAppDispatch();
@@ -86,7 +87,7 @@ const ProductsPage = () => {
                             <span className="text-xl font-bold text-gray-900">
                                 ${product.price.toFixed(2)}
                             </span>
-                            <button className="bg-indigo-600 text-white text-sm px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors">
+                            <button onClick={() => dispatch(addToCart(product))} className="bg-indigo-600 text-white text-sm px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors">
                                 Add to cart
                             </button>
                         </div>
