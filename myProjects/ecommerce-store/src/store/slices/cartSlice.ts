@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Product } from "../../types/product.types";
+import { loadCartFromStorage } from "../../utils/localStorage";
 
 
 export interface CartItem extends Product{
@@ -9,7 +10,7 @@ interface CartState{
     items:CartItem[]
 }
 const initialState:CartState ={
-   items: []
+   items: loadCartFromStorage()
 }
 
 const cartSlice = createSlice({
