@@ -33,7 +33,7 @@ const productSlice = createSlice({
             state.error = action.payload;
             state.loading = false
         },
-        fetchProductDetailStart : (state) =>{
+        fetchProductDetailStart : (state, _action: PayloadAction<number>) =>{
             state.selectedProductLoading = true;
             state.selectedProductError = null;
         },

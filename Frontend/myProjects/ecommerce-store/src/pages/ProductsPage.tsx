@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchProductsStart } from "../store/slices/productSlice";
 import { addToCart } from "../store/slices/cartSlice";
-
+import { Link } from "react-router-dom";
 const ProductsPage = () => {
     const dispatch = useAppDispatch();
     const { products, loading, error } = useAppSelector((state) => state.products);
@@ -53,8 +53,9 @@ const ProductsPage = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {products.map((product) => (
-                    <div
-                        key={product.id}
+                    <Link to={`/products/${product.id}`} key={product.id}>
+<div
+                      
                         className="bg-white rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-shadow duration-300 cursor-pointer flex flex-col"
                     >
                         <div className="bg-gray-50 rounded-xl p-4 flex items-center justify-center h-48 mb-4">
@@ -87,11 +88,16 @@ const ProductsPage = () => {
                             <span className="text-xl font-bold text-gray-900">
                                 ${product.price.toFixed(2)}
                             </span>
-                            <button onClick={() => dispatch(addToCart(product))} className="bg-indigo-600 text-white text-sm px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors">
+                            <button onClick={(e) => {
+
+                            e.preventDefault()
+                                 dispatch(addToCart(product))}} className="bg-indigo-600 text-white text-sm px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors">
                                 Add to cart
                             </button>
                         </div>
                     </div>
+                    </Link>
+                    
                 ))}
             </div>
         </div>
