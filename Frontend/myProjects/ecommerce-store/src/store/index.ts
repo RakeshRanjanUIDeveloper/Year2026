@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import productReducer from './slices/productSlice';
 import cartReducer from './slices/cartSlice'
+import authReducer from './slices/authSlice'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from "./sagas/rootSaga";
 import { saveCartToStorage } from "../utils/localStorage";
@@ -8,7 +9,8 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
     reducer:{
         products: productReducer,
-        cart : cartReducer
+        cart : cartReducer,
+        auth: authReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
 })
