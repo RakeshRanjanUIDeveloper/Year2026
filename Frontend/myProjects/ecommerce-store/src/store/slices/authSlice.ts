@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { LoginCredentials } from "../../services/authService";
+import { loadAuthFromStorage } from "../../utils/localStorage";
 
 export interface User{
     email:string;
@@ -13,7 +14,7 @@ export interface AuthState{
 }
 
 const initialState: AuthState ={
-    user:null,
+    user: loadAuthFromStorage(),
     loading:false,
     error:null
 }

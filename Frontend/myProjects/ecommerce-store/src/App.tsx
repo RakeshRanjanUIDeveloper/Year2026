@@ -6,6 +6,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Layout from "./components/layout/Layout";
 import CartPage from "./pages/CartPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 const App = () => {
   return (
     <BrowserRouter>
@@ -14,7 +15,11 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={
+            <ProtectedRoute>
+                <CartPage />
+            </ProtectedRoute>
+            } />
           <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
