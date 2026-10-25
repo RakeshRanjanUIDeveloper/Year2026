@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { loginStart } from "../store/slices/authSlice";
+import { useToast } from "../context/ToastContext";
 
 const loginSchema = z.object({
     username: z.string().min(1, "Username is required"),
@@ -14,6 +15,7 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
+    const { showToast } = useToast()
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -27,11 +29,20 @@ const LoginPage = () => {
 
     const { loading, error, user } = useAppSelector((state) => state.auth);
 
-    useEffect(() => {
-        if (user) {
+useEffect(() => {
+    if (user) {
+        showToast("Welcome back!", "success")
+        setTimeout(() => {
             navigate("/", { replace: true })
-        }
-    }, [user, navigate])
+        }, 500)
+    }
+}, [user, navigate])
+
+useEffect(() => {
+    if (error) {
+        showToast(error, "error")
+    }
+}, [error])
 
     const onSubmit = (data: LoginFormData) => {
         dispatch(loginStart(data))

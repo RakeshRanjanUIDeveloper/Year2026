@@ -7,8 +7,10 @@ import Layout from "./components/layout/Layout";
 import CartPage from "./pages/CartPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ToastProvider } from "./context/ToastContext";
 const App = () => {
   return (
+    <ToastProvider>
     <BrowserRouter>
       <Layout>
         <Routes>
@@ -25,6 +27,8 @@ const App = () => {
         </Routes>
       </Layout>
     </BrowserRouter>
+    </ToastProvider>
+
   );
 };
 export default App;

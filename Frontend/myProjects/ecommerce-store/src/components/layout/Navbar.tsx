@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { logout } from "../../store/slices/authSlice";
+import { useToast } from "../../context/ToastContext";
 
 const Navbar = () => {
+  const { showToast } = useToast()
   const items = useAppSelector((state) => state.cart.items);
   const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
   const { user } = useAppSelector((state) => state.auth);
@@ -42,7 +44,11 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             <span className="text-sm text-gray-600">{user.email}</span>
             <button
-              onClick={() => dispatch(logout())}
+              onClick={() => {
+                dispatch(logout())
+                showToast("Logged out successfully", "info")
+              } 
+              }
               className="text-sm text-red-500 hover:text-red-700 transition-colors"
             >
               Logout

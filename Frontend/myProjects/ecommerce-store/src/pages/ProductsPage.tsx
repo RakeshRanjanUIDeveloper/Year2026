@@ -3,7 +3,10 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchProductsStart } from "../store/slices/productSlice";
 import { addToCart } from "../store/slices/cartSlice";
 import { Link } from "react-router-dom";
+import { useToast } from "../context/ToastContext";
+
 const ProductsPage = () => {
+    const {showToast} = useToast()
     const dispatch = useAppDispatch();
     const { products, loading, error } = useAppSelector((state) => state.products);
 
@@ -89,9 +92,10 @@ const ProductsPage = () => {
                                 ${product.price.toFixed(2)}
                             </span>
                             <button onClick={(e) => {
-
-                            e.preventDefault()
-                                 dispatch(addToCart(product))}} className="bg-indigo-600 text-white text-sm px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors">
+                                    e.preventDefault()
+                                    dispatch(addToCart(product))
+                                    showToast("Added to cart!")
+                                 }} className="bg-indigo-600 text-white text-sm px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors">
                                 Add to cart
                             </button>
                         </div>
