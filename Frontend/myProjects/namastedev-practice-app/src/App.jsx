@@ -4,6 +4,7 @@ import AcronymGenerator from './components/AcronymGenerator'
 import BackToTop from './components/BackToTop'
 import CharacterCount from './components/CharacterCount'
 import ChipsInput from './components/ChipsInput'
+import CopyClipboard from './components/CopyClipboard'
 import DarkModeToggle from './components/DarkModeToggle'
 import FaqAccordion from './components/FaqAccordion'
 import InputFocus from './components/InputFocus'
@@ -27,8 +28,9 @@ function App() {
      <CharacterCount />
      <PasswordStrength />
      <RecipeFilterApp />
-     <FaqAccordion />*/}
-     <ChipsInput />
+     <FaqAccordion />
+     <ChipsInput />*/}
+     <CopyClipboard />
     </>
   )
 }
