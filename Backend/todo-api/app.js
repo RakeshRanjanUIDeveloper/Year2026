@@ -24,6 +24,42 @@ app.post('/todos', (req, res) => {
   todos.push(todo);
   res.status(201).json(todo);
 });
+
+app.put('/todos/:id', (req, res) => {
+
+  const id = Number(req.params.id);
+    if (Number.isNaN(id)) {
+  return res.status(400).json({ error: 'id must be a number' });
+}
+  const todo = todos.find(t => t.id === id);
+
+  if (!todo) {
+    return res.status(404).json({ error: 'Todo not found' });
+  }
+
+  const { title, done } = req.body;
+  if (title !== undefined) todo.title = title;
+  if (done !== undefined) todo.done = done;
+
+  res.json(todo);
+});
+
+app.delete('/todos/:id', (req, res) => {
+
+  const id = Number(req.params.id);
+    if (Number.isNaN(id)) {
+  return res.status(400).json({ error: 'id must be a number' });
+}
+  const index = todos.findIndex(t => t.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'Todo not found' });
+  }
+
+  todos.splice(index, 1);
+  res.status(204).send();
+});
+
 app.listen(3000, ()=>{
     console.log("Server running at http://localhost:3000")
 })
