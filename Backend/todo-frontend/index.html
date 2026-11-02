@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>My Todos</h1>
+  <input id="title" placeholder="New todo" />
+  <button id="add">Add</button>
+  <ul id="list"></ul>
+
+  <script>
+    const API = 'http://localhost:3000/todos';
+    const list = document.getElementById('list');
+
+    async function loadTodos() {
+      const res = await fetch(API);
+      const todos = await res.json();
+
+      list.innerHTML = '';   // clear the old list
+
+      todos.forEach(t => {
+        const li = document.createElement('li');
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = t.done;
+        checkbox.addEventListener('change', async () => {
+          await fetch(`${API}/${t.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ done: checkbox.checked })
+          });
+        });
+
+        const span = document.createElement('span');
+        span.textContent = ' ' + t.title + ' ';   // textContent = safe from XSS
+
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'Delete';
+        delBtn.addEventListener('click', async () => {
+          await fetch(`${API}/${t.id}`, { method: 'DELETE' });
+          loadTodos();
+        });
+
+        li.append(checkbox, span, delBtn);
+        list.appendChild(li);
+      });
+    }
+
+    document.getElementById('add').addEventListener('click', async () => {
+      const input = document.getElementById('title');
+      if (!input.value.trim()) return;
+      await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: input.value })
+      });
+      input.value = '';
+      loadTodos();
+    });
+
+    loadTodos();
+  </script>
+</body>
+</html>

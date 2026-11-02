@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+
 const fs = require('fs');
 const path = require('path');
 
@@ -15,6 +16,9 @@ function loadTodos() {
 function saveTodos() {
   fs.writeFileSync(DATA_FILE, JSON.stringify(todos, null, 2));
 }
+
+const cors = require('cors');
+app.use(cors());
 
 app.use(express.json()); 
 app.use((req, res, next) => {   
