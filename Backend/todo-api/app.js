@@ -1,15 +1,30 @@
 const express = require('express');
 const app = express();
+const fs = require('fs');
+const path = require('path');
+
+const DATA_FILE = path.join(__dirname, 'todos.json');
+
+function loadTodos() {
+  if (!fs.existsSync(DATA_FILE)) {
+    return [];
+  }
+  return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+}
+
+function saveTodos() {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(todos, null, 2));
+}
+
 app.use(express.json()); 
 app.use((req, res, next) => {   
   console.log(req.method, req.url);
   next();
 });
-let todos = [
-  { id: 1, title: 'Learn Node', done: false },
-  { id: 2, title: 'Learn Express', done: false }
-];
-let nextId = 3;
+
+let todos = loadTodos();
+let nextId = todos.length ? Math.max(...todos.map(t => t.id)) + 1 : 1;
+
 app.get('/todos', (req, res) => {
   res.json(todos);
 });
@@ -22,6 +37,7 @@ app.post('/todos', (req, res) => {
 
   const todo = { id: nextId++, title, done: false };
   todos.push(todo);
+  saveTodos();
   res.status(201).json(todo);
 });
 
@@ -40,6 +56,7 @@ app.put('/todos/:id', (req, res) => {
   const { title, done } = req.body;
   if (title !== undefined) todo.title = title;
   if (done !== undefined) todo.done = done;
+  saveTodos();
 
   res.json(todo);
 });
@@ -57,6 +74,7 @@ app.delete('/todos/:id', (req, res) => {
   }
 
   todos.splice(index, 1);
+   saveTodos();
   res.status(204).send();
 });
 
